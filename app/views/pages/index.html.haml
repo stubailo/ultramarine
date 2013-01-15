@@ -1,0 +1,7 @@
+- if current_user
+  = link_to "Logout", destroy_user_session_path, :method => :delete
+- else
+  = link_to "Login with facebook", user_omniauth_authorize_path(:provider => :facebook)
+
+%h1 Pages#index
+%p Log in #{link_to "here", user_omniauth_authorize_path(:facebook)}
