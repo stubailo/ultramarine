@@ -11,6 +11,9 @@ end
 
 module Ultramarine
   class Application < Rails::Application
+    PLACES_API_KEY = "AIzaSyDpXUN863Ef1Two8nZjW3NGuIt8knw2eVo"
+    CITY_DEFAULT_RADIUS = 10
+    config.force_ssl = false
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
