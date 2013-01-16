@@ -1,0 +1,20 @@
+%p#notice= notice
+
+%p
+  %b Challenge:
+  = @photo.challenge_id
+%p
+  %b Caption:
+  = @photo.caption
+%p
+  %b User:
+  = @photo.user_id
+%p
+  %b Privacy level:
+  = @photo.privacy_level_id
+
+= image_tag @photo.image.url
+
+= link_to 'Edit', edit_photo_path(@photo)
+\|
+= link_to 'Back', photos_path

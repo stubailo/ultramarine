@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  challenge_id: 1
+  caption: MyText
+  user_id: 1
+  privacy_level_id: 1
+
+two:
+  challenge_id: 1
+  caption: MyText
+  user_id: 1
+  privacy_level_id: 1
