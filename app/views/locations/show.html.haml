@@ -1,11 +1,18 @@
 %p#notice= notice
 
 %p
-  %b Parent:
-  = @location.parent_id
-%p
   %b Name:
   = @location.name
+%p
+  %b Latitude:
+  = @location.lat
+%p
+  %b Longitude:
+  = @location.lon
+%p
+  %b Places of interest:
+  =@venues.body
+  =@url
 
 = link_to 'Edit', edit_location_path(@location)
 \|

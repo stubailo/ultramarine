@@ -1,3 +1,5 @@
+require 'net/http'
+
 class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
@@ -14,6 +16,11 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
+    @url = URI.parse("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=#{Ultramarine::Application::PLACES_API_KEY}&location=#{@location.lat},#{@location.lon}&radius=#{Ultramarine::Application::CITY_DEFAULT_RADIUS}&sensor=false")
+    @req = Net::HTTP::Get.new(@url.path)
+    @venues = Net::HTTP.start(@url.host, @url.port, :use_ssl => true) {|http|
+      http.request(@req)
+    }
 
     respond_to do |format|
       format.html # show.html.erb
