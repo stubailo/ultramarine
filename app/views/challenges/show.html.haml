@@ -22,6 +22,7 @@
     = f.hidden_field :challenge_id, :value => @challenge.id
   .actions
     =f.submit
+
 = form_for Photo.new, :html => {:id => "ajax_photo_form"} do |f|
   = f.hidden_field :challenge_id, :value => @challenge.id 
   = f.label :image, "Upload images:"
