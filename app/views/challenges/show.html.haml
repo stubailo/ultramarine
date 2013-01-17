@@ -7,10 +7,24 @@
   %b Description:
   = @challenge.description
 
+%p
+  ADD USER NAME
+
 = form_for Photo.new, :html => {:class => "ajax_photo_form"} do |f|
   = f.label :image, "Upload images:"
   = f.file_field :image, multiple: true, name: "photo[image]"
 
+= form_for (Comment.new) do |f|
+  .field
+    = f.label :body
+    = f.text_area :body
+  .field
+    = f.hidden_field :challenge_id, :value => @challenge.id
+  .actions
+    =f.submit
+
 = link_to 'Edit', edit_challenge_path(@challenge)
 \|
 = link_to 'Back', challenges_path
+
+= render @challenge.comments

@@ -1,12 +1,11 @@
 Ultramarine::Application.routes.draw do
   resources :photos
 
-
   resources :challenges
-
 
   resources :locations
 
+  resources :comments
 
   get "pages/index"
 

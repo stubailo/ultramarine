@@ -3,6 +3,10 @@
 - else
   = link_to "Login with facebook", user_omniauth_authorize_path(:provider => :facebook)
 
-%p #{link_to "Locations", locations_path}
+%p
+  =link_to "Locations", locations_path
+
+%p
+  =link_to "Challenges", challenges_path
 
 %p Log in #{link_to "here", user_omniauth_authorize_path(:facebook)}
