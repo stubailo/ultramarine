@@ -22,6 +22,13 @@
     = f.hidden_field :challenge_id, :value => @challenge.id
   .actions
     =f.submit
+= form_for Photo.new, :html => {:id => "ajax_photo_form"} do |f|
+  = f.hidden_field :challenge_id, :value => @challenge.id 
+  = f.label :image, "Upload images:"
+  = f.file_field :image, multiple: true, name: "photo[image]"
+
+- @challenge.photos.each do |photo|
+  = image_tag photo.image.url(:thumb)
 
 = link_to 'Edit', edit_challenge_path(@challenge)
 \|

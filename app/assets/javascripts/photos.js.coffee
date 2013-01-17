@@ -3,4 +3,11 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-  $(".ajax_photo_form").fileupload()
+  $("#ajax_photo_form").fileupload({dataType: "json"})
+    .bind("fileuploadadd", file_started)
+    .bind("fileuploaddone", file_done)
+
+file_started = (e, data) ->
+file_done = (e, data) ->
+  console.log(data.result)
+  $("body").append("<img src=#{data.result.thumb} />")
