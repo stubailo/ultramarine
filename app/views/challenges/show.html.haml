@@ -7,6 +7,10 @@
   %b Description:
   = @challenge.description
 
+= form_for Photo.new, :html => {:class => "ajax_photo_form"} do |f|
+  = f.label :image, "Upload images:"
+  = f.file_field :image, multiple: true, name: "photo[image]"
+
 = link_to 'Edit', edit_challenge_path(@challenge)
 \|
 = link_to 'Back', challenges_path

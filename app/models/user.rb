@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   has_many :omniauth_associations
 
+  has_many :photos
+
   def self.find_or_create_by_omniauth(auth)
     oa = OmniauthAssociation.where( {provider: auth.provider, uid: auth.uid} ).first
 
