@@ -1,3 +1,5 @@
+require 'net/http'
+
 class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
