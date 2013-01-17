@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130116052617) do
+ActiveRecord::Schema.define(:version => 20130116073546) do
 
   create_table "challenges", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20130116052617) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "lat"
+    t.string   "lon"
   end
 
   create_table "omniauth_associations", :force => true do |t|

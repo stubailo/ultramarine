@@ -7,10 +7,14 @@
           %li= msg
 
   .field
-    = f.label :parent_id
-    = f.number_field :parent_id
-  .field
     = f.label :name
     = f.text_field :name
+  .field
+    = f.label :lat
+    = f.text_field :lat
+  .field
+    = f.label :lon
+    = f.text_field :lon
+
   .actions
     = f.submit 'Save'

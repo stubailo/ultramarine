@@ -1,3 +1,5 @@
+require 'net/http'
+
 class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
@@ -14,6 +16,8 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
+    @client = GooglePlaces::Client.new(Ultramarine::Application::PLACES_API_KEY)
+    @venues = @client.spots(@location.lat, @location.lon)
 
     respond_to do |format|
       format.html # show.html.erb
