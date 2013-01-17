@@ -5,4 +5,12 @@ class Photo < ActiveRecord::Base
   belongs_to :user
 
   has_attached_file :image, :styles => { :thumb => "200x200>" }
+  
+  def thumb
+    image.url(:thumb)
+  end
+
+  def as_json(options)
+    super(:methods => [:thumb])
+  end
 end
