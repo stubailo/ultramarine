@@ -10,10 +10,6 @@
 %p
   ADD USER NAME
 
-= form_for Photo.new, :html => {:class => "ajax_photo_form"} do |f|
-  = f.label :image, "Upload images:"
-  = f.file_field :image, multiple: true, name: "photo[image]"
-
 = form_for (Comment.new) do |f|
   .field
     = f.label :body
