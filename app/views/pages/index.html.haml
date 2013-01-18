@@ -1,8 +1,55 @@
-- if current_user
-  = link_to "Logout", destroy_user_session_path, :method => :delete
-- else
-  = link_to "Login with facebook", user_omniauth_authorize_path(:provider => :facebook)
+.hero-unit
+	%h1 Vacation inspiration for
+	-#%p tagline tagline tagline
+	%form
+		%fieldset
+			-#%legend Vacation inspiration for
+			%input{:type=>'text', 'placeholder'=>'wherever you want to go'}
+			%p
+				%button.btn{:type=>'submit'} Go
 
-%p #{link_to "Locations", locations_path}
+-#
+	.carousel.slide#home-carousel
+		.carousel-inner
+			.item.active
+				%img{:src=>'/assets/grandcanyon-alanenglish.jpg'}
+					.carousel-caption
+						%p Grand Canyon Alan English test test test
+			.item
+				%img{:src=>'/assets/sanfranskyline-fritography.jpg'}
+					.carousel-caption
+						%p San Francisco Skyline Fritography test test test
+			.item
+				%img{:src=>'/assets/sanfranskyline2-fritography.jpg'}
+					.carousel-caption
+						%p San Fransisco Skyline 2 Fritography test test test
+			.item
+				%img{:src=>'/assets/sunsetovermanhattan-acmace.jpg'}
+					.carousel-caption
+						%p Sunset over Manhattan ACMace test test test
+			.item
+				%img{:src=>'/assets/utahredrock-kushdarkroom.jpg'}
+					.carousel-caption
+						%p Utah Red Rock Kushdarkroom test test test
+		%div
+			%a.carousel-control.left{:href=>"#home-carousel", "data-slide"=>"prev"} &lsaquo;
+			%a.carousel-control.right{:href=>"#home-carousel", "data-slide"=>"next"} &rsaquo;
 
-%p Log in #{link_to "here", user_omniauth_authorize_path(:facebook)}
+
+
+	%script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
+	%script window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')
+	%script{:src=>"js/bootstrap.min.js"}
+	:javascript
+		$(document).ready(function(){
+			$('.carousel').carousel();	
+		});
+
+-#- if current_user
+-#  = link_to "Logout", destroy_user_session_path, :method => :delete
+-#- else
+-#  = link_to "Login with facebook", user_omniauth_authorize_path(:provider => :facebook)
+
+-#%p #{link_to "Locations", locations_path}
+
+-#%p Log in #{link_to "here", user_omniauth_authorize_path(:facebook)}
