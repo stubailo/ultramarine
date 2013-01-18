@@ -7,6 +7,7 @@
 %p
   %b Longitude:
   = @location.lon
+= image_tag @location.image
 %p
   %b Places of interest:
   - @venues.each do |venue| 
@@ -14,6 +15,7 @@
       = venue.name
       = venue.rating
   =@url
+
 
 = link_to 'Edit', edit_location_path(@location)
 \|
