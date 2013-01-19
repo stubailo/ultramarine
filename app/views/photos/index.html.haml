@@ -1,4 +1,8 @@
-%h1 Listing photos
+-#%h1 Listing photos
+%h1 Photos
+- @photos.each do |photo|
+  .span3
+    = link_to 'Show', photo
 
 %table
   %tr
