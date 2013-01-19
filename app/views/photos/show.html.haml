@@ -21,13 +21,5 @@
 
 %h1
   Comments!
-  = form_for (Comment.new) do |f|
-    .field
-      = f.label :body
-      = f.text_area :body
-    .field
-      = f.hidden_field :photo_id, :value => @photo.id
-    .actions
-      =f.submit
-
+= render :partial => "comments/form", :locals => {:photo => @photo}
 = render @photo.comments

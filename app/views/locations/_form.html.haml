@@ -1,4 +1,4 @@
-= form_for @location do |f|
+= form_for @location, :html => {:multipart => true} do |f|
   - if @location.errors.any?
     #error_explanation
       %h2= "#{pluralize(@location.errors.count, "error")} prohibited this location from being saved:"
@@ -15,6 +15,9 @@
   .field
     = f.label :lon
     = f.text_field :lon
+  .field
+    = f.label :image
+    = f.file_field :image
 
   .actions
     = f.submit 'Save'

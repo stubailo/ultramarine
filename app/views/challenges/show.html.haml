@@ -1,5 +1,3 @@
-%p#notice= notice
-
 %p
   %b Name:
   = @challenge.name
@@ -10,14 +8,6 @@
 %p
   ADD USER NAME
 
-= form_for (Comment.new) do |f|
-  .field
-    = f.label :body
-    = f.text_area :body
-  .field
-    = f.hidden_field :challenge_id, :value => @challenge.id
-  .actions
-    =f.submit
 
 = form_for Photo.new, :html => {:id => "ajax_photo_form"} do |f|
   = f.hidden_field :challenge_id, :value => @challenge.id 
@@ -31,4 +21,5 @@
 \|
 = link_to 'Back', challenges_path
 
+= render :partial => "comments/form", :locals => {:challenge => @challenge}
 = render @challenge.comments

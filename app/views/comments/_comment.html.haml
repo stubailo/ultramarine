@@ -1,26 +1,12 @@
-%h1
-  Level: 
-  = comment.level
 %p
-  Commenter:
   - if comment.user
     = comment.user.email
   - else
-    COMMENTER
+    FIX THE SHIT THAT PEOPLE CAN SUBMIT WITHOUT BEING LOGGED IN BITCH
+%p= comment.body
+%p  
+  reply
 
-%p
-  Comment:
-  = comment.body
-
-%p Add a subcomment:
-= form_for (Comment.new) do |f|
-  .field
-    = f.label :body
-    = f.text_area :body
-  .field
-    = f.hidden_field :parent_id, :value => comment.id
-  .actions
-    =f.submit :'Create Subcomment'
-
--if comment.subcomments.length > 0 
+.subcomments
+  = render :partial => "comments/form", :locals => {:comment => comment}
   = render comment.subcomments
