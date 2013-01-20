@@ -18,6 +18,8 @@ Ultramarine::Application.routes.draw do
 
   get "pages/about"
 
+  post "votes/vote"
+
   resources :users, :only => :show
 
   # The priority is based upon order of creation:

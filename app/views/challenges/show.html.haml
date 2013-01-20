@@ -56,8 +56,9 @@
           .well
             Be the first to submit a photo to this challenge!
     %h3 Comments
-    .well
-      Be the first to comment on this challenge!
-
-    = render :partial => "comments/form", :locals => {:challenge => @challenge}
-    = render @challenge.comments
+    - if @challenge.comments.any?
+      = render :partial => "comments/form", :locals => {:challenge => @challenge}
+      = render @challenge.comments
+    - else
+      .well
+        Be the first to comment on this challenge!
