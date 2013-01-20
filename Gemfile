@@ -36,6 +36,7 @@ gem 'paperclip'
 
 gem 'gmaps4rails'
 gem 'google_places'
+gem 'koala'
 
 gem 'cancan'
 
