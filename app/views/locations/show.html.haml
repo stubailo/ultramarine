@@ -26,3 +26,6 @@
 = link_to 'Edit', edit_location_path(@location)
 \|
 = link_to 'Back', locations_path
+
+
+= link_to "Add a Challenge Here", new_challenge_path(:location_id => @location.id)

@@ -29,12 +29,18 @@
 								= link_to "Challenges", challenges_path
 							%li
 								= link_to "Photos", photos_path
-							-#%li #{link_to "Log in", user_omniauth_authorize_path(:facebook)}
-							%li
-								- if current_user
+
+							- if current_user
+								%li
+									= link_to current_user.email, user_path(current_user)
+								%li 
 									= link_to "Logout", destroy_user_session_path, :method => :delete
-								- else
-									= link_to "Login with facebook", user_omniauth_authorize_path(:provider => :facebook)
+							- else
+								%li
+									= link_to "Sign in", new_user_session_path
+								%li
+									= link_to "Register", new_user_registration_path
+
 		.container
 			= flash[:notice]
 			= yield
