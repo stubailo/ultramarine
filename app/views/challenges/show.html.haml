@@ -34,12 +34,16 @@
     .row
       .span8
         - if @challenge.photos.any?
-          - @challenge.photos.each do |photo|
-            = link_to photo do
-              = image_tag photo.image.url(:thumb), :class => "img-rounded"
+          .thumbnail-grid
+            %ul.thumbnails
+              -@challenge.photos.each do |photo|
+                %li.span4
+                  = link_to photo, :class => "thumbnail" do
+                    = image_tag photo.image.url(:thumb)
         - else
           .well
             Be the first to submit a photo to this challenge!
+
 
 
     %h3 Comments
