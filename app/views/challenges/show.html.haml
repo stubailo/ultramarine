@@ -1,21 +1,31 @@
 %p
-  %b Name:
-  = @challenge.name
+	%b Challenge:
+	= @challenge.name
 %p
-  %b Description:
-  = @challenge.description
+	%b Description:
+	= @challenge.description
 
 %p
-  ADD USER NAME
+	ADD USER NAME
 
+-#
+	%table
+		%tr
+			-@challenge.photos.each do |photo|
+				= image_tag photo.image.url(:thumb)
+
+.thumbnail-grid
+	%ul.thumbnails
+		-@challenge.photos.each do |photo|
+			%li.span4
+				%a.thumbnail{:href=>"#"}
+					= image_tag photo.image.url(:thumb)
+					-# fix the link - how do i link to photo page?
 
 = form_for Photo.new, :html => {:id => "ajax_photo_form"} do |f|
-  = f.hidden_field :challenge_id, :value => @challenge.id 
-  = f.label :image, "Upload images:"
-  = f.file_field :image, multiple: true, name: "photo[image]"
-
-- @challenge.photos.each do |photo|
-  = image_tag photo.image.url(:thumb)
+	= f.hidden_field :challenge_id, :value => @challenge.id 
+	= f.label :image, "Upload images:"
+	= f.file_field :image, multiple: true, name: "photo[image]"
 
 = link_to 'Edit', edit_challenge_path(@challenge)
 \|

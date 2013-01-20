@@ -4,6 +4,15 @@
   .span3
     = link_to 'Show', photo
 
+
+.thumbnail-grid
+  %ul.thumbnails
+    -@photos.each do |photo|
+      %li.span4
+        %a.thumbnail{:href=> photo}
+          = image_tag photo.image.url(:thumb)
+          -# fix the above 2 lines??
+
 %table
   %tr
     %th Challenge
