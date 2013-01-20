@@ -8,14 +8,25 @@
   %b Description:
   = @challenge.description
 
-%p
-  ADD USER NAME
-
-
 = form_for Photo.new, :html => {:id => "ajax_photo_form"} do |f|
   = f.hidden_field :challenge_id, :value => @challenge.id 
   = f.label :image, "Upload images:"
   = f.file_field :image, multiple: true, name: "photo[image]"
+
+-if @challenge.todo_users.exists?(:id => current_user.id)
+  %p
+    = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn'
+-else
+  %p
+    = link_to 'Add to Todo list', add_todo_path(@challenge), :class => 'btn'
+
+-if @challenge.completed_users.exists?(:id => current_user.id)
+  %p
+    = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn'
+-else
+  %p
+    = link_to 'Mark completed', add_completed_path(@challenge), :class => 'btn'
+
 
 - @challenge.photos.each do |photo|
   = image_tag photo.image.url(:thumb)

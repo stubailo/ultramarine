@@ -5,6 +5,10 @@ Ultramarine::Application.routes.draw do
   resources :photos
 
   resources :challenges
+  match 'challenges/:id/add_todo' => "challenges#add_todo", :as => :add_todo
+  match 'challenges/:id/add_completed' => "challenges#add_completed", :as => :add_completed
+  match 'challenges/:id/remove_todo' => "challenges#remove_todo", :as => :remove_todo
+  match 'challenges/:id/remove_completed' => "challenges#remove_completed", :as => :remove_completed
 
   resources :locations
 

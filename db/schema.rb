@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130119232523) do
+ActiveRecord::Schema.define(:version => 20130120012533) do
 
   create_table "challenges", :force => true do |t|
     t.string   "name"
@@ -37,6 +37,11 @@ ActiveRecord::Schema.define(:version => 20130119232523) do
   add_index "comments", ["parent_id"], :name => "index_comments_on_parent_id"
   add_index "comments", ["photo_id"], :name => "index_comments_on_photo_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "completed_users_completeds", :id => false, :force => true do |t|
+    t.integer "completed_user_id"
+    t.integer "completed_id"
+  end
 
   create_table "locations", :force => true do |t|
     t.integer  "parent_id"
@@ -70,6 +75,11 @@ ActiveRecord::Schema.define(:version => 20130119232523) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+  end
+
+  create_table "todo_users_todos", :id => false, :force => true do |t|
+    t.integer "todo_user_id"
+    t.integer "todo_id"
   end
 
   create_table "users", :force => true do |t|

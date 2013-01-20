@@ -2,6 +2,26 @@ class ChallengesController < ApplicationController
 
   load_and_authorize_resource
 
+  def add_todo
+    @challenge.todo_users << current_user
+    redirect_to :back
+  end
+
+  def add_completed
+    @challenge.completed_users << current_user
+    redirect_to :back
+  end
+
+  def remove_todo
+    @challenge.todo_users.delete(current_user)
+    redirect_to :back
+  end
+
+  def remove_completed
+    @challenge.completed_users.delete(current_user)
+    redirect_to :back
+  end
+
   # GET /challenges
   # GET /challenges.json
   def index
