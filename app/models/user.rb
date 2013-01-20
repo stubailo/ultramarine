@@ -6,20 +6,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :authentication_keys => [:login]
 
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :login
-  # attr_accessible :title, :body
+  attr_accessor :login
 
   has_many :omniauth_associations
-
   has_many :photos
-
-  has_many :challenges
-
+  has_many :submitted_challenges, :class_name => "Challenge"
   has_and_belongs_to_many :todos, :class_name => "Challenge", :join_table => "todo_users_todos", :foreign_key => "todo_user_id", :association_foreign_key => "todo_id"
-
   has_and_belongs_to_many :completeds, :class_name => "Challenge", :join_table => "completed_users_completeds", :foreign_key => "completed_user_id", :association_foreign_key => "completed_id"
-  attr_accessor :login
 
   def self.find_or_create_by_omniauth(auth)
     oa = OmniauthAssociation.where( {provider: auth.provider, uid: auth.uid} ).first
