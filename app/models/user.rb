@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
 
   has_many :photos
 
+  has_many :challenges
+
+  has_and_belongs_to_many :todos, :class_name => "Challenge", :join_table => "todo_users_todos", :foreign_key => "todo_user_id", :association_foreign_key => "todo_id"
+
+  has_and_belongs_to_many :completeds, :class_name => "Challenge", :join_table => "completed_users_completeds", :foreign_key => "completed_user_id", :association_foreign_key => "completed_id"
   attr_accessor :login
 
   def self.find_or_create_by_omniauth(auth)

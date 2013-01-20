@@ -3,6 +3,12 @@
   
 %p
   Completed Challenges:
+  %p
+    -@user.completeds.each do |completed|
+      =link_to completed.name, challenge_path(completed)
 
 %p
   Todo List:
+  %p
+    -@user.todos.each do |todo|
+      =link_to todo.name, challenge_path(todo)
