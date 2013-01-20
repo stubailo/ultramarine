@@ -33,6 +33,7 @@ class Ability
     else
       can :manage, Photo, :user_id => user.id
 
+      can :read, Challenge
       can :manage, Challenge, :user_id => user.id
       cannot :destroy, Challenge
 
