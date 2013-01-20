@@ -1,29 +1,28 @@
-%p#notice= notice
+%ul.breadcrumb
+  %li
+    - location = @photo.challenge.location
+    = link_to location.name, location
+    %span.divider >
+  %li
+    = link_to @photo.challenge.name, @photo.challenge
+    %span.divider >
+  %li
+    Photo
 
-%p
-  %b Challenge:
-  = @photo.challenge_id
-%p
-  %b Caption:
-  = @photo.caption
-%p
-  %b User:
-  = @photo.user_id
-%p
-  %b Privacy level:
-  = @photo.privacy_level_id
+.photo-page-well
+  = image_tag @photo.image.url
 
-= image_tag @photo.image.url
-
-= link_to 'Edit', edit_photo_path(@photo)
-\|
-= link_to 'Back', photos_path
+%p= @photo.caption
 
 score: #{@photo.vote_value}
 = link_to "upvote", votes_vote_path(:photo_id => @photo.id, :value => 1), :method => :post
 = link_to "downvote", votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post
 
-%h1
-  Comments!
+posted by #{@photo.user.username} #{time_ago_in_words @photo.created_at} ago
+= link_to 'Edit', edit_photo_path(@photo)
+\|
+= link_to 'Back', photos_path
+
+
 = render :partial => "comments/form", :locals => {:photo => @photo}
 = render @photo.comments
