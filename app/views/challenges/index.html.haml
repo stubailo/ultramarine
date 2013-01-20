@@ -1,21 +1,22 @@
-%h1 Listing challenges
+.container
+  %h1 Listing challenges
 
-%table
-  %tr
-    %th Name
-    %th Description
-    %th
-    %th
-    %th
-
-  - @challenges.each do |challenge|
+  %table
     %tr
-      %td= challenge.name
-      %td= challenge.description
-      %td= link_to 'Show', challenge
-      %td= link_to 'Edit', edit_challenge_path(challenge)
-      %td= link_to 'Destroy', challenge, method: :delete, data: { confirm: 'Are you sure?' }
+      %th Name
+      %th Description
+      %th
+      %th
+      %th
 
-%br
+    - @challenges.each do |challenge|
+      %tr
+        %td= challenge.name
+        %td= challenge.description
+        %td= link_to 'Show', challenge
+        %td= link_to 'Edit', edit_challenge_path(challenge)
+        %td= link_to 'Destroy', challenge, method: :delete, data: { confirm: 'Are you sure?' }
 
-= link_to 'New Challenge', new_challenge_path
+  %br
+
+  = link_to 'New Challenge', new_challenge_path
