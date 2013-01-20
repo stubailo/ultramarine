@@ -44,11 +44,4 @@
 			$('.carousel').carousel();	
 		});
 
--#- if current_user
--#  = link_to "Logout", destroy_user_session_path, :method => :delete
--#- else
--#  = link_to "Login with facebook", user_omniauth_authorize_path(:provider => :facebook)
-
--#%p #{link_to "Locations", locations_path}
-
--#%p Log in #{link_to "here", user_omniauth_authorize_path(:facebook)}
+=@me
