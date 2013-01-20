@@ -6,14 +6,20 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :authentication_keys => [:login]
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :login
-  attr_accessor :login
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :token, :fbid, :password_confirmation, :remember_me, :username, :login
+  # attr_accessible :title, :body
 
   has_many :omniauth_associations
+
   has_many :photos
-  has_many :submitted_challenges, :class_name => "Challenge"
+
+  has_many :challenges
+
   has_and_belongs_to_many :todos, :class_name => "Challenge", :join_table => "todo_users_todos", :foreign_key => "todo_user_id", :association_foreign_key => "todo_id"
+
   has_and_belongs_to_many :completeds, :class_name => "Challenge", :join_table => "completed_users_completeds", :foreign_key => "completed_user_id", :association_foreign_key => "completed_id"
+  attr_accessor :login
 
   def self.find_or_create_by_omniauth(auth)
     oa = OmniauthAssociation.where( {provider: auth.provider, uid: auth.uid} ).first
@@ -21,7 +27,7 @@ class User < ActiveRecord::Base
     if oa
       u = oa.user
     else
-      u = User.create(email:auth.info.email, username:auth.info.name, password:Devise.friendly_token[0,20])
+      u = User.create(email:auth.info.email, username:auth.info.name, token:auth.credentials.token, fbid:auth.uid, password:Devise.friendly_token[0,20])
       u.omniauth_associations = [OmniauthAssociation.new( {provider: auth.provider, uid: auth.uid} )]
       u.save
     end
