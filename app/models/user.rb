@@ -34,4 +34,8 @@ class User < ActiveRecord::Base
     u
   end
 
+  def admin?
+    return is_admin
+  end
+
 end

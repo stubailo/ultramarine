@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+
   def create
     if params[:comment][:challenge_id]
       @challenge = Challenge.find(params[:comment][:challenge_id])
