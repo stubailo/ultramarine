@@ -25,6 +25,7 @@ class ChallengesController < ApplicationController
   # GET /challenges/new
   # GET /challenges/new.json
   def new
+    @challenge.location_id = params[:location_id]
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @challenge }
