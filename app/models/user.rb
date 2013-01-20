@@ -14,6 +14,12 @@ class User < ActiveRecord::Base
 
   has_many :photos
 
+  has_many :challenges
+
+  has_and_belongs_to_many :todos, :class_name => "Challenge"
+
+  has_and_belongs_to_many :completeds, :class_name => "Challenge"
+
   def self.find_or_create_by_omniauth(auth)
     oa = OmniauthAssociation.where( {provider: auth.provider, uid: auth.uid} ).first
 
