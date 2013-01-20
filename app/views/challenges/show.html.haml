@@ -20,6 +20,19 @@
       - if can? :edit, @challenge
         |
         = link_to 'edit', edit_challenge_path(@challenge)
+    -if @challenge.todo_users.exists?(:id => current_user.id)
+      %p
+        = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn'
+    -else
+      %p
+        = link_to 'Add to Todo list', add_todo_path(@challenge), :class => 'btn'
+
+    -if @challenge.completed_users.exists?(:id => current_user.id)
+      %p
+        = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn'
+    -else
+      %p
+        = link_to 'Mark completed', add_completed_path(@challenge), :class => 'btn'
   .span8
     .row
       %h3.span4 Photos
@@ -42,21 +55,6 @@
         - else
           .well
             Be the first to submit a photo to this challenge!
-
--if @challenge.todo_users.exists?(:id => current_user.id)
-  %p
-    = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn'
--else
-  %p
-    = link_to 'Add to Todo list', add_todo_path(@challenge), :class => 'btn'
-
--if @challenge.completed_users.exists?(:id => current_user.id)
-  %p
-    = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn'
--else
-  %p
-    = link_to 'Mark completed', add_completed_path(@challenge), :class => 'btn'
-
     %h3 Comments
     .well
       Be the first to comment on this challenge!
