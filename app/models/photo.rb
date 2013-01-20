@@ -14,4 +14,9 @@ class Photo < ActiveRecord::Base
   def as_json(options)
     super(:methods => [:thumb])
   end
+  
+  has_many :votes
+  def vote_value
+    votes.reduce(0) { |sum, x| sum + x.value }
+  end
 end

@@ -5,6 +5,9 @@
     FIX THE SHIT THAT PEOPLE CAN SUBMIT WITHOUT BEING LOGGED IN BITCH
 %p= comment.body
 %p  
+  score: #{comment.vote_value}
+  = link_to "upvote", votes_vote_path(:comment_id => comment.id, :value => 1), :method => :post
+  = link_to "downvote", votes_vote_path(:comment_id => comment.id, :value => -1), :method => :post
   reply
 
 .subcomments

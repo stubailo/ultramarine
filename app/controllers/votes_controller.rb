@@ -1,43 +1,37 @@
 class VotesController < ApplicationController
   def vote
-    if [params[:challenge_id], params[:comment_id], params[:photo_id]].count{|p| p} != 1
-      redirect_to :back
+    attr = :none
+    if params[:comment_id]
+      attr = :comment_id
+    elsif params[:challenge_id]
+      attr = :challenge_id
+    elsif params[:photo_id]
+      attr = :photo_id
     else
-      
-      if params[:value] > 0
-        params[:value] = 1
-      elsif params[:value] < 0
-        params[:value] = -1
-      end
-
-      params[:user_id] = current_user.id
-
-      if params[:challenge_id]
-        v = Vote.where(:challenge_id => params[:challenge_id], :user_id => current_user.id)
-        if v.any?
-          v.first.destroy
-        else
-          Vote.create(params)
-        end
-      elsif params[:comment_id]
-        v = Vote.where(:comment_id => params[:comment_id], :user_id => current_user.id)
-        if v.any?
-          v.first.destroy
-        else
-          Vote.create(params)
-        end
-      elsif params[:photo_id]
-        v = Vote.where(:photo_id => params[:photo_id], :user_id => current_user.id)
-        if v.any?
-          v.first.destroy
-        else
-          Vote.create(params)
-        end
-      else
-        # what the fuck this isn't possible
-      end
-      
       redirect_to :back
+      return
     end
+    val = params[:value].to_i
+    if not [-1,1].include? val
+      redirect_to :back
+      return
+    end
+    user_id = current_user.id
+
+    v = Vote.where(attr => params[attr], :user_id => user_id)
+    if v.any?
+      v = v.first
+      if v.value == val
+        v.destroy
+      else
+        v.value = val
+        v.update_attributes(:value => val)
+      end
+    else
+      v.create(:value => val, attr => params[attr], :user_id => user_id)
+    end
+
+    redirect_to :back
+
   end
 end

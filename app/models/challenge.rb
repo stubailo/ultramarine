@@ -13,4 +13,9 @@ class Challenge < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :location
+
+  has_many :votes
+  def vote_value
+    votes.reduce(0) { |sum, x| sum + x.value }
+  end
 end

@@ -19,6 +19,10 @@
 \|
 = link_to 'Back', photos_path
 
+score: #{@photo.vote_value}
+= link_to "upvote", votes_vote_path(:photo_id => @photo.id, :value => 1), :method => :post
+= link_to "downvote", votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post
+
 %h1
   Comments!
 = render :partial => "comments/form", :locals => {:photo => @photo}
