@@ -1,28 +1,50 @@
-%ul.breadcrumb
-  %li= @challenge.location.name
+.row
+  .span4
+    
 
-%p
-  %b Name:
-  = @challenge.name
-%p
-  %b Description:
-  = @challenge.description
+    %h1= @challenge.name
+    %ul.breadcrumb
+      %li
+        #{link_to @challenge.location.name, @challenge.location}
+        %span.divider >
+      %li.active Challenge
+    %p= @challenge.description
 
-%p
-  ADD USER NAME
+    %p
+      Posted by
+      - if current_user == @challenge.user
+        you
+      - else
+        #{link_to @challenge.user.username, @challenge.user}
+      = time_ago_in_words @challenge.created_at
+      ago
+      - if can? :edit, @challenge
+        |
+        = link_to 'edit', edit_challenge_path(@challenge)
+  .span8
+    .row
+      %h3.span4 Photos
+      .new_photo_form_container.span4
+
+        = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
+          = f.hidden_field :challenge_id, :value => @challenge.id 
+          = f.label :image, "Submit yours:"
+          = f.file_field :image, multiple: true, name: "photo[image]"
+
+    .row
+      .span8
+        - if @challenge.photos.any?
+          - @challenge.photos.each do |photo|
+            = link_to photo do
+              = image_tag photo.image.url(:thumb), :class => "img-rounded"
+        - else
+          .well
+            Be the first to submit a photo to this challenge!
 
 
-= form_for Photo.new, :html => {:id => "ajax_photo_form"} do |f|
-  = f.hidden_field :challenge_id, :value => @challenge.id 
-  = f.label :image, "Upload images:"
-  = f.file_field :image, multiple: true, name: "photo[image]"
+    %h3 Comments
+    .well
+      Be the first to comment on this challenge!
 
-- @challenge.photos.each do |photo|
-  = image_tag photo.image.url(:thumb)
-
-= link_to 'Edit', edit_challenge_path(@challenge)
-\|
-= link_to 'Back', challenges_path
-
-= render :partial => "comments/form", :locals => {:challenge => @challenge}
-= render @challenge.comments
+    = render :partial => "comments/form", :locals => {:challenge => @challenge}
+    = render @challenge.comments
