@@ -1,17 +1,12 @@
 -#%h1 Listing photos
 %h1 Photos
-- @photos.each do |photo|
-  .span3
-    = link_to 'Show', photo
-
 
 .thumbnail-grid
   %ul.thumbnails
     -@photos.each do |photo|
       %li.span4
-        %a.thumbnail{:href=> photo}
+        = link_to photo, :class => "thumbnail" do
           = image_tag photo.image.url(:thumb)
-          -# fix the above 2 lines??
 
 %table
   %tr
@@ -34,5 +29,3 @@
       %td= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
-
-= link_to 'New Photo', new_photo_path
