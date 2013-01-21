@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130121051809) do
+ActiveRecord::Schema.define(:version => 20130121202855) do
 
   create_table "albums", :force => true do |t|
     t.integer  "user_id"
@@ -80,13 +80,13 @@ ActiveRecord::Schema.define(:version => 20130121051809) do
     t.integer  "challenge_id"
     t.text     "caption"
     t.integer  "user_id"
-    t.integer  "privacy_level_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.integer  "privacy_level"
   end
 
   create_table "todo_users_todos", :id => false, :force => true do |t|
