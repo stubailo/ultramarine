@@ -35,6 +35,24 @@ class ChallengesController < ApplicationController
   # GET /challenges/1
   # GET /challenges/1.json
   def show
+    private_photos = Photo.where(:user_id = current_user.id).where(:challenge_id = @challenge.id).where(:privacy_level = 1)
+    private_group = { "group" => "Personal Photos", "photos" => private_photos }
+
+    friends = graph.get_connections("me", "friends")
+    friend_fbids = []
+    friends.each do |friend|
+      friend_fbids += [friend["id"].to_int]
+    end
+    friend_ids = User.where(:fbid in friend_fbids).ids
+    friend_photos = Photo.where(:user_id in friend_ids).where(:challenge_id = @challenge.id).where(:privacy_level in [2,3])
+    friend_group = { "group" => "Friends' Photos", "photos" => friend_photos }
+
+    public_photos = Photo.where(:challenge_id = @challenge.id).where(:privacy_level = 3)
+    public_group = { "group" => "Public Photos", "photos" => public_photos }
+
+
+    @photo_groups = [private_group, friend_group, public_group]
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @challenge }
