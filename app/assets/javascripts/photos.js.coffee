@@ -10,4 +10,13 @@ $ ->
 file_started = (e, data) ->
 file_done = (e, data) ->
   console.log(data.result)
-  $("body").append("<img src=#{data.result.thumb} />")
+  d = photo_drawer()
+  d.append("<img src=#{data.result.thumb} />")
+
+photo_drawer = ->
+  if $("#photo-upload-drawer").length > 0
+    return $("#photo-upload-drawer")
+  drawer = $("<div></div>")
+  drawer.attr("id", "photo-upload-drawer")
+  $("#main-navbar").after(drawer)
+  return drawer
