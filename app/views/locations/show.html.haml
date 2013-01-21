@@ -1,20 +1,33 @@
 .row
   .span8
-    .hero-unit.location-page{:style => "background: url(#{@location.image})"}
+    .hero-unit.location-page{:style => "background: url(#{@location.image}); background-size: cover"}
       %h1
         %span.bg= @location.name
       %p
         %span.bg Find inspiration in the city that never sleeps.
-  .span4
-    .well
-      You haven't done any challenges in New York yet!
 - if @location.challenges.any?
-  %ul.thumbnails
+  .big-challenge
+    %h6 Top Challenge
     - challenge = @location.challenges.first
-    %li.span12
-      .thumbnail
-        %h3= challenge.name
+    %h3= link_to challenge.name, challenge
+    %p= challenge.description
+    .thumbnail-hider
+      .row-thumbnails
+        - challenge.photos.each do |photo|
+          = link_to photo do
+            = image_tag photo.image(:thumb)
+      .more-photos
+        
+  - if @location.challenges.count > 1
+    %h6 More Challenges
+    .row
+      - @location.challenges.slice(1, @location.challenges.count).each do |challenge|
+        .span4
+          %h3= link_to challenge.name, challenge
+          %p= challenge.description
   
+
+%hr
 
 %p
   %b Places of interest:
