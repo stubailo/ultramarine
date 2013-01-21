@@ -20,13 +20,14 @@ class Photo < ActiveRecord::Base
     votes.reduce(0) { |sum, x| sum + x.value }
   end
 
-  def facebook(photo, user)
-    album = Album.where(:user_id => user.id, :location_id => @photo.challenge.location.id) 
-    if album
-      #fb
-    else
-      #fb create album get id
-      Album.create_album(user.id, photo.challenge.location.id, fbid)
+  #TODO: need to put photo caption and approve photo checkbox in
+  def self.facebook(photo, user)
+    album = Album.where(:user_id => user.id, :location_id => photo.challenge.location.id).first 
+    @graph = Koala::Facebook::GraphAPI.new(user.token) 
+    if album.nil?
+      album_info = @graph.put_object('me','albums', :name=>"Trip to #{photo.challenge.location.name}")
+      album = Album.create_album(user.id, photo.challenge.location.id, album_info["id"])
     end
+    @graph.put_picture(photo.image.path, photo.image.content_type, facebook_arguments = {:message => "sample caption"}, album.fbid)
   end
 end
