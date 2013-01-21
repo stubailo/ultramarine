@@ -41,9 +41,10 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     @photo = Photo.new(params[:photo])
-
+    user = current_user
     respond_to do |format|
       if @photo.save
+        #Photo.facebook(@photo, user)
         format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
         format.json { render json: @photo, status: :created, location: @photo }
       else

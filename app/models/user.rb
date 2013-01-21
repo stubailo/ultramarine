@@ -11,10 +11,9 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   has_many :omniauth_associations
-
   has_many :photos
-
   has_many :challenges
+  has_many :albums
 
   has_and_belongs_to_many :todos, :class_name => "Challenge", :join_table => "todo_users_todos", :foreign_key => "todo_user_id", :association_foreign_key => "todo_id"
 

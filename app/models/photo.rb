@@ -19,4 +19,14 @@ class Photo < ActiveRecord::Base
   def vote_value
     votes.reduce(0) { |sum, x| sum + x.value }
   end
+
+  def facebook(photo, user)
+    album = Album.where(:user_id => user.id, :location_id => @photo.challenge.location.id) 
+    if album
+      #fb
+    else
+      #fb create album get id
+      Album.create_album(user.id, photo.challenge.location.id, fbid)
+    end
+  end
 end
