@@ -45,7 +45,6 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       if @photo.save
-        Photo.facebook(@photo, current_user)
         format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
         format.json { render json: @photo, status: :created, location: @photo }
       else
@@ -62,6 +61,23 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
+        format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @photo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /photos/1/confirm
+  # POST /photos/1/confirm.json
+  def confirm
+    @photo = Photo.find(params[:id])
+
+    respond_to do |format|
+      if @photo.update_attributes(params[:photo])
+        Photo.facebook(@photo, current_user)
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
         format.json { head :no_content }
       else

@@ -2,7 +2,11 @@ Ultramarine::Application.routes.draw do
 
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 
-  resources :photos
+  resources :photos do
+    member do
+      post "confirm"
+    end
+  end
 
   resources :challenges
   match 'challenges/:id/add_todo' => "challenges#add_todo", :as => :add_todo

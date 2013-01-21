@@ -1,5 +1,5 @@
 class Photo < ActiveRecord::Base
-  attr_accessible :caption, :challenge_id, :privacy_level_id, :user_id, :image
+  attr_accessible :caption, :challenge_id, :privacy_level, :user_id, :image
 
   belongs_to :challenge
   belongs_to :user
