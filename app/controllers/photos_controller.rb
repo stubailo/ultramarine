@@ -77,7 +77,9 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
-        Photo.facebook(@photo, current_user)
+        if params[:post_to_facebook]
+          Photo.facebook(@photo, current_user)
+        end
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
         format.json { head :no_content }
       else
