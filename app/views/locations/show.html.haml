@@ -1,19 +1,21 @@
-.subhead
-  %h1
-    = @location.name
+.row
+  .span8
+    .hero-unit.location-page{:style => "background: url(#{@location.image})"}
+      %h1
+        %span.bg= @location.name
+      %p
+        %span.bg Find inspiration in the city that never sleeps.
+  .span4
+    .well
+      You haven't done any challenges in New York yet!
+- if @location.challenges.any?
+  %ul.thumbnails
+    - challenge = @location.challenges.first
+    %li.span12
+      .thumbnail
+        %h3= challenge.name
+  
 
--#
-  %p
-    %b Name:
-    = @location.name
-
-%p
-  %b Latitude:
-  = @location.lat
-%p
-  %b Longitude:
-  = @location.lon
-= image_tag @location.image
 %p
   %b Places of interest:
   - @venues.each do |venue| 

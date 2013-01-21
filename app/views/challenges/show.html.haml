@@ -1,7 +1,7 @@
 .row
-  .span4
+  .span3
     
-    %h1= @challenge.name
+    %h3= @challenge.name
     %ul.breadcrumb
       %li
         #{link_to @challenge.location.name, @challenge.location}
@@ -20,22 +20,23 @@
       - if can? :edit, @challenge
         |
         = link_to 'edit', edit_challenge_path(@challenge)
-    -if @challenge.todo_users.exists?(:id => current_user.id)
-      %p
-        = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn'
-    -else
-      %p
-        = link_to 'Add to Todo list', add_todo_path(@challenge), :class => 'btn'
+    .btn-group
+      -if @challenge.completed_users.exists?(:id => current_user.id)
+        = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn btn-small'
+      -else
+        = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
+          %i.icon-ok
+          Mark Completed
+      -if @challenge.todo_users.exists?(:id => current_user.id)
+        = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn btn-small'
+      -else
+        = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
+          %i.icon-plus
+          Todo List
 
-    -if @challenge.completed_users.exists?(:id => current_user.id)
-      %p
-        = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn'
-    -else
-      %p
-        = link_to 'Mark completed', add_completed_path(@challenge), :class => 'btn'
-  .span8
+  .span9
     .row
-      %h3.span4 Photos
+      %h4.span4 Photos
       .new_photo_form_container.span4
 
         = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
@@ -55,7 +56,7 @@
         - else
           .well
             Be the first to submit a photo to this challenge!
-    %h3 Comments
+    %h4 Comments
     - if @challenge.comments.any?
       = render :partial => "comments/form", :locals => {:challenge => @challenge}
       = render @challenge.comments
