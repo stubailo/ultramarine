@@ -50,8 +50,9 @@ $ ->
         next = ->
           if which < count - 1
             submit(which + 1)
+          else
+            window.location.replace(document.referrer)
         $.post val.attr("action") + "/confirm.json", val.serialize(), next, "json"
         return false
       submit(0)
-      history.back()
       return false
