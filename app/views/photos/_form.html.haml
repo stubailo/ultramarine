@@ -18,5 +18,10 @@
       = f.label :privacy_level, "Privacy", :class => "control-label"
       .controls
         = f.select :privacy_level, [["Private", 1], ["Friends Only", 2], ["Public", 3]]
+    - if @photo.facebook_bit != 1
+      .control-group
+        = f.label :facebook_bit, "Upload to Facebook?", :class => "control-label"
+        .controls
+          = f.check_box :facebook_bit, :checked => 0, :class => :facebook
     .actions
       = f.submit 'Save'

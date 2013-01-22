@@ -64,9 +64,11 @@ class PhotosController < ApplicationController
   # PUT /photos/1.json
   def update
     @photo = Photo.find(params[:id])
-
     respond_to do |format|
-      if @photo.update_attributes(params[:photo])
+      if params[:photo][:facebook_bit] == "1"
+        Photo.facebook(@photo, current_user)
+      end
+      if @photo.update_attributes(:caption => params[:photo][:caption], :privacy_level => params[:photo][:privacy_level])
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
         format.json { head :no_content }
       else
@@ -82,9 +84,8 @@ class PhotosController < ApplicationController
     @photo = Photo.find(params[:id])
 
     respond_to do |format|
-      if @photo.update_attributes(params[:photo])
-        if params[:post_to_facebook]
-          @photo.update_attributes(:facebook_bit => 1)
+      if @photo.update_attributes(:caption => params[:photo][:caption], :privacy_level => params[:photo][:privacy_level])
+        if params[:photo][:facebook_bit] == "1"
           Photo.facebook(@photo, current_user)
         end
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
