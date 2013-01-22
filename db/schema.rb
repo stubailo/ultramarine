@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130122025851) do
+ActiveRecord::Schema.define(:version => 20130122035539) do
 
   create_table "albums", :force => true do |t|
     t.integer  "user_id"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20130122025851) do
     t.datetime "image_updated_at"
     t.integer  "privacy_level"
     t.integer  "vote_value"
+    t.integer  "facebook_bit"
   end
 
   create_table "todo_users_todos", :id => false, :force => true do |t|

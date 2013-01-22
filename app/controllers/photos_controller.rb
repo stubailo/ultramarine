@@ -47,6 +47,7 @@ class PhotosController < ApplicationController
     @photo = Photo.new(params[:photo])
     @photo.user_id = current_user.id
     @photo.vote_value = 0
+    @photo.facebook_bit = 0
 
     respond_to do |format|
       if @photo.save
@@ -83,6 +84,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
         if params[:post_to_facebook]
+          @photo.update_attributes(:facebook_bit => 1)
           Photo.facebook(@photo, current_user)
         end
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
