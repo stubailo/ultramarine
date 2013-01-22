@@ -2,8 +2,8 @@
   %p Please add some captions and privacy information for the photos you uploaded!
 
   - @photos.each_with_index do |photo, i|
-    - @photo = photo
-    - if i != 0
-      %hr
-    = render 'form'
+    .row
+      - @photo = photo
+      %hr.span12
+      = render 'form'
 
