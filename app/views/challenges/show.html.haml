@@ -37,7 +37,7 @@
   .span9
     .row
       %h4.span4 Photos
-      .new_photo_form_container.span4
+      #new_photo_form_container.span4
 
         = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
           = f.hidden_field :challenge_id, :value => @challenge.id 
