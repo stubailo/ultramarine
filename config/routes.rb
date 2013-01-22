@@ -3,8 +3,8 @@ Ultramarine::Application.routes.draw do
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 
   resources :photos do
-    member do
-      post "confirm"
+    collection do
+      get "edit_many"
     end
   end
 
