@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :user_id, :photo_id, :parent_id, :body, :challenge_id, :level
+  attr_accessible :user_id, :photo_id, :parent_id, :body, :challenge_id, :level, :vote_value
 
   belongs_to :user
   belongs_to :photo

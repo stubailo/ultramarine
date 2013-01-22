@@ -42,6 +42,7 @@ class PhotosController < ApplicationController
   def create
     @photo = Photo.new(params[:photo])
     @photo.user_id = current_user.id
+    @photo.vote_vale = 0
 
     respond_to do |format|
       if @photo.save

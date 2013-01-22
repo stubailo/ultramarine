@@ -1,5 +1,5 @@
 class Challenge < ActiveRecord::Base
-  attr_accessible :description, :name, :location_id
+  attr_accessible :description, :name, :location_id, :vote_value 
 
   validates :location_id, :presence => true
   validates :description, :presence => true

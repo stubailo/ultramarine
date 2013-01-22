@@ -4,15 +4,15 @@ class CommentsController < ApplicationController
     if params[:comment][:challenge_id]
       @challenge = Challenge.find(params[:comment][:challenge_id])
       @comment = @challenge.comments.create(params[:comment])
-      @comment.update_attributes(:user_id => current_user.id, :level => 1) 
+      @comment.update_attributes(:user_id => current_user.id, :level => 1, :vote_value => 0) 
     elsif params[:comment][:parent_id]
       @parent = Comment.find(params[:comment][:parent_id])
       @comment = @parent.subcomments.create(params[:comment])
-      @comment.update_attributes(:user_id => current_user.id, :level => @parent.level + 1)
+      @comment.update_attributes(:user_id => current_user.id, :level => @parent.level + 1, :vote_value => 0)
     elsif params[:comment][:photo_id]
       @photo = Photo.find(params[:comment][:photo_id])
       @comment = @photo.comments.create(params[:comment])
-      @comment.update_attributes(:user_id => current_user.id, :level => 1)
+      @comment.update_attributes(:user_id => current_user.id, :level => 1, :vote_value => 0)
     end
 
     respond_to do |format|

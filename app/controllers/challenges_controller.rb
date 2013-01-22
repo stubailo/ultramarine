@@ -84,6 +84,7 @@ class ChallengesController < ApplicationController
   def create
     respond_to do |format|
       if @challenge.save
+        @challenge.update_attributes(:vote_value => 0)
         format.html { redirect_to @challenge, notice: 'Challenge was successfully created.' }
         format.json { render json: @challenge, status: :created, location: @challenge }
       else
