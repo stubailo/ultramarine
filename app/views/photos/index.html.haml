@@ -23,7 +23,7 @@
       %td= photo.challenge_id
       %td= photo.caption
       %td= photo.user_id
-      %td= photo.privacy_level_id
+      %td= photo.privacy_level
       %td= link_to 'Show', photo
       %td= link_to 'Edit', edit_photo_path(photo)
       %td= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' }

@@ -39,3 +39,11 @@ $ ->
         </div>
       </div>")
     $("#edit_many_photos form select").val("3")
+    $("#edit_many_photos").append("<div class='form-actions'>
+      <button type='submit' id='submit-button' class='btn btn-primary'>Save Changes</button>
+    </div>")
+    $("#edit_many_photos #submit-button").click ->
+      $("#edit_many_photos form").each ->
+        $.post $(this).attr("action"), $(this).serialize()
+        return false
+      history.go(-1)
