@@ -53,6 +53,7 @@ class ChallengesController < ApplicationController
     friend_group = { "group" => "Friends' Photos", "photos" => friend_photos }
 
     public_photos = Photo.where(:challenge_id => @challenge.id).where(:privacy_level => 3)
+    public_photos = public_photos - friend_photos - private_photos
     @count += public_photos.length
     public_group = { "group" => "Public Photos", "photos" => public_photos }
 
