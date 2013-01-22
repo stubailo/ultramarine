@@ -29,3 +29,13 @@ file_done = (e, data) ->
 file_all_done = (e, data) ->
   window.location = "/photos/edit_many?photo_ids[]=" + photo_ids.join("&photo_ids[]=")
 
+$ ->
+  if $("#edit_many_photos").length > 0 
+    $("#edit_many_photos .actions").remove()
+    $("#edit_many_photos form").append("<div class='control-group'>
+        <label class='control-label' for='facebook'>Post to Facebook</label>
+        <div class='controls'>
+          <input checked='checked' type='checkbox' name='facebook' />
+        </div>
+      </div>")
+    $("#edit_many_photos form select").val("3")
