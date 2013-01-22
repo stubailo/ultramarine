@@ -13,7 +13,7 @@
     %p= challenge.description
     .thumbnail-hider
       .row-thumbnails
-        - challenge.photos.each do |photo|
+        - challenge.photos(@graph, current_user, challenge).each do |photo|
           = link_to photo do
             = image_tag photo.image(:thumb)
       .more-photos

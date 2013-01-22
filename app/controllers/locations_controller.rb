@@ -15,6 +15,7 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
+    @graph = graph
     @location = Location.find(params[:id])
     @client = GooglePlaces::Client.new(Ultramarine::Application::PLACES_API_KEY)
     @venues = @client.spots(@location.lat, @location.lon)

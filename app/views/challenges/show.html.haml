@@ -46,13 +46,16 @@
 
     .row
       .span9
-        - if @challenge.photos.any?
-          .thumbnail-grid
-            %ul.thumbnails
-              -@challenge.photos.each do |photo|
-                %li.span4
-                  = link_to photo, :class => "thumbnail" do
-                    = image_tag photo.image.url(:thumb)
+        - if @count > 0
+          -@photo_groups.each do |photo_group|
+            %h3 
+              =photo_group["group"]
+            .thumbnail-grid
+              %ul.thumbnails
+                -photo_group["photos"].each do |photo|
+                  %li.span4
+                    = link_to photo, :class => "thumbnail" do
+                      = image_tag photo.image.url(:thumb)
         - else
           .well
             Be the first to submit a photo to this challenge!

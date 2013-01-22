@@ -22,8 +22,8 @@ class Photo < ActiveRecord::Base
 
   #TODO: need to put photo caption and approve photo checkbox in
   def self.facebook(photo, user)
+    @graph = Koala::Facebook::API.new(user.token)
     album = Album.where(:user_id => user.id, :location_id => photo.challenge.location.id).first 
-    @graph = Koala::Facebook::GraphAPI.new(user.token) 
     if album.nil?
       album_info = @graph.put_object('me','albums', :name=>"Trip to #{photo.challenge.location.name}")
       album = Album.create_album(user.id, photo.challenge.location.id, album_info["id"])
