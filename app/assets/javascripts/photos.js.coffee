@@ -33,9 +33,9 @@ $ ->
   if $("#edit_many_photos").length > 0 
     $("#edit_many_photos .actions").remove()
     $("#edit_many_photos form").append("<div class='control-group'>
-        <label class='control-label' for='facebook'>Post to Facebook</label>
+        <label class='control-label' for='post_to_facebook'>Post to Facebook</label>
         <div class='controls'>
-          <input checked='checked' type='checkbox' name='facebook' />
+          <input checked='checked' type='checkbox' name='post_to_facebook' />
         </div>
       </div>")
     $("#edit_many_photos form select").val("3")
@@ -43,7 +43,15 @@ $ ->
       <button type='submit' id='submit-button' class='btn btn-primary'>Save Changes</button>
     </div>")
     $("#edit_many_photos #submit-button").click ->
-      $("#edit_many_photos form").each ->
-        $.post $(this).attr("action"), $(this).serialize()
+      count = $("#edit_many_photos form").length
+      submit = (which) ->
+        val = $("#edit_many_photos form")[which]
+        val = $ val
+        next = ->
+          if which < count - 1
+            submit(which + 1)
+        $.post val.attr("action") + "/confirm.json", val.serialize(), next, "json"
         return false
-      history.go(-1)
+      submit(0)
+      history.back()
+      return false
