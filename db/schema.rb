@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130121202855) do
+ActiveRecord::Schema.define(:version => 20130122025851) do
 
   create_table "albums", :force => true do |t|
     t.integer  "user_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20130121202855) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
+    t.integer  "vote_value"
   end
 
   create_table "comments", :force => true do |t|
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20130121202855) do
     t.integer  "challenge_id"
     t.integer  "level"
     t.integer  "photo_id"
+    t.integer  "vote_value"
   end
 
   add_index "comments", ["challenge_id"], :name => "index_comments_on_challenge_id"
@@ -87,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20130121202855) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "privacy_level"
+    t.integer  "vote_value"
   end
 
   create_table "todo_users_todos", :id => false, :force => true do |t|

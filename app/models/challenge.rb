@@ -1,5 +1,5 @@
 class Challenge < ActiveRecord::Base
-  attr_accessible :description, :name, :location_id
+  attr_accessible :description, :name, :location_id, :vote_value 
 
   validates :location_id, :presence => true
   validates :description, :presence => true
@@ -15,9 +15,6 @@ class Challenge < ActiveRecord::Base
   belongs_to :location
 
   has_many :votes
-  def vote_value
-    votes.reduce(0) { |sum, x| sum + x.value }
-  end
 
   #Need to call with graph, user, and challenge objects
   def photos

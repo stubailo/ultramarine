@@ -12,6 +12,7 @@ class VotesController < ApplicationController
       return
     end
     val = params[:value].to_i
+    update_val = 0
     if not [-1,1].include? val
       redirect_to :back
       return
@@ -22,13 +23,23 @@ class VotesController < ApplicationController
     if v.any?
       v = v.first
       if v.value == val
+        update_val = 0-val
         v.destroy
       else
+        update_val = 2*val
         v.value = val
         v.update_attributes(:value => val)
       end
     else
-      v.create(:value => val, attr => params[attr], :user_id => user_id)
+      v = v.create(:value => val, attr => params[attr], :user_id => user_id)
+      update_val = val
+    end
+    if params[:comment_id]
+      v.comment.update_attributes(:vote_value => v.comment.vote_value+update_val)
+    elsif params[:challenge_id]
+      v.challenge.update_attributes(:vote_value => v.challenge.vote_value+update_val)
+    elsif params[:photo_id]
+      v.photo.update_attributes(:vote_value => v.photo.vote_value+update_val)
     end
 
     redirect_to :back
