@@ -31,7 +31,7 @@ class VotesController < ApplicationController
         v.update_attributes(:value => val)
       end
     else
-      v.create(:value => val, attr => params[attr], :user_id => user_id)
+      v = v.create(:value => val, attr => params[attr], :user_id => user_id)
       update_val = val
     end
     if params[:comment_id]

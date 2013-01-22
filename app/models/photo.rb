@@ -16,9 +16,6 @@ class Photo < ActiveRecord::Base
   end
   
   has_many :votes
-  def vote_value
-    votes.reduce(0) { |sum, x| sum + x.value }
-  end
 
   def self.facebook(photo, user)
     @graph = Koala::Facebook::API.new(user.token)

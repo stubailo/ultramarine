@@ -15,9 +15,6 @@ class Challenge < ActiveRecord::Base
   belongs_to :location
 
   has_many :votes
-  def vote_value
-    votes.reduce(0) { |sum, x| sum + x.value }
-  end
 
   #Need to call with graph, user, and challenge objects
   def photos
