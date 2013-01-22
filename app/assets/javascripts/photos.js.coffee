@@ -32,12 +32,8 @@ file_all_done = (e, data) ->
 $ ->
   if $("#edit_many_photos").length > 0 
     $("#edit_many_photos .actions").remove()
-    $("#edit_many_photos form").append("<div class='control-group'>
-        <label class='control-label' for='post_to_facebook'>Post to Facebook</label>
-        <div class='controls'>
-          <input checked='checked' type='checkbox' name='post_to_facebook' />
-        </div>
-      </div>")
+    $("#edit_many_photos .facebook").each (i, box) =>
+      box.checked=true
     $("#edit_many_photos form select").val("3")
     $("#edit_many_photos").append("<div class='form-actions'>
       <button type='submit' id='submit-button' class='btn btn-primary'>Save Changes</button>
