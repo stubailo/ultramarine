@@ -52,7 +52,7 @@ class ChallengesController < ApplicationController
       private_photos = Photo.where(:user_id => current_user.id).where(:challenge_id => @challenge.id)
       @count += private_photos.length
       @ordered_photos += private_photos
-      public_photos.each do |photo|
+      private_photos.each do |photo|
         @photos_to_photo_types[photo.id] = "private"
       end
 
