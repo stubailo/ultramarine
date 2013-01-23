@@ -22,19 +22,22 @@ class Challenge < ActiveRecord::Base
   end
 
   def photos(graph, user, challenge)
-    friends = graph.get_connections("me", "friends")
-    friend_fbids = []
-    friends.each do |friend| 
-      friend_fbids += [friend["id"].to_i]
-    end
-    friend_ids = User.where(:fbid => friend_fbids)
-    friend_ids = friend_ids.map{|friend| friend.id}
-
-    private_photos = Photo.where(:user_id => user.id).where(:challenge_id => challenge.id).where(:privacy_level => [1, 2])
-    friend_photos = Photo.where(:user_id => friend_ids).where(:challenge_id => challenge.id).where(:privacy_level => 2)
     public_photos = Photo.where(:challenge_id => challenge.id).where(:privacy_level => 3)
+    photos = public_photos
+    if user
+      friends = graph.get_connections("me", "friends")
+      friend_fbids = []
+      friends.each do |friend| 
+        friend_fbids += [friend["id"].to_i]
+      end
+      friend_ids = User.where(:fbid => friend_fbids)
+      friend_ids = friend_ids.map{|friend| friend.id}
 
-    photos = private_photos + friend_photos + public_photos
+      private_photos = Photo.where(:user_id => user.id).where(:challenge_id => challenge.id).where(:privacy_level => [1, 2])
+      friend_photos = Photo.where(:user_id => friend_ids).where(:challenge_id => challenge.id).where(:privacy_level => 2)
+      photos = private_photos + friend_photos + public_photos
+    end
+    return photos
   end
 
 end
