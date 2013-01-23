@@ -11,7 +11,7 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
 
-  %body
+  %body{:class => params[:controller] + " " + params[:action]}
     #main-navbar.navbar.navbar-fixed-top
       .navbar-inner
         .container
@@ -43,7 +43,9 @@
                   = link_to "Register", new_user_registration_path
 
     .container
-      = flash[:notice]
+      - if flash[:notice]
+        .alert.alert-successs
+          = flash[:notice]
       = yield
 -#
   - if current_user
