@@ -20,6 +20,7 @@ class VotesController < ApplicationController
     user_id = current_user.id
 
     v = Vote.where(attr => params[attr], :user_id => user_id)
+    authorize! :vote, v
     if v.any?
       v = v.first
       if v.value == val

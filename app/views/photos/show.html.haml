@@ -15,14 +15,16 @@
 %p= @photo.caption
 
 score: #{@photo.vote_value}
-= link_to "upvote", votes_vote_path(:photo_id => @photo.id, :value => 1), :method => :post
-= link_to "downvote", votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post
+-if current_user
+  = link_to "upvote", votes_vote_path(:photo_id => @photo.id, :value => 1), :method => :post
+  = link_to "downvote", votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post
 
 posted by #{@photo.user.username} #{time_ago_in_words @photo.created_at} ago
-= link_to 'Edit', edit_photo_path(@photo)
-\|
-= link_to 'Back', photos_path
+-if current_user
+  = link_to 'Edit', edit_photo_path(@photo)
+  \|
+= link_to 'Back', challenge_path(@photo.challenge)
 
-
-= render :partial => "comments/form", :locals => {:photo => @photo}
+-if current_user
+  = render :partial => "comments/form", :locals => {:photo => @photo}
 = render @photo.comments

@@ -37,27 +37,31 @@ class ChallengesController < ApplicationController
   def show
     @count = 0
 
-    private_photos = Photo.where(:user_id => current_user.id).where(:challenge_id => @challenge.id)
-    @count += private_photos.length
-    private_group = { "group" => "Personal Photos", "photos" => private_photos }
-
-    friends = graph.get_connections("me", "friends")
-    friend_fbids = []
-    friends.each do |friend|
-      friend_fbids += [friend["id"].to_i]
-    end
-    friend_ids = User.where(:fbid => friend_fbids)
-    friend_ids = friend_ids.map{|friend| friend.id}
-    friend_photos = Photo.where(:user_id => friend_ids).where(:challenge_id => @challenge.id).where(:privacy_level => [2,3])
-    @count += friend_photos.length
-    friend_group = { "group" => "Friends' Photos", "photos" => friend_photos }
-
     public_photos = Photo.where(:challenge_id => @challenge.id).where(:privacy_level => 3)
     @count += public_photos.length
     public_group = { "group" => "Public Photos", "photos" => public_photos }
+    @photo_groups = [public_group]
 
+    if current_user
+      private_photos = Photo.where(:user_id => current_user.id).where(:challenge_id => @challenge.id)
+      @count += private_photos.length
+      private_group = { "group" => "Personal Photos", "photos" => private_photos }
 
-    @photo_groups = [private_group, friend_group, public_group]
+      friends = graph.get_connections("me", "friends")
+      friend_fbids = []
+      friends.each do |friend|
+        friend_fbids += [friend["id"].to_i]
+      end
+      friend_ids = User.where(:fbid => friend_fbids)
+      friend_ids = friend_ids.map{|friend| friend.id}
+      friend_photos = Photo.where(:user_id => friend_ids).where(:challenge_id => @challenge.id).where(:privacy_level => [2,3])
+      @count += friend_photos.length
+      friend_group = { "group" => "Friends' Photos", "photos" => friend_photos }
+
+      public_photos = public_photos - friend_photos - private_photos
+
+      @photo_groups = [private_group, friend_group, public_group]
+    end
     
     respond_to do |format|
       format.html # show.html.erb

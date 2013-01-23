@@ -1,11 +1,10 @@
 require 'net/http'
 
 class LocationsController < ApplicationController
+  load_and_authorize_resource
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @locations }
@@ -16,7 +15,6 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @graph = graph
-    @location = Location.find(params[:id])
     @client = GooglePlaces::Client.new(Ultramarine::Application::PLACES_API_KEY)
     @venues = @client.spots(@location.lat, @location.lon)
 
@@ -29,8 +27,6 @@ class LocationsController < ApplicationController
   # GET /locations/new
   # GET /locations/new.json
   def new
-    @location = Location.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @location }
@@ -39,14 +35,11 @@ class LocationsController < ApplicationController
 
   # GET /locations/1/edit
   def edit
-    @location = Location.find(params[:id])
   end
 
   # POST /locations
   # POST /locations.json
   def create
-    @location = Location.new(params[:location])
-
     respond_to do |format|
       if @location.save
         format.html { redirect_to @location, notice: 'Location was successfully created.' }
@@ -61,8 +54,6 @@ class LocationsController < ApplicationController
   # PUT /locations/1
   # PUT /locations/1.json
   def update
-    @location = Location.find(params[:id])
-
     respond_to do |format|
       if @location.update_attributes(params[:location])
         format.html { redirect_to @location, notice: 'Location was successfully updated.' }
@@ -77,7 +68,6 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.json
   def destroy
-    @location = Location.find(params[:id])
     @location.destroy
 
     respond_to do |format|

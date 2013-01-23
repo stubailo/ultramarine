@@ -16,7 +16,7 @@ file_all_started = (e, data) ->
       <h6>Uploading files...</h6>
       <div class='progress progress-striped active'><div class='bar' style='width: 0'></div>
     </div>"
-  $("#ajax_photo_form").hide();
+  $("#ajax_photo_form").hide()
   $("#new_photo_form_container").append progress_area
   data.context = {}
 
@@ -31,6 +31,7 @@ file_all_done = (e, data) ->
 
 $ ->
   if $("#edit_many_photos").length > 0 
+    num_photos = $("#edit_many_photos").length
     $("#edit_many_photos .actions").remove()
     $("#edit_many_photos .facebook").each (i, box) =>
       box.checked=true
@@ -39,11 +40,20 @@ $ ->
       <button type='submit' id='submit-button' class='btn btn-primary'>Save Changes</button>
     </div>")
     $("#edit_many_photos #submit-button").click ->
+      facebook_progress_bar = $ "<div>
+        <h6> Updating Information... </h6>
+        <div class='progress progress-striped active'><div class='bar' style='width: 2%'></div>
+      </div>"
+      num_photos_uploaded = 0
+      $("#edit_many_photos #submit-button").hide()
+      $("#edit_many_photos #submit-button").after(facebook_progress_bar)
       count = $("#edit_many_photos form").length
       submit = (which) ->
         val = $("#edit_many_photos form")[which]
         val = $ val
         next = ->
+          num_photos_uploaded +=1
+          facebook_progress_bar.find(".bar").width(num_photos_uploaded/count * 100 + "%")
           if which < count - 1
             submit(which + 1)
           else

@@ -46,9 +46,7 @@
       - if flash[:notice]
         .alert.alert-successs
           = flash[:notice]
+      - if flash[:alert]
+        .alert.alert-error
+          = flash[:alert]
       = yield
--#
-  - if current_user
-    = link_to "Logout", destroy_user_session_path, :method => :delete
-  - else
-    = link_to "Login with facebook", user_omniauth_authorize_path(:provider => :facebook)
