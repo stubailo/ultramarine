@@ -34,6 +34,10 @@
               = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
                 %i.icon-plus
                 Todo List
+          .vote-btn-group
+            Score: #{@challenge.vote_value}
+            = link_to "upvote", votes_vote_path(:challenge_id => @challenge.id, :value => 1), :method => :post
+            = link_to "downvote", votes_vote_path(:challenge_id => @challenge.id, :value => -1), :method => :post
         -if can? :create, Photo
           #new_photo_form_container
             = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
@@ -47,21 +51,18 @@
       %h4 Photos
     #photos-hash.content-hash
       -if @count > 0
-        -@photo_groups.each do |photo_group|
-          %h3 
-            =photo_group["group"]
-          .challenge-page-photo-grid
-            -photo_group["photos"].each do |photo|
-              .image-mouseover
-                = link_to photo do
-                  = image_tag photo.image.url(:thumb)
-                .image-mouseover-content
-                  -if not photo.caption.blank?
-                    %p= photo.caption
-                  %p
-                    %small
-                      Posted by 
-                      = link_to photo.user.username, photo.user
+        .challenge-page-photo-grid
+          -@ordered_photos.each do |photo|
+            .image-mouseover
+              = link_to photo do
+                = image_tag photo.image.url(:thumb)
+              .image-mouseover-content
+                -if not photo.caption.blank?
+                  %p= photo.caption
+                %p
+                  %small
+                    Posted by 
+                    = link_to photo.user.username, photo.user
       - else
         .well
           Be the first to submit a photo to this challenge!
