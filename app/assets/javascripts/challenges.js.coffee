@@ -7,8 +7,8 @@
 $ ->
   if $("body.challenges.show").length > 0
     $("#photos-hash").before( "<ul class='nav nav-tabs nav-hash'>
-      <li id='photos-tab'><a href='#photos'>Photos</a></li>
-      <li id='comments-tab'><a href='#comments'>Comments</a></li>
+      <li id='photos-tab'><a href='#photos'><i class='icon-picture' /> Photos</a></li>
+      <li id='comments-tab'><a href='#comments'><i class='icon-comment' /> Comments</a></li>
       </ul>")
 
     if window.location.hash == ""

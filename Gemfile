@@ -23,6 +23,7 @@ group :assets do
   
   gem 'less-rails'
   gem 'twitter-bootstrap-rails'
+  gem 'font-awesome-rails'
 
 end
 

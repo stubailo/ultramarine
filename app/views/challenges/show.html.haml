@@ -45,12 +45,11 @@
       %h4 Photos
     #photos-hash.content-hash
       - if @count > 0
-        -@photo_groups.each do |photo_group|
-          %h3 
-            =photo_group["group"]
-          .challenge-page-photo-grid
+        .challenge-page-photo-grid
+          -@photo_groups.each do |photo_group|
+            - group = photo_group["group"]
             -photo_group["photos"].each do |photo|
-              .image-mouseover
+              .image-mouseover{:class => photo_group["group"]}
                 = link_to photo do
                   = image_tag photo.image.url(:thumb)
                 .image-mouseover-content
