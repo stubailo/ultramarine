@@ -42,6 +42,8 @@
                 %li
                   = link_to "Register", new_user_registration_path
 
+    = yield(:above_container)
+
     .container
       - if flash[:notice]
         .alert.alert-successs

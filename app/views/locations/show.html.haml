@@ -1,36 +1,42 @@
 :css
-  body {
+  .big-image {
     background-image: url(#{@location.image});
     background-size: cover;
     background-position: center;
+
+    margin-top: -60px;
+    padding-top: 60px;
+    padding-bottom: 20px;
   }
 
-
-.row
-  .span3.tablet-full-width
-    %h2= @location.name
-    %p Find inspiration in the city that never sleeps.
-  .span9.tablet-full-width
-    - if @location.challenges.any?
-      .big-challenge
-        %h6 Top Challenge
-        - challenge = @location.challenges.first
-        %h3= link_to challenge.name, challenge
-        %p= challenge.description
-        .thumbnail-hider
-          .row-thumbnails
-            - challenge.photos(nil, nil, challenge).each do |photo|
-              = link_to photo do
-                = image_tag photo.image(:thumb)
-          .more-photos
-            
-      - if @location.challenges.count > 1
-        %h6 More Challenges
-        .row
-          - @location.challenges.slice(1, @location.challenges.count).each do |challenge|
-            .span4
+- content_for (:above_container) do
+  .big-image 
+    .container
+      .row
+        .span3.tablet-full-width
+          %h2= @location.name
+          %p Find inspiration in the city that never sleeps.
+        .span9.tablet-full-width
+          - if @location.challenges.any?
+            .big-challenge
+              %h6 Top Challenge
+              - challenge = @location.challenges.first
               %h3= link_to challenge.name, challenge
               %p= challenge.description
+              .thumbnail-hider
+                .row-thumbnails
+                  - challenge.photos(nil, nil, challenge).each do |photo|
+                    = link_to photo do
+                      = image_tag photo.image(:thumb)
+                .more-photos
+                  
+            - if @location.challenges.count > 1
+              %h6 More Challenges
+              .row
+                - @location.challenges.slice(1, @location.challenges.count).each do |challenge|
+                  .span4
+                    %h3= link_to challenge.name, challenge
+                    %p= challenge.description
   
 
 %p

@@ -10,7 +10,7 @@
     Photo
 
 .photo-page-well
-  = image_tag @photo.image.url
+  = image_tag @photo.image(:big)
 
 %p= @photo.caption
 
