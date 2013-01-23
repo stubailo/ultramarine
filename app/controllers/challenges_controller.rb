@@ -36,16 +36,25 @@ class ChallengesController < ApplicationController
   # GET /challenges/1.json
   def show
     @count = 0
+    @photos_to_photo_types = Hash.new
+    @ordered_photos = []
 
     public_photos = Photo.where(:challenge_id => @challenge.id).where(:privacy_level => 3)
     @count += public_photos.length
-    public_group = { "group" => "Public Photos", "photos" => public_photos }
-    @photo_groups = [public_group]
+    unless current_user
+      @ordered_photos += public_photos
+      public_photos.each do |photo|
+        @photos_to_photo_types[photo.id] = "public"
+      end
+    end
 
     if current_user
       private_photos = Photo.where(:user_id => current_user.id).where(:challenge_id => @challenge.id)
       @count += private_photos.length
-      private_group = { "group" => "Personal Photos", "photos" => private_photos }
+      @ordered_photos += private_photos
+      public_photos.each do |photo|
+        @photos_to_photo_types[photo.id] = "private"
+      end
 
       friends = graph.get_connections("me", "friends")
       friend_fbids = []
@@ -56,12 +65,20 @@ class ChallengesController < ApplicationController
       friend_ids = friend_ids.map{|friend| friend.id}
       friend_photos = Photo.where(:user_id => friend_ids).where(:challenge_id => @challenge.id).where(:privacy_level => [2,3])
       @count += friend_photos.length
-      friend_group = { "group" => "Friends' Photos", "photos" => friend_photos }
+      @ordered_photos += friend_photos
+      friend_photos.each do |photo|
+        @photos_to_photo_types[photo.id] = "friend"
+      end
 
       public_photos = public_photos - friend_photos - private_photos
-
-      @photo_groups = [private_group, friend_group, public_group]
+      @ordered_photos += public_photos
+      public_photos.each do |photo|
+        @photos_to_photo_types[photo.id] = "public"
+      end
     end
+    @ordered_photos = @ordered_photos.sort_by{|photo| photo[:vote_value]}.reverse
+    
+    puts @photos_to_photo_types
     
     respond_to do |format|
       format.html # show.html.erb

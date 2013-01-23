@@ -17,12 +17,33 @@
     background: white;
 }
 
-body.challenges.show .Personal img:before {
-    content: "hello";
+body.challenges.show .image-mouseover>:first-child:before {
+    content: "\f09a";
     position: absolute;
-    left: 0;
-    top: 0;
-    background: blue;
+    left: 3px;
+    top: 3px;
+    background: #007;
     z-index: 1000;
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+
+  /* sprites.less reset */
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: normal;
+  vertical-align: baseline;
+  background-image: none;
+  background-position: 0% 0%;
+  background-repeat: repeat;
+  margin-top: 0; 
+  color: white;
+  width: 1em;
+  height: 1em;
+  text-align: right;
+
 }
     
