@@ -19,32 +19,34 @@
             = link_to 'edit', edit_challenge_path(@challenge)
 
       .span6.tablet-layout
-        %h6 Actions
-        .btn-group
-          -if current_user and @challenge.completed_users.exists?(:id => current_user.id)
-            = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn btn-small'
-          -else
-            = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
-              %i.icon-ok
-              Mark Completed
-          -if current_user and @challenge.todo_users.exists?(:id => current_user.id)
-            = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn btn-small'
-          -else
-            = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
-              %i.icon-plus
-              Todo List
-        #new_photo_form_container
-          = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
-            = f.hidden_field :challenge_id, :value => @challenge.id 
-            = f.label :image, "Submit your photos:"
-            = f.file_field :image, multiple: true, name: "photo[image]"
+        -if current_user
+          %h6 Actions
+          .btn-group
+            -if @challenge.completed_users.exists?(:id => current_user.id)
+              = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn btn-small'
+            -else
+              = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
+                %i.icon-ok
+                Mark Completed
+            -if @challenge.todo_users.exists?(:id => current_user.id)
+              = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn btn-small'
+            -else
+              = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
+                %i.icon-plus
+                Todo List
+        -if can? :create Photo
+          #new_photo_form_container
+            = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
+              = f.hidden_field :challenge_id, :value => @challenge.id 
+              = f.label :image, "Submit your photos:"
+              = f.file_field :image, multiple: true, name: "photo[image]"
 
 
   .span9.tablet-full-width
     .nojs
       %h4 Photos
     #photos-hash.content-hash
-      - if @count > 0
+      -if @count > 0
         -@photo_groups.each do |photo_group|
           %h3 
             =photo_group["group"]
@@ -67,7 +69,8 @@
       %h4 Comments
     #comments-hash.content-hash
       - if @challenge.comments.any?
-        = render :partial => "comments/form", :locals => {:challenge => @challenge}
+        -if can? :create, Comment
+          = render :partial => "comments/form", :locals => {:challenge => @challenge}
         = render @challenge.comments
       - else
         - if can? :create, Comment
