@@ -8,8 +8,17 @@
 
 .row
   .span3.tablet-full-width
-    %h2= @location.name
-    %p Find inspiration in the city that never sleeps.
+    .location-information
+      %h2= @location.name
+      %p= @location.description
+      - @venues.each do |venue| 
+        = venue.name
+        = venue.rating
+      .controls
+        -if can? :update, @location
+          = link_to 'Edit', edit_location_path(@location)
+          \|
+        = link_to 'Back', locations_path
   .span9.tablet-full-width
     - if @location.challenges.any?
       .big-challenge
@@ -31,22 +40,5 @@
             .span4
               %h3= link_to challenge.name, challenge
               %p= challenge.description
-  
-
-%p
-  %b Places of interest:
-  - @venues.each do |venue| 
-    %p
-      = venue.name
-      = venue.rating
-  =@url
-
-
--if current_user
-  = link_to 'Edit', edit_location_path(@location)
-  \|
-= link_to 'Back', locations_path
-
--if current_user
-  \|
-  = link_to "Add a Challenge Here", new_challenge_path(:location_id => @location.id)
+    -if can? :create, Location
+      = link_to "Add a Challenge Here", new_challenge_path(:location_id => @location.id), :class => "btn"

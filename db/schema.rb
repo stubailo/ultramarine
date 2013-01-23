@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130122035539) do
+ActiveRecord::Schema.define(:version => 20130123164543) do
 
   create_table "albums", :force => true do |t|
     t.integer  "user_id"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20130122035539) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "description"
   end
 
   create_table "omniauth_associations", :force => true do |t|

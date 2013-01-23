@@ -33,13 +33,22 @@ $ ->
   if $("#edit_many_photos").length > 0 
     num_photos = $("#edit_many_photos").length
     $("#edit_many_photos .actions").remove()
+    $("#edit_many_photos .control-group-privacy").hide()
     $("#edit_many_photos .facebook").each (i, box) =>
       box.checked=true
     $("#edit_many_photos form select").val("3")
+    $("#edit_many_photos").append("<div class='control-group'>
+      <label class='control-label' for='photo_privacy_level'>Privacy</label>
+      <div class='controls'>
+        <select id='all_photo_privacy' name='photo[privacy_level]'><option value='1'>Private</option>
+        <option value='2'>Friends Only</option>
+        <option value='3'>Public</option></select>
+      </div>
+    </div>")
     $("#edit_many_photos").append("<div class='form-actions'>
       <button type='submit' id='submit-button' class='btn btn-primary'>Save Changes</button>
     </div>")
-    $("#edit_many_photos #submit-button").click ->
+   $("#edit_many_photos #submit-button").click ->
       facebook_progress_bar = $ "<div>
         <h6> Updating Information... </h6>
         <div class='progress progress-striped active'><div class='bar' style='width: 2%'></div>
@@ -51,6 +60,7 @@ $ ->
       submit = (which) ->
         val = $("#edit_many_photos form")[which]
         val = $ val
+        val.find("#photo_privacy_level").val($("#all_photo_privacy").val())
         next = ->
           num_photos_uploaded +=1
           facebook_progress_bar.find(".bar").width(num_photos_uploaded/count * 100 + "%")
