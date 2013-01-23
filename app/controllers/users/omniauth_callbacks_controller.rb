@@ -1,4 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_authorization_check
   def facebook
     u = User.find_or_create_by_omniauth(request.env["omniauth.auth"])
     u.update_attributes(:token => request.env["omniauth.auth"].credentials.token)

@@ -21,28 +21,30 @@
         |
         = link_to 'edit', edit_challenge_path(@challenge)
     .btn-group
-      -if @challenge.completed_users.exists?(:id => current_user.id)
-        = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn btn-small'
-      -else
-        = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
-          %i.icon-ok
-          Mark Completed
-      -if @challenge.todo_users.exists?(:id => current_user.id)
-        = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn btn-small'
-      -else
-        = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
-          %i.icon-plus
-          Todo List
+      -if current_user
+        -if @challenge.completed_users.exists?(:id => current_user.id)
+          = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn btn-small'
+        -else
+          = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
+            %i.icon-ok
+            Mark Completed
+        -if @challenge.todo_users.exists?(:id => current_user.id)
+          = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn btn-small'
+        -else
+          = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
+            %i.icon-plus
+            Todo List
 
   .span9
     .row
-      %h4.span4 Photos
-      #new_photo_form_container.span4
+      -if current_user
+        %h4.span4 Photos
+        #new_photo_form_container.span4
 
-        = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
-          = f.hidden_field :challenge_id, :value => @challenge.id 
-          = f.label :image, "Submit yours:"
-          = f.file_field :image, multiple: true, name: "photo[image]"
+          = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
+            = f.hidden_field :challenge_id, :value => @challenge.id 
+            = f.label :image, "Submit yours:"
+            = f.file_field :image, multiple: true, name: "photo[image]"
 
     .row
       .span9
@@ -61,8 +63,11 @@
             Be the first to submit a photo to this challenge!
     %h4 Comments
     - if @challenge.comments.any?
-      = render :partial => "comments/form", :locals => {:challenge => @challenge}
+      -if current_user
+        = render :partial => "comments/form", :locals => {:challenge => @challenge}
       = render @challenge.comments
     - else
       .well
         Be the first to comment on this challenge!
+      -if current_user
+        = render :partial => "comments/form", :locals => {:challenge => @challenge} 

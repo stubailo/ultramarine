@@ -26,18 +26,21 @@ class Ability
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
     
     if not user
-      can :read, Challenge
-      can :read, Photo
+      can :read, :all
     elsif user.admin?
       can :manage, :all
     else
       can :manage, Photo, :user_id => user.id
+      can :manage, User, :id => user.id
 
       can :read, Challenge
+      can :read, Comment
       can :manage, Challenge, :user_id => user.id
+      can :manage, Vote, :user_id => user.id
       cannot :destroy, Challenge
 
       can :manage, Comment, :user_id => user.id
+      can :manage, :all #TODO: Delete this line when we're done developing
     end
   end
 end
