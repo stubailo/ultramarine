@@ -4,7 +4,7 @@ class Photo < ActiveRecord::Base
   belongs_to :challenge
   belongs_to :user
 
-  has_attached_file :image, :styles => { :thumb => "200x200#", :small => "300x300>"}
+  has_attached_file :image, :styles => { :thumb => "200x200#", :small => "300x300>", :big => "1170x882>"}
   has_many :comments
   
   def thumb

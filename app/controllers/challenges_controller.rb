@@ -78,6 +78,8 @@ class ChallengesController < ApplicationController
     end
     @ordered_photos = @ordered_photos.sort_by{|photo| photo[:vote_value]}.reverse
     
+    puts @photos_to_photo_types
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @challenge }

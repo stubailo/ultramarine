@@ -53,7 +53,7 @@
       -if @count > 0
         .challenge-page-photo-grid
           -@ordered_photos.each do |photo|
-            .image-mouseover
+            .image-mouseover{:class => @photos_to_photo_types[photo.id]}
               = link_to photo do
                 = image_tag photo.image.url(:thumb)
               .image-mouseover-content
