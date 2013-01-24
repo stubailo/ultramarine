@@ -5,6 +5,44 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @is_me = @user == current_user
     @newsfeed = @user.newsfeed_items.order("created_at DESC")
+    
+    @is_friends = current_user.facebook_friends? @user.id, graph
+    
+    if @is_friends or @is_me
+      @photos = Photo.where(user_id: @user.id, privacy_level: [2,3])
+    else
+      @photos = Photo.where(user_id: @user.id, privacy_level: 3)
+    end
+
+    @newsfeed.select! do |item|
+      if item.related_object_type == "Photo"
+        p = Photo.find(item.related_object_id)
+        if p.privacy_level == 1
+          next
+        elsif p.privacy_level == 2
+          unless @is_friends or @is_me
+            next
+          end
+        end
+      elsif item.related_object_type == "Comment"
+        c = Comment.find(item.related_object_id)
+        base_comment = c
+        while base_comment.parent_id
+          base_comment = c.parent
+        end
+        if base_comment.photo_id
+          p = Photo.find(base_comment.photo_id)
+          if p.privacy_level == 1
+            next
+          elsif p.privacy_level == 2
+            unless @is_friends or @is_me
+              next
+            end
+          end
+        end
+      end
+      true
+    end
   end
 
   def new
