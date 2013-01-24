@@ -34,7 +34,9 @@ class Ability
       can :manage, User, :id => user.id
 
       can :read, Challenge
+      can :create, Challenge
       can :read, Comment
+      can :read, Location
       can :manage, Challenge, :user_id => user.id
       can :manage, Vote, :user_id => user.id
       cannot :destroy, Challenge
