@@ -40,7 +40,6 @@ class Ability
       cannot :destroy, Challenge
 
       can :manage, Comment, :user_id => user.id
-      can :manage, :all #TODO: Delete this line when we're done developing
     end
   end
 end

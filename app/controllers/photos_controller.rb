@@ -4,11 +4,14 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    @photos = Photo.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @photos }
+    unless current_user.admin?
+      redirect_to :back, :notice => "You are not authorized to view this page"
+    else
+      @photos = Photo.all
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @photos }
+      end
     end
   end
 
