@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @is_me = @user == current_user
-    @newsfeed = @user.newsfeed_items
+    @newsfeed = @user.newsfeed_items.order("created_at DESC")
   end
 
   def new
