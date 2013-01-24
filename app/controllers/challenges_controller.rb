@@ -25,10 +25,14 @@ class ChallengesController < ApplicationController
   # GET /challenges
   # GET /challenges.json
   def index
-    @challenges = Challenge.all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @challenges }
+    unless current_user.admin?
+      redirect_to :back, :notice => "You are not authorized to view this page"
+    else
+      @challenges = Challenge.all
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @challenges }
+      end
     end
   end
 
