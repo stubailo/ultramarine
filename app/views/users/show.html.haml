@@ -1,17 +1,28 @@
 %h1
   = @user.username
   
-%p
-  Completed Challenges:
-  %p
-    -@user.completeds.each do |completed|
-      =link_to completed.name, challenge_path(completed)
+.row
+  .span4
+    %h3 Photos
+    .user-page-photo-grid
+      - @photos.each do |photo|
+        .image-mouseover
+          = link_to photo do
+            = image_tag photo.image(:thumb)
+    %p
+      Completed Challenges:
+      %p
+        -@user.completeds.each do |completed|
+          =link_to completed.name, challenge_path(completed)
 
-%p
-  Todo List:
-  %p
-    -@user.todos.each do |todo|
-      =link_to todo.name, challenge_path(todo)
+  .span4
+    %p
+      Todo List:
+      %p
+        -@user.todos.each do |todo|
+          =link_to todo.name, challenge_path(todo)
 
-- @newsfeed.each do |n|
-  = render :partial => "newsfeed/main", :locals => {:newsfeed_item => n}
+  .span4
+    %h3 Recent Activity
+    - @newsfeed.each do |n|
+      = render :partial => "newsfeed/main", :locals => {:newsfeed_item => n}
