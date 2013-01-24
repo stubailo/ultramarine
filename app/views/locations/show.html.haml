@@ -35,7 +35,7 @@
                     = link_to photo do
                       = image_tag photo.image(:thumb)
   .span3.tablet-full-width
-    -if can? :create, Location
+    -if can? :create, Challenge
       = link_to "Add a Challenge Here", new_challenge_path(:location_id => @location.id), :class => "btn"
     %h4 Potential locations of interest in this area:
     .google-places
