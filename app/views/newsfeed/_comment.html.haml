@@ -1,0 +1,20 @@
+- base_comment = comment
+- while base_comment.parent_id
+  - base_comment = base_comment.parent
+
+.newsfeed_item.media
+  - if base_comment.photo_id
+    = link_to base_comment.photo, :class => "pull-left" do
+      = image_tag base_comment.photo.image(:tiny), :class => "media-object"
+  .media-body
+    %p.media-heading
+      #{comment.user.username} #{comment.parent_id ? "replied to a comment" : "commented"}
+      on
+      - if base_comment.photo_id
+        = link_to "a photo", base_comment.photo
+      - elsif base_comment.challenge_id
+        on #{link_to base_comment.challenge.name, url_for(base_comment.challenge) + "#comments"}
+    
+    %p= comment.body
+    %p
+      %small #{time_ago_in_words comment.created_at} ago

@@ -1,0 +1,1 @@
+= render :partial => "newsfeed/" + newsfeed_item.related_object_type.downcase, :locals => {newsfeed_item.related_object_type.downcase.to_sym => newsfeed_item.related_object_type.constantize.find(newsfeed_item.related_object_id)}

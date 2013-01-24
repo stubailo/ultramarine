@@ -1,0 +1,9 @@
+.newsfeed_item.media
+  = link_to photo, :class => "pull-left" do
+    = image_tag photo.image(:tiny), :class => "media-object"
+  .media-body
+    %p.media-heading #{photo.user.username} uploaded a photo to #{link_to photo.challenge.name, photo.challenge}
+    - if not photo.caption.blank?
+      %p= photo.caption
+    %p
+      %small #{time_ago_in_words photo.created_at} ago 
