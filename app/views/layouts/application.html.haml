@@ -25,10 +25,6 @@
             %ul.nav
               %li 
                 = link_to "Locations", locations_path
-              %li 
-                = link_to "Challenges", challenges_path
-              %li
-                = link_to "Photos", photos_path
 
             %ul.nav.pull-right
               - if current_user
@@ -42,8 +38,6 @@
                 %li
                   = link_to "Register", new_user_registration_path
 
-    = yield(:above_container)
-
     .container
       - if flash[:notice]
         .alert.alert-successs
@@ -52,3 +46,5 @@
         .alert.alert-error
           = flash[:alert]
       = yield
+
+    = yield(:above_container)

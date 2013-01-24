@@ -26,13 +26,21 @@ class Ability
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
     
     if not user
-      can :read, :all
+      can :read, Vote
+      can :read, Challenge
+      can :read, Location
+      can :read, Photo, :privacy_level => 3
+      can :read, Comment
     elsif user.admin?
       can :manage, :all
     else
       can :manage, Photo, :user_id => user.id
       can :manage, User, :id => user.id
-
+      can :create, Photo
+      can :read, Photo do |photo|
+        photo.privacy_level == 3 or 
+          (photo.privacy_level == 2 and user.facebook_friends?(photo.user_id, Koala::Facebook::API.new(user.token)))
+      end
       can :read, Challenge
       can :create, Challenge
       can :manage, Challenge, :user_id => user.id

@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    return is_admin || email = "brodrick.childs@gmail.com"
+    return is_admin || email == "brodrick.childs@gmail.com"
   end
 
 end
