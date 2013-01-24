@@ -1,0 +1,25 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "twitter/bootstrap/variables.less";
+@import "twitter/bootstrap/mixins.less";
+
+body.users.show {
+  .newsfeed_item {
+    border: 1px solid #ccc;
+    padding: 5px;
+
+    font-size: @fontSizeSmall;
+
+    p {
+      margin-bottom: 3px;
+    }
+
+    .border-radius(@borderRadiusSmall);
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

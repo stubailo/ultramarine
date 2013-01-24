@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :photos
   has_many :challenges
   has_many :albums
+  has_many :newsfeed_items
 
   has_and_belongs_to_many :todos, :class_name => "Challenge", :join_table => "todo_users_todos", :foreign_key => "todo_user_id", :association_foreign_key => "todo_id"
 

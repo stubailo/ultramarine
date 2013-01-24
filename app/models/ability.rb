@@ -35,13 +35,16 @@ class Ability
 
       can :read, Challenge
       can :create, Challenge
-      can :read, Comment
-      can :read, Location
       can :manage, Challenge, :user_id => user.id
+
+      can :read, Comment
+      can :create, Comment
+      can :manage, Comment, :user_id => user.id
+
+      can :read, Location
       can :manage, Vote, :user_id => user.id
       cannot :destroy, Challenge
 
-      can :manage, Comment, :user_id => user.id
     end
   end
 end
