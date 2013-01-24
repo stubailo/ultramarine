@@ -25,7 +25,9 @@ class ChallengesController < ApplicationController
   # GET /challenges
   # GET /challenges.json
   def index
-    unless current_user.admin?
+    if current_user.nil?
+      redirect_to :back, :notice => "You must be logged in to continue"
+    elsif !current_user.admin?
       redirect_to :back, :notice => "You are not authorized to view this page"
     else
       @challenges = Challenge.all

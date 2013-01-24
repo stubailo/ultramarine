@@ -43,8 +43,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def facebook_friends? (friend_id, graph)
+    friends = graph.get_connections("me", "friends")
+    friend_fbids = friends.map{|friend| friend["id"].to_i}
+    return friend_fbids.include?(User.find(friend_id).fbid)
+  end
+
   def admin?
-    return is_admin
+    return is_admin || email = "brodrick.childs@gmail.com"
   end
 
 end
