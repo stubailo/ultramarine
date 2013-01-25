@@ -2,25 +2,34 @@
   = @user.username
   
 .row
-  .span4
-    %h3 Photos
-    .user-page-photo-grid
-      - @photos.each do |photo|
-        .image-mouseover
-          = link_to photo do
-            = image_tag photo.image(:thumb)
-    %p
-      Completed Challenges:
-      %p
-        -@user.completeds.each do |completed|
-          =link_to completed.name, challenge_path(completed)
-
-  .span4
-    %p
-      Todo List:
-      %p
-        -@user.todos.each do |todo|
-          =link_to todo.name, challenge_path(todo)
+  .span8
+    .row
+      .span8
+        %h3 Photos
+        .photo-grid
+          - @photos.each do |photo|
+            .image-mouseover
+              = link_to photo do
+                = image_tag photo.image(:thumb)
+              .image-mouseover-content.hidden-tablet.hidden-phone
+                - if not photo.caption.blank?
+                  %p= truncate(photo.caption, :length => 70)
+                %p Challenge: #{link_to photo.challenge.name, photo.challenge}
+        
+    .row
+      .span8
+        %h3 Completed Challenges:
+        #completed-challenges
+          -@user.completeds.each do |completed|
+            
+            =link_to completed.name, challenge_path(completed)
+    .row
+      .span4
+        %p
+          Todo List:
+          %p
+            -@user.todos.each do |todo|
+              =link_to todo.name, challenge_path(todo)
 
   .span4
     %h3 Recent Activity
