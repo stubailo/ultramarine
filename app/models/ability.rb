@@ -34,22 +34,16 @@ class Ability
     elsif user.admin?
       can :manage, :all
     else
-      can :manage, Photo, :user_id => user.id
-      can :manage, User, :id => user.id
-      can :create, Photo
       can :read, Photo do |photo|
         photo.privacy_level == 3 or 
           (photo.privacy_level == 2 and user.facebook_friends?(photo.user_id, Koala::Facebook::API.new(user.token)))
       end
-      can :read, Challenge
-      can :create, Challenge
+      can :read, [Challenge, Comment, Location, Vote]
+      can :create, [Challenge, Comment, Photo, Vote]
       can :manage, Challenge, :user_id => user.id
-
-      can :read, Comment
-      can :create, Comment
       can :manage, Comment, :user_id => user.id
-
-      can :read, Location
+      can :manage, Photo, :user_id => user.id
+      can :manage, User, :id => user.id
       can :manage, Vote, :user_id => user.id
       cannot :destroy, Challenge
 
