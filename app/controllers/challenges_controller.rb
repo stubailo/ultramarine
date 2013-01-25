@@ -1,6 +1,8 @@
 class ChallengesController < ApplicationController
 
   load_and_authorize_resource
+  skip_authorize_resource :only => [:add_todo, :add_completed, :remove_todo, :remove_completed]
+  skip_authorization_check :only => [:add_todo, :add_completed, :remove_todo, :remove_completed]
 
   def add_todo
     @challenge.todo_users << current_user
