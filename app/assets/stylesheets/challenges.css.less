@@ -1,7 +1,7 @@
 @import "twitter/bootstrap/variables.less";
 @import "twitter/bootstrap/mixins.less";
 
-.challenge-page-photo-grid {
+.photo-grid {
   .clearfix;
 
   .image-mouseover {
@@ -12,6 +12,7 @@
     overflow: hidden;
     position: relative;
     display: inline-block;
+    border: 1px solid #ccc;
     img {
       width: 100%;
     }
@@ -20,7 +21,7 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 100%;
+        right: 0;
         opacity: 0;
         overflow: hidden;
         -webkit-transition: opacity;
@@ -28,7 +29,7 @@
         -webkit-transition-duration: 250ms;
         background: rgba(0,0,0,.7);
         padding: @paddingSmall;
-        color: white;
+        color: #ddd;
 
         a {
             color: white;
@@ -53,8 +54,12 @@
 
 }
 
+body.users .photo-grid .image-mouseover {
+    width: 32%;
+}
+
 @media (max-width: 480px) {
-  .challenge-page-photo-grid .image-mouseover {
+  .photo-grid .image-mouseover {
       width: 32%;
   }
 }

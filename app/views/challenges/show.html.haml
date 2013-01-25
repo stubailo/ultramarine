@@ -51,14 +51,14 @@
       %h4 Photos
     #photos-hash.content-hash
       -if @count > 0
-        .challenge-page-photo-grid
+        .photo-grid
           -@ordered_photos.each do |photo|
             .image-mouseover{:class => @photos_to_photo_types[photo.id]}
               = link_to photo do
                 = image_tag photo.image.url(:thumb)
-              .image-mouseover-content
+              .image-mouseover-content.hidden-phone.hidden-tablet
                 -if not photo.caption.blank?
-                  %p= photo.caption
+                  %p= truncate(photo.caption, :length => 70)
                 %p
                   %small
                     Posted by 
