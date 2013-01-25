@@ -98,10 +98,11 @@ class PhotosController < ApplicationController
   # DELETE /photos/1
   # DELETE /photos/1.json
   def destroy
+    challenge = @photo.challenge
     @photo.destroy
 
     respond_to do |format|
-      format.html { redirect_to photos_url }
+      format.html { redirect_to challenge }
       format.json { head :no_content }
     end
   end

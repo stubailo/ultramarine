@@ -1,10 +1,15 @@
 .row
   .span3.tablet-full-width
-    %h5= @challenge.location.name
-    %h3= @challenge.name
+    %h2= link_to @challenge.location.name, @challenge.location
+    %h3
+      >
+      = @challenge.name
+    .actions
+      - if can? :edit, @challenge
+        = link_to "Edit challenge", edit_challenge_path(@challenge)   
     .row
       .span6.tablet-layout 
-        %h6 Description
+        %h4 Description
         %p= @challenge.description
         %p
           Posted by
@@ -14,9 +19,7 @@
             #{link_to @challenge.user.username, @challenge.user}
           = time_ago_in_words @challenge.created_at
           ago
-          - if can? :edit, @challenge
-            |
-            = link_to 'edit', edit_challenge_path(@challenge)
+
 
       .span6.tablet-layout
         -if current_user
