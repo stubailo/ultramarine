@@ -10,7 +10,7 @@ class ChallengesController < ApplicationController
   end
 
   def add_completed
-    @challenge.completed_users << current_user
+    ChallengeCompletion.create(user_id: current_user.id, challenge_id: @challenge.id)
     redirect_to :back
   end
 
@@ -20,7 +20,7 @@ class ChallengesController < ApplicationController
   end
 
   def remove_completed
-    @challenge.completed_users.delete(current_user)
+    ChallengeCompletion.where(user_id: current_user.id, challenge_id: @challenge.id).first.destroy
     redirect_to :back
   end
 

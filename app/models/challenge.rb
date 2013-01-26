@@ -8,7 +8,8 @@ class Challenge < ActiveRecord::Base
   has_many :photos
   has_many :comments
 
-  has_and_belongs_to_many :completed_users, :class_name => "User", :join_table => "completed_users_completeds", :foreign_key => "completed_id", :association_foreign_key => "completed_user_id"
+  has_many :challenge_completions
+  has_many :completed_users, :class_name => "User", :through => :challenge_completions, :source => :user
   has_and_belongs_to_many :todo_users, :class_name => "User", :join_table => "todo_users_todos", :foreign_key => "todo_id", :association_foreign_key => "todo_user_id"
 
   belongs_to :user
@@ -25,6 +26,10 @@ class Challenge < ActiveRecord::Base
 
   def difficulty_string
     DifficultyStringMap[difficulty]
+  end
+
+  def completed_by? (user)
+    ChallengeCompletion.where(user_id: user.id, challenge_id: id).first
   end
 
   #Need to call with graph, user, and challenge objects
