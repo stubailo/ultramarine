@@ -5,49 +5,36 @@
     background-position: center;
 
     margin-top: -60px;
-    padding-top: 60px;
-    padding-bottom: 20px;
   }
 
 - content_for (:above_container) do
   .big-image
     .container
       .row
-        .span3.tablet-full-width
-          .location-information
-            %h2= @location.name
-            %p= @location.description
-            .controls
-              -if can? :update, @location
-                = link_to 'edit', edit_location_path(@location)
-                \|
-              = link_to 'back', locations_path
-        .span9.tablet-full-width
-          - if @location.challenges.any?
-            .big-challenge
-              %h6 top challenge
-              - challenge = @location.challenges.first
-              %h3= link_to challenge.name, challenge
-              %p= challenge.description
-              .thumbnail-hider
-                .row-thumbnails
-                  - challenge.photos(nil, nil, challenge).each do |photo|
-                    = link_to photo do
-                      = image_tag photo.image(:thumb)
-  .span3.tablet-full-width
+        .span12
+          .pull-right.controls
+            -if can? :update, @location
+              = link_to '(Admin) Edit', edit_location_path(@location), :class => "btn"
+          %h2= @location.name
+          %p= @location.description
+
+.row
+  .span8.tablet-full-width               
+    %h3 Challenges
     -if can? :create, Challenge
       = link_to "Add a Challenge Here", new_challenge_path(:location_id => @location.id), :class => "btn"
-    %h4 Potential locations of interest in this area:
-    .google-places
-      - @venues.each do |venue| 
-        = venue.name
-        = venue.rating
-  .span9.tablet-full-width               
-    - if @location.challenges.count > 1
-      %h3 More Challenges
-      .row
-        - @location.challenges.slice(1, @location.challenges.count).each do |challenge|
-          .span4
-            %h4= link_to challenge.name, challenge
-            %p= challenge.description
-    
+    - if @location.challenges.count
+      - @location.challenges.each do |challenge|
+        = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
+          .tiny-photos
+            - challenge.photos(@graph, current_user).each do |photo|
+              = link_to photo do
+                = image_tag photo.image(:tiny)
+  .span4.tablet-full-width
+    -#
+      %h4 Potential locations of interest in this area:
+      .google-places
+        - @venues.each do |venue| 
+          = venue.name
+          = venue.rating
+  

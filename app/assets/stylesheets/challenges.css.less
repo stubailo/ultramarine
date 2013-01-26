@@ -2,14 +2,23 @@
 @import "twitter/bootstrap/mixins.less";
 
 .mini-challenge {
-  margin-bottom: 24px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  
+  .border-radius(@borderRadiusSmall);
+  .tiny-photos {
+    padding: @paddingSmall;
+    padding-bottom: 8px;
+  }
   .title {
+    border-bottom: 1px solid #eee;
     ul {
       margin-bottom: 0;
     }
     .clearfix;
     .name {
       font-weight: bold;
+      font-size: 1.2em;
     }
     .pull-left {
       margin-right: 10px;
@@ -18,7 +27,6 @@
     margin-bottom: 4px;
   }
   p {
-    margin-bottom: 4px;
   }
 }
 
