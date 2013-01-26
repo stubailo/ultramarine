@@ -1,5 +1,5 @@
 class Challenge < ActiveRecord::Base
-  attr_accessible :description, :name, :location_id, :vote_value, :difficulty, :duration, :duration_unit, :lat, :lon 
+  attr_accessible :description, :name, :location_id, :vote_value, :difficulty, :duration, :duration_unit, :lat, :lon, :duration_value
 
   validates :location_id, :presence => true
   validates :description, :presence => true
@@ -54,6 +54,21 @@ class Challenge < ActiveRecord::Base
       photos = private_photos + friend_photos + public_photos
     end
     return photos
+  end
+
+  def duration_value(duration, duration_unit)
+    case duration_unit
+    when "seconds"
+      return duration
+    when "minutes"
+      return duration*60
+    when "hours"
+      return duration*3600
+    when "days"
+      return duration*3600*24
+    else
+      return duration
+    end
   end
 
 end

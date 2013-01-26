@@ -23,6 +23,12 @@
                 \|
               = link_to 'back', locations_path
         .span9.tablet-full-width
+          .challenge-sort
+            %select
+              %option Volvo
+              %option Saab
+              %option Mercedes
+              %option Audi
           - if @location.challenges.any?
             .big-challenge
               %h6 top challenge
