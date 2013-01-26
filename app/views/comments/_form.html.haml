@@ -1,6 +1,4 @@
 = form_for (Comment.new) do |f|
-  .field
-    = f.text_area :body
   - if defined? comment
     .field
       = f.hidden_field :parent_id, :value => comment.id
@@ -10,5 +8,15 @@
   - elsif defined? photo
     .field
       = f.hidden_field :photo_id, :value => photo.id
-  .actions
-    =f.submit :'Submit'
+  -if defined? comment
+    .response-area
+      .field
+        = f.text_area :body
+      .actions
+        = f.submit :'Submit'
+  -else
+    .first-response-area
+      .field
+        = f.text_area :body
+      .actions
+        =f.submit :'Submit'
