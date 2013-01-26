@@ -6,6 +6,7 @@ $ ->
   $(".response-area").hide()
   $("form.new_comment").submit comment_submit_handler 
   $("span.reply").click comment_reply
+  $("span.collapse").click comment_collapse
   
 comment_submit_handler = (event) ->
   $(".response-area").hide()
@@ -24,9 +25,21 @@ comment_submit_handler = (event) ->
       form.after new_comment
       new_comment.slideDown()
       new_comment.find("span.reply").click comment_reply
+      new_comment.find("span.collapse").click comment_collapse
   form.find("textarea").val ""
   return false
 
 comment_reply = (event) ->
   $(this).parent().find("div.response-area").first().show()
+  return false
+
+comment_collapse = (event) ->
+  collapse_icon = $(this).find("a")
+  subcomment_section = $(this).parent().parent().find("div.comment-body").first()
+  if subcomment_section.is(":visible")
+    subcomment_section.hide()
+    collapse_icon.text("[+]")
+  else
+    subcomment_section.show()
+    collapse_icon.text("[-]")
   return false

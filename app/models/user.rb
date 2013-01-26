@@ -52,7 +52,11 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    return is_admin || email == "brodrick.childs@gmail.com"
+    if Rails.env.production?
+      return is_admin
+    else 
+      return is_admin || email == "brodrick.childs@gmail.com"
+    end
   end
 
 end
