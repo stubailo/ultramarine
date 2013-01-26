@@ -1,2 +1,6 @@
-.newsfeed-item
-  fuck off
+.newsfeed_item.media
+  .media-body
+    %p.media-heading #{challenge.user.username} created a challenge
+    %p #{link_to challenge.name, challenge} in #{link_to challenge.location.name, challenge.location}
+    %p
+      %small #{time_ago_in_words challenge.created_at} ago
