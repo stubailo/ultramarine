@@ -24,7 +24,7 @@ class Photo < ActiveRecord::Base
       album_info = @graph.put_object('me','albums', :name=>"Trip to #{photo.challenge.location.name}")
       album = Album.create_album(user.id, photo.challenge.location.id, album_info["id"])
     end
-    if @graph.put_picture(photo.image.path, photo.image.content_type, facebook_arguments = {:message => photo.caption}, album.fbid)
+    if @graph.put_picture(photo.image.path(:big), photo.image.content_type, facebook_arguments = {:message => photo.caption}, album.fbid)
       photo.update_attributes(:facebook_bit => 1)
     end
   end

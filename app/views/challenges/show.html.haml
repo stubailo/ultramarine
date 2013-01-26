@@ -1,17 +1,31 @@
 .row
   .span3.tablet-full-width
-    %h5= link_to @challenge.location.name, @challenge.location
     %h3= @challenge.name
+    %p
+      %strong
+        In 
+        = link_to @challenge.location.name, @challenge.location
+    %p
+      Posted by
+      - if current_user == @challenge.user
+        you
+      - else
+        #{link_to @challenge.user.username, @challenge.user}
+      = time_ago_in_words @challenge.created_at
+      ago
+      - if can? :edit, @challenge
+        |
+        = link_to "edit", edit_challenge_path(@challenge)
     .row
       .span6.tablet-layout
         -if current_user
-          .btn-group
-            = link_to votes_vote_path(:challenge_id => @challenge.id, :value => 1), :method => :post, :class => "btn btn-small" do
-              %i.icon-thumbs-up
-            = link_to votes_vote_path(:challenge_id => @challenge.id, :value => -1), :method => :post, :class => "btn btn-small" do
-              %i.icon-thumbs-down
-          =@challenge.vote_value 
-          %hr
+          -#
+            .btn-group
+              = link_to votes_vote_path(:challenge_id => @challenge.id, :value => 1), :method => :post, :class => "btn btn-small" do
+                %i.icon-thumbs-up
+              = link_to votes_vote_path(:challenge_id => @challenge.id, :value => -1), :method => :post, :class => "btn btn-small" do
+                %i.icon-thumbs-down
+            =@challenge.vote_value 
           -if @challenge.completed_by? current_user
             %span.label.label-success
               %i.icon-ok
@@ -51,17 +65,7 @@
         = image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@challenge.lat},#{@challenge.lon}&zoom=13&size=300x200&maptype=roadmap&markers=color:red%7C#{@challenge.lat},#{@challenge.lon}&sensor=false", :id => "challenge-location-image", "data-lat" => @challenge.lat, "data-lon" => @challenge.lon
 
 
-        %p
-          Posted by
-          - if current_user == @challenge.user
-            you
-          - else
-            #{link_to @challenge.user.username, @challenge.user}
-          = time_ago_in_words @challenge.created_at
-          ago
-          - if can? :edit, @challenge
-            |
-            = link_to 'edit', edit_challenge_path(@challenge)
+
 
 
 

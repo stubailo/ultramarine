@@ -4,12 +4,16 @@
   - else
     FIX THE SHIT THAT PEOPLE CAN SUBMIT WITHOUT BEING LOGGED IN BITCH
 %p= comment.body
-%p  
+.comment  
   score: #{comment.vote_value}
-  = link_to "upvote", votes_vote_path(:comment_id => comment.id, :value => 1), :method => :post
-  = link_to "downvote", votes_vote_path(:comment_id => comment.id, :value => -1), :method => :post
-  reply
+  %span.vote-btn-group
+    = link_to "upvote", votes_vote_path(:comment_id => comment.id, :value => 1), :method => :post
+    = link_to "downvote", votes_vote_path(:comment_id => comment.id, :value => -1), :method => :post
+  -if can? :delete, comment
+    = link_to "delete", comment, :method => :delete
+  %span.reply 
+    = link_to "reply", nil
 
-.subcomments
-  = render :partial => "comments/form", :locals => {:comment => comment}
-  = render comment.subcomments
+  .subcomments
+    = render :partial => "comments/form", :locals => {:comment => comment}
+    = render comment.subcomments

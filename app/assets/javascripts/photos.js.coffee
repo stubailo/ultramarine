@@ -32,21 +32,19 @@ file_all_done = (e, data) ->
 $ ->
   if $("#edit_many_photos").length > 0 
     num_photos = $("#edit_many_photos").length
-    $("#edit_many_photos .actions").remove()
-    $("#edit_many_photos .control-group-privacy").hide()
+    $("#edit_many_photos .form-actions").remove()
+    $("#edit_many_photos .control-group#privacy").hide()
     $("#edit_many_photos .facebook").each (i, box) =>
       box.checked=true
     $("#edit_many_photos form select").val("3")
-    $("#edit_many_photos").append("<div class='control-group'>
-      <label class='control-label' for='photo_privacy_level'>Privacy</label>
-      <div class='controls'>
+    $("#edit_many_photos").append("<div class='form-actions'>
+      <button type='submit' id='submit-button' class='btn btn-primary'>Save Changes</button>
+      <div id='all-photo'>
+        <label>Privacy for these photos..</label>
         <select id='all_photo_privacy' name='photo[privacy_level]'><option value='1'>Private</option>
         <option value='2'>Friends Only</option>
         <option value='3'>Public</option></select>
       </div>
-    </div>")
-    $("#edit_many_photos").append("<div class='form-actions'>
-      <button type='submit' id='submit-button' class='btn btn-primary'>Save Changes</button>
     </div>")
    $("#edit_many_photos #submit-button").click ->
       facebook_progress_bar = $ "<div>

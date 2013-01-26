@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource
+
   def create
     comment = Comment.new(params[:comment])
 
@@ -16,6 +18,14 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { render :partial => "comment", :locals => {:comment => comment}, :layout => false }
+    end
+  end
+
+  def destroy
+    @comment.destroy
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.json { head :no_content }
     end
   end
 end

@@ -20,7 +20,10 @@ score: #{@photo.vote_value}
   = link_to "downvote", votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post
 
 posted by #{@photo.user.username} #{time_ago_in_words @photo.created_at} ago
--if current_user
+-if can? :destroy, @photo
+  =link_to "Remove photo", @photo, :method => :delete
+  \|
+-if can? :update, @photo
   = link_to 'Edit', edit_photo_path(@photo)
   \|
 = link_to 'Back', challenge_path(@photo.challenge)
