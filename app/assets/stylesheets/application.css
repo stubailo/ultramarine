@@ -16,3 +16,7 @@
 html {
   height:  100%;
 }
+
+.onlyjs {
+  display: none;
+}
