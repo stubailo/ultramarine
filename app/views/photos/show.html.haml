@@ -16,8 +16,11 @@
 
 score: #{@photo.vote_value}
 -if current_user
-  = link_to "upvote", votes_vote_path(:photo_id => @photo.id, :value => 1), :method => :post
-  = link_to "downvote", votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post
+  %span.vote-btn-group
+    = link_to  votes_vote_path(:photo_id => @photo.id, :value => 1), :method => :post, :class => "btn btn-small" do
+      %i.icon-thumbs-up
+    = link_to votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post, :class => "btn btn-small" do
+      %i.icon-thumbs-down
 
 posted by #{@photo.user.username} #{time_ago_in_words @photo.created_at} ago
 -if can? :destroy, @photo
