@@ -19,12 +19,13 @@
     .row
       .span6.tablet-layout
         -if current_user
-          .btn-group
+          .vote-btn-group
             = link_to votes_vote_path(:challenge_id => @challenge.id, :value => 1), :method => :post, :class => "btn btn-small" do
               %i.icon-thumbs-up
             = link_to votes_vote_path(:challenge_id => @challenge.id, :value => -1), :method => :post, :class => "btn btn-small" do
               %i.icon-thumbs-down
-          =@challenge.vote_value 
+            Score:
+            =@challenge.vote_value 
           -if @challenge.completed_by? current_user
             %span.label.label-success
               %i.icon-ok
