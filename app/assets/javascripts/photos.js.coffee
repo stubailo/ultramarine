@@ -43,7 +43,7 @@ $ ->
         <label>Privacy for these photos..</label>
         <select id='all_photo_privacy' name='photo[privacy_level]'><option value='1'>Private</option>
         <option value='2'>Friends Only</option>
-        <option value='3'>Public</option></select>
+        <option selected='selected' value='3'>Public</option></select>
       </div>
     </div>")
    $("#edit_many_photos #submit-button").click ->
