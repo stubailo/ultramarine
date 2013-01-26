@@ -1,4 +1,6 @@
-= form_for @challenge do |f|
+= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyAe1Wo6-iOo1JdVcxvfknIMjHF6z1uTtTw&sensor=false"
+
+= form_for @challenge, :html => {:class => "form-horizontal"} do |f|
   - if @challenge.errors.any?
     #error_explanation
       %h2= "#{pluralize(@challenge.errors.count, "error")} prohibited this challenge from being saved:"
@@ -7,11 +9,31 @@
           %li= msg
 
   = f.hidden_field :location_id
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :description
-    = f.text_area :description
-  .actions
-    = f.submit 'Save'
+  %legend Required
+  .control-group
+    = f.label :name, :class => "control-label"
+    .controls
+      = f.text_field :name
+  .control-group
+    = f.label :description, :class => "control-label"
+    .controls
+      = f.text_area :description, :rows => "5", :class => "span6"
+  %legend Optional
+  .control-group
+    = f.label :difficulty, :class => "control-label"
+    .controls
+      = f.select :difficulty, [["Unset", nil], ["Trivial", 1], ["Easy", 2], ["Medium", 3], ["Hard", 4], ["Impossible", 5]]
+  .control-group
+    = f.label :duration, "About how much time does it take?", :class => "control-label"
+    .controls
+      = f.number_field :duration, :class => "span1"
+      = f.select :duration_unit, ["days", "hours", "minutes", "seconds"], :selected => (@challenge.duration_unit ? @challenge.duration_unit : "hours")
+  .control-group
+    = f.label :lat, "Location", :class => "control-label"
+    .controls#location-controls
+      .help-block If your challenge is at a specific location, click on the map to indicate where.
+      = f.text_field :lat, :"data-location-lat" => @challenge.location.lat
+      = f.text_field :lon, :"data-location-lon" => @challenge.location.lon
+  .form-actions
+    = f.submit 'Save', :class => "btn btn-primary"
+    = link_to "Cancel", :back, :class => "btn"

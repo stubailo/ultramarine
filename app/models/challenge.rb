@@ -1,5 +1,5 @@
 class Challenge < ActiveRecord::Base
-  attr_accessible :description, :name, :location_id, :vote_value 
+  attr_accessible :description, :name, :location_id, :vote_value, :difficulty, :duration, :duration_unit, :lat, :lon 
 
   validates :location_id, :presence => true
   validates :description, :presence => true
@@ -15,6 +15,17 @@ class Challenge < ActiveRecord::Base
   belongs_to :location
 
   has_many :votes
+
+  DifficultyStringMap = {
+    1 => "Trivial",
+    2 => "Easy",
+    3 => "Medium",
+    4 => "Hard",
+    5 => "Impossible"}
+
+  def difficulty_string
+    DifficultyStringMap[difficulty]
+  end
 
   #Need to call with graph, user, and challenge objects
   def photos

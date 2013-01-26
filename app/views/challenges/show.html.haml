@@ -1,11 +1,56 @@
 .row
   .span3.tablet-full-width
-    %h5= @challenge.location.name
+    %h5= link_to @challenge.location.name, @challenge.location
     %h3= @challenge.name
     .row
+      .span6.tablet-layout
+        -if current_user
+          .btn-group
+            = link_to votes_vote_path(:challenge_id => @challenge.id, :value => 1), :method => :post, :class => "btn btn-small" do
+              %i.icon-thumbs-up
+            = link_to votes_vote_path(:challenge_id => @challenge.id, :value => -1), :method => :post, :class => "btn btn-small" do
+              %i.icon-thumbs-down
+          =@challenge.vote_value 
+          %hr
+          -if @challenge.completed_users.exists?(:id => current_user.id)
+            %span.label.label-success
+              %i.icon-ok
+              Completed
+              \-
+              = link_to "cancel", remove_completed_path(@challenge), :style => "color: white"
+          -else
+            .btn-group
+              = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
+                %i.icon-ok
+                Mark Done
+              -if @challenge.todo_users.exists?(:id => current_user.id)
+                = link_to remove_todo_path(@challenge), :class => 'btn btn-small' do
+                  %i.icon-minus
+                  Todo
+              -else
+                = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
+                  %i.icon-plus
+                  Todo
       .span6.tablet-layout 
-        %h6 Description
-        %p= @challenge.description
+        %dl
+          %dt Description
+          %dd= @challenge.description
+          - if @challenge.difficulty
+            %dt Difficulty
+            %dd= @challenge.difficulty_string
+          - if @challenge.duration
+            %dt Time Required
+            %dd #{@challenge.duration} #{@challenge.duration_unit}
+
+        %p
+          %strong Location
+          \- 
+          = link_to "Larger Map", "https://maps.google.com/maps?hl=en&q=#{@challenge.lat},#{@challenge.lon}&t=m&z=16"
+
+        = javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyAe1Wo6-iOo1JdVcxvfknIMjHF6z1uTtTw&sensor=false"
+        = image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@challenge.lat},#{@challenge.lon}&zoom=13&size=300x200&maptype=roadmap&markers=color:red%7C#{@challenge.lat},#{@challenge.lon}&sensor=false", :id => "challenge-location-image", "data-lat" => @challenge.lat, "data-lon" => @challenge.lon
+
+
         %p
           Posted by
           - if current_user == @challenge.user
@@ -18,38 +63,18 @@
             |
             = link_to 'edit', edit_challenge_path(@challenge)
 
-      .span6.tablet-layout
-        -if current_user
-          %h6 Actions
-          .btn-group
-            -if @challenge.completed_users.exists?(:id => current_user.id)
-              = link_to 'Mark as incomplete', remove_completed_path(@challenge), :class => 'btn btn-small'
-            -else
-              = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
-                %i.icon-ok
-                Mark Completed
-            -if @challenge.todo_users.exists?(:id => current_user.id)
-              = link_to 'Remove from Todo list', remove_todo_path(@challenge), :class => 'btn btn-small'
-            -else
-              = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
-                %i.icon-plus
-                Todo List
-          .vote-btn-group
-            Score: #{@challenge.vote_value}
-            = link_to "upvote", votes_vote_path(:challenge_id => @challenge.id, :value => 1), :method => :post
-            = link_to "downvote", votes_vote_path(:challenge_id => @challenge.id, :value => -1), :method => :post
-        -if can? :create, Photo
-          #new_photo_form_container
-            = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
-              = f.hidden_field :challenge_id, :value => @challenge.id 
-              = f.label :image, "Submit your photos:"
-              = f.file_field :image, multiple: true, name: "photo[image]"
 
 
   .span9.tablet-full-width
     .nojs
       %h4 Photos
     #photos-hash.content-hash
+      -if can? :create, Photo
+        #new_photo_form_container
+          = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
+            = f.hidden_field :challenge_id, :value => @challenge.id 
+            = f.label :image, "Submit your photos:"
+            = f.file_field :image, multiple: true, name: "photo[image]"
       -if @count > 0
         .photo-grid
           -@ordered_photos.each do |photo|
