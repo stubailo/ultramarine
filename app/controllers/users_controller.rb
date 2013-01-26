@@ -43,6 +43,8 @@ class UsersController < ApplicationController
       end
       true
     end
+
+    @completed_challenges = Challenge.joins(:challenge_completions).where(:challenge_completions => {:user_id => @user.id}).order("challenge_completions.created_at DESC")
   end
 
   def new

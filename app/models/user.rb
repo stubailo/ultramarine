@@ -18,7 +18,8 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :todos, :class_name => "Challenge", :join_table => "todo_users_todos", :foreign_key => "todo_user_id", :association_foreign_key => "todo_id"
 
-  has_and_belongs_to_many :completeds, :class_name => "Challenge", :join_table => "completed_users_completeds", :foreign_key => "completed_user_id", :association_foreign_key => "completed_id"
+  has_many :challenge_completions
+  has_many :completed_challenges, :class_name => "Challenge", :source => :challenge, :through => :challenge_completions
   attr_accessor :login
 
   def self.find_or_create_by_omniauth(auth)

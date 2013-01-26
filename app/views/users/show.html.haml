@@ -20,16 +20,15 @@
       .span8
         %h3 Completed Challenges:
         #completed-challenges
-          -@user.completeds.each do |completed|
-            
-            =link_to completed.name, challenge_path(completed)
+          -@completed_challenges.each do |completed|
+            = render :layout => "challenges/mini", :locals => {:challenge => completed} do
+              %p Completed by #{@user.username} #{time_ago_in_words completed.completed_by?(@user).created_at} ago
     .row
       .span4
+        %h3 Todo List:
         %p
-          Todo List:
-          %p
-            -@user.todos.each do |todo|
-              =link_to todo.name, challenge_path(todo)
+          -@user.todos.each do |todo|
+            =link_to todo.name, challenge_path(todo)
 
   .span4
     %h3 Recent Activity

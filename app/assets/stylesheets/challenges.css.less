@@ -1,6 +1,27 @@
 @import "twitter/bootstrap/variables.less";
 @import "twitter/bootstrap/mixins.less";
 
+.mini-challenge {
+  margin-bottom: 24px;
+  .title {
+    ul {
+      margin-bottom: 0;
+    }
+    .clearfix;
+    .name {
+      font-weight: bold;
+    }
+    .pull-left {
+      margin-right: 10px;
+    }
+
+    margin-bottom: 4px;
+  }
+  p {
+    margin-bottom: 4px;
+  }
+}
+
 .photo-grid {
   .clearfix;
 
@@ -62,4 +83,12 @@ body.users .photo-grid .image-mouseover {
   .photo-grid .image-mouseover {
       width: 32%;
   }
+}
+
+#map-canvas {
+  height: 300px;
+}
+
+#challenge-location-map {
+    height: 200px;
 }

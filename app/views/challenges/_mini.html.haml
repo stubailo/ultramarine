@@ -1,0 +1,20 @@
+.row
+  .span8
+    .mini-challenge
+      .title
+        .name.pull-left= link_to challenge.name, challenge
+        %ul.pull-left.inline
+          %li
+            %i.icon-globe
+            = link_to challenge.location.name, challenge.location
+          - if challenge.difficulty
+            %li
+              %i.icon-star
+              = challenge.difficulty_string
+          - if challenge.duration
+            %li
+              %i.icon-time
+              = challenge.duration
+              = challenge.duration_unit
+      %p= challenge.description
+      = yield
