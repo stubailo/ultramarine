@@ -3,6 +3,12 @@
 - content_for (:above_container) do
   .big-image{:style => "background-image: url(#{location.image})"}
     .container
-      Some shit here
+      .dark-bg
+        %h2 
+          I'm on vacation in
+          = location.name
+        %p.subtitle What should I do here?
+      = render :layout => "challenges/mini", :locals => {:challenge => location.challenges.first} do
+        Whatup
 
 Other shit here.
