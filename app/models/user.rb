@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   has_many :omniauth_associations
+  has_many :facebook_friends
   has_many :photos
   has_many :challenges
   has_many :albums
@@ -45,9 +46,25 @@ class User < ActiveRecord::Base
     end
   end
 
-  def facebook_friends? (friend_id, graph)
-    friends = graph.get_connections("me", "friends")
-    friend_fbids = friends.map{|friend| friend["id"].to_i}
+  def get_fb_friend_ids(user, graph)
+    if user.last_loaded.nil? || (Time.now-user.last_loaded).to_i > 600
+      user.facebook_friends.destroy_all
+      friends = graph.get_connections("me", "friends")
+      friend_ids = friends.map{|friend| friend["id"].to_i}
+      friend_ids.each do |fbid|
+        user.facebook_friends.create({fbid: fbid, user_id: user.id})
+      end
+      user.update_attribute(:last_loaded, Time.now())
+      user.save
+      return friend_ids
+    else
+      return user.facebook_friends.map{|friend| friend.fbid}
+    end
+  end
+
+  def facebook_friends? (user, friend_id, graph)
+    friend_fbids = get_fb_friend_ids(user, graph)
+    puts friend_fbids
     return friend_fbids.include?(User.find(friend_id).fbid)
   end
 

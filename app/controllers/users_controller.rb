@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @is_me = @user == current_user
     @newsfeed = @user.newsfeed_items.order("created_at DESC")
     
-    @is_friends = current_user.facebook_friends? @user.id, graph
+    @is_friends = current_user ? current_user.facebook_friends?(current_user, @user.id, graph) : nil
     
     if @is_friends or @is_me
       @photos = Photo.where(user_id: @user.id, privacy_level: [2,3])

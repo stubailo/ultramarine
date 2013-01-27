@@ -36,7 +36,7 @@ class Ability
     else
       can :read, Photo do |photo|
         photo.privacy_level == 3 or 
-          (photo.privacy_level == 2 and user.facebook_friends?(photo.user_id, Koala::Facebook::API.new(user.token)))
+          (photo.privacy_level == 2 and user.facebook_friends?(user, photo.user_id, Koala::Facebook::API.new(user.token)))
       end
       can :read, [Challenge, Comment, Location, Vote]
       can :create, [Challenge, Comment, Photo, Vote]
