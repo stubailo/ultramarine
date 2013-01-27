@@ -56,13 +56,14 @@
             %dt Time Required
             %dd #{@challenge.duration} #{@challenge.duration_unit}
 
-        %p
-          %strong Location
-          \- 
-          = link_to "Larger Map", "https://maps.google.com/maps?hl=en&q=#{@challenge.lat},#{@challenge.lon}&t=m&z=16"
+        - if not @challenge.lat.blank?
+          %p
+            %strong Location
+            \- 
+            = link_to "Larger Map", "https://maps.google.com/maps?hl=en&q=#{@challenge.lat},#{@challenge.lon}&t=m&z=16"
 
-        = javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyAe1Wo6-iOo1JdVcxvfknIMjHF6z1uTtTw&sensor=false"
-        = image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@challenge.lat},#{@challenge.lon}&zoom=13&size=300x200&maptype=roadmap&markers=color:red%7C#{@challenge.lat},#{@challenge.lon}&sensor=false", :id => "challenge-location-image", "data-lat" => @challenge.lat, "data-lon" => @challenge.lon
+          = javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyAe1Wo6-iOo1JdVcxvfknIMjHF6z1uTtTw&sensor=false"
+          = image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@challenge.lat},#{@challenge.lon}&zoom=13&size=300x200&maptype=roadmap&markers=color:red%7C#{@challenge.lat},#{@challenge.lon}&sensor=false", :id => "challenge-location-image", "data-lat" => @challenge.lat, "data-lon" => @challenge.lon
 
 
 

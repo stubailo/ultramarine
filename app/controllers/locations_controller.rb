@@ -1,6 +1,8 @@
 require 'net/http'
 
 class LocationsController < ApplicationController
+
+  helper_method :sort_column, :sort_direction
   load_and_authorize_resource
   # GET /locations
   # GET /locations.json
@@ -15,8 +17,16 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @graph = graph
-    @client = GooglePlaces::Client.new(Ultramarine::Application::PLACES_API_KEY)
-    @venues = @client.spots(@location.lat, @location.lon)
+    if sort_column == "duration_value"
+      sort_direction == "desc" ? 
+        @challenges = @location.challenges.sort_by(&:duration_value).reverse() :
+        @challenges = @location.challenges.sort_by(&:duration_value)
+    else
+      @challenges = @location.challenges.order(sort_column + ' ' + sort_direction)
+    end
+
+    #@client = GooglePlaces::Client.new(Ultramarine::Application::PLACES_API_KEY)
+    #@venues = @client.spots(@location.lat, @location.lon)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -74,5 +84,14 @@ class LocationsController < ApplicationController
       format.html { redirect_to locations_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def sort_column
+    %w[vote_value duration_value difficulty].include?(params[:sort]) ? params[:sort] : "vote_value"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 end
