@@ -1,9 +1,8 @@
-.masthead
-  %h1 Vacation inspiration for
-  -#%p tagline tagline tagline
-  %form
-    %fieldset
-      -#%legend Vacation inspiration for
-      %input{:type=>'text', 'placeholder'=>'wherever you want to go'}
-      %p
-        %button.btn{:type=>'submit'} Go
+- location = Location.first
+
+- content_for (:above_container) do
+  .big-image{:style => "background-image: url(#{location.image})"}
+    .container
+      Some shit here
+
+Other shit here.
