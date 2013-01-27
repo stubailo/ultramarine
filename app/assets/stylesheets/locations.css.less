@@ -1,94 +1,100 @@
 @import "twitter/bootstrap/variables.less";
 @import "twitter/bootstrap/mixins.less";
+body.locations {
+  .big-image {
+    color: white;
+    .container {
+      background: rgba(0,0,0,.5);
+      padding-top: 90px;
+      padding-bottom: 20px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    h2 {
+      text-transform: uppercase;
+      font-size: 5em;
+      text-shadow: 0 1px 8px rgba(0,0,0,.7);
+      margin-bottom: 20px;
+    }
+    p {
+      text-shadow: 0 1px 8px rgba(0,0,0,.7);
+      font-size: @fontSizeLarge;
+    }
 
-.big-image {
-  color: white;
-  .container {
-    background: rgba(0,0,0,.5);
-    padding-top: 90px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  h2 {
-    text-transform: uppercase;
-    font-size: 5em;
-    text-shadow: 0 1px 8px rgba(0,0,0,.7);
     margin-bottom: 20px;
   }
-  p {
-    text-shadow: 0 1px 8px rgba(0,0,0,.7);
-    font-size: @fontSizeLarge;
-  }
 
-  margin-bottom: 20px;
-}
-
-.location-page-picture {
-  .border-radius( @baseBorderRadius );
-  padding: @paddingLarge;
-  padding-bottom: 300px;
-  background-position: center;
-  color: white;
-  text-shadow: 0 1px 5px rgba(0,0,0,.5);
-  .box-shadow( 0 0 3px rgba(0,0,0,.6);
-  border: 1px solid white;
-  .bg {
-    background: rgba(0,0,0,.4);
-    padding: @paddingSmall;
-  }
-  p {
-    margin-top: 6px;
-  }
-}
-
-.big-location {
-  position:relative;
-  height: 250px;
-  padding: @paddingLarge;
-  .border-radius( @borderRadiusLarge );
-  .box-shadow( 0 0 3px rgba(0,0,0,.6);
-  border: 1px solid white;
-
-  .location-details {
-    background: fadeout(@linkColor, 25%); 
-    width: 60%;
+  .location-page-picture {
+    .border-radius( @baseBorderRadius );
+    padding: @paddingLarge;
+    padding-bottom: 300px;
+    background-position: center;
     color: white;
+    text-shadow: 0 1px 5px rgba(0,0,0,.5);
+    .box-shadow( 0 0 3px rgba(0,0,0,.6);
+    border: 1px solid white;
+    .bg {
+      background: rgba(0,0,0,.4);
+      padding: @paddingSmall;
+    }
+    p {
+      margin-top: 6px;
+    }
+  }
+
+  .big-location {
+    position:relative;
+    height: 250px;
     padding: @paddingLarge;
     .border-radius( @borderRadiusLarge );
     .box-shadow( 0 0 3px rgba(0,0,0,.6);
     border: 1px solid white;
-    a {
+
+    .location-details {
+      background: fadeout(@linkColor, 25%); 
+      width: 60%;
       color: white;
+      padding: @paddingLarge;
+      .border-radius( @borderRadiusLarge );
+      .box-shadow( 0 0 3px rgba(0,0,0,.6);
+      border: 1px solid white;
+      a {
+        color: white;
+      }
+    }
+    .actions {
+      position:absolute;
+      bottom:0;
+      right:10px;
+      a {
+        color:black;
+      }
     }
   }
-  .actions {
+
+  .new-location {
     position:absolute;
-    bottom:0;
-    right:10px;
-    a {
-      color:black;
+    padding-top: 20px;
+    left:20px;
+  }
+
+  i {
+    display: none;
+    margin-left: 4px;
+  }
+
+  .asc {
+    i.icon-caret-up {
+      display: inline-block;
+      text-decoration: none;
     }
   }
-}
 
-.new-location {
-  position:absolute;
-  padding-top: 20px;
-  left:20px;
-}
+  .desc {
+    i.icon-caret-down {
+      display: inline-block;
+      text-decoration: none;
+    }
+  }
 
-.current {
-  padding-right: 12px;
-  margin-right: 12px;
-  background-repeat: no-repeat;
-  background-position: right center;
-}
-
-.asc {
-  background-image: url(/images/up_arrow.png);
-}
-
-.desc {
-  background-image: url(/images/down_arrow.png);
 }
