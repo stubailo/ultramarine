@@ -23,6 +23,7 @@
     - resource_class.omniauth_providers.each do |provider|
       - if provider = "facebook"
         = link_to omniauth_authorize_path(resource_name, provider), {:class => provider} do
-          <i class='icon-facebook-sign'> </i> Sign in with Facebook
+          %i.icon-facebook-sign
+          Sign in with Facebook
       - else
         = link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider), {:class => provider}
