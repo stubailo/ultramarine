@@ -38,22 +38,13 @@ class Challenge < ActiveRecord::Base
   end
 
   def photos(graph, user)
-    public_photos = Photo.where(:challenge_id => id).where(:privacy_level => 3)
-    photos = public_photos
     if user
-      friends = graph.get_connections("me", "friends")
-      friend_fbids = []
-      friends.each do |friend| 
-        friend_fbids += [friend["id"].to_i]
-      end
-      friend_ids = User.where(:fbid => friend_fbids)
-      friend_ids = friend_ids.map{|friend| friend.id}
-
-      private_photos = Photo.where(:user_id => user.id).where(:challenge_id => id).where(:privacy_level => [1, 2])
-      friend_photos = Photo.where(:user_id => friend_ids).where(:challenge_id => id).where(:privacy_level => 2)
-      photos = private_photos + friend_photos + public_photos
+      friend_ids = user.friend_ids(user, graph)
+      @all_photos = Photo.where("(challenge_id = ? and privacy_level = ?) or (user_id = ? and challenge_id = ?) or (user_id in (?) and challenge_id = ? and privacy_level in (?))", self[:id], 3, user.id, self[:id], friend_ids, self[:id], [2,3])
+    else
+      @all_photos = Photo.where(:challenge_id => id).where(:privacy_level => 3)
     end
-    return photos
+    return @all_photos
   end
 
   def duration_value

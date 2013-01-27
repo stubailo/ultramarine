@@ -27,10 +27,20 @@
 
             %ul.nav.pull-right
               - if current_user
-                %li
-                  = link_to current_user.username, user_path(current_user)
-                %li
-                  = link_to "Logout", destroy_user_session_path, :method => :delete
+                %li.dropdown
+                  =link_to nil, {:class => "dropdown-toggle", :'data-toggle' => "dropdown"} do
+                    = current_user.username
+                    %b.caret
+                  %ul.dropdown-menu
+                    %li
+                      =link_to "Profile", user_path(current_user)
+                    %li
+                      =link_to edit_user_registration_path do
+                        Edit account
+                        %i.icon-wrench
+                    %li
+                      =link_to "Logout", destroy_user_session_path, :method => :delete
+                  
               - else
                 %li
                   = link_to user_omniauth_authorize_path(:facebook) do
