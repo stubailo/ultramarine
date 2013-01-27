@@ -49,6 +49,7 @@ class PhotosController < ApplicationController
     @photo.user_id = current_user.id
     @photo.vote_value = 0
     @photo.facebook_bit = 0
+    @photo.privacy_level = 2
 
     respond_to do |format|
       if @photo.save

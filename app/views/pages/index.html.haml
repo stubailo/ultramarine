@@ -7,10 +7,10 @@
         .dark-bg
           %h2 
             I'm on vacation in
-            %span.location-name= location.name
+            = link_to location.name, location, :class => "location-name"
           %p.subtitle What should I do here?
         - if location.challenges.any?
           = render :layout => "challenges/mini", :locals => {:challenge => location.challenges.first} do
-            Whatup
+            Whatup 
 
 Other shit here.

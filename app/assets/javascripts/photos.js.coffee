@@ -32,21 +32,13 @@ file_all_done = (e, data) ->
 $ ->
   if $("#edit_many_photos").length > 0 
     num_photos = $("#edit_many_photos").length
-    $("#edit_many_photos .form-actions").remove()
+    $("#edit_many_photos .form-horizontal .form-actions").remove()
     $("#edit_many_photos .control-group#privacy").hide()
+    $("#edit_many_photos #photo_facebook_bit").parents(".control-group").hide()
     $("#edit_many_photos .facebook").each (i, box) =>
       box.checked=true
     $("#edit_many_photos form select").val("3")
-    $("#edit_many_photos").append("<div class='form-actions'>
-      <button type='submit' id='submit-button' class='btn btn-primary'>Save Changes</button>
-      <div id='all-photo'>
-        <label>Privacy for these photos..</label>
-        <select id='all_photo_privacy' name='photo[privacy_level]'><option value='1'>Private</option>
-        <option value='2'>Friends Only</option>
-        <option selected='selected' value='3'>Public</option></select>
-      </div>
-    </div>")
-   $("#edit_many_photos #submit-button").click ->
+    $("#edit_many_photos #submit-button").click ->
       facebook_progress_bar = $ "<div>
         <h6> Updating Information... </h6>
         <div class='progress progress-striped active'><div class='bar' style='width: 2%'></div>
@@ -59,13 +51,14 @@ $ ->
         val = $("#edit_many_photos form")[which]
         val = $ val
         val.find("#photo_privacy_level").val($("#all_photo_privacy").val())
+        val.find("#photo_facebook_bit").val($("#all_photo_facebook_bit").val())
         next = ->
           num_photos_uploaded +=1
           facebook_progress_bar.find(".bar").width(num_photos_uploaded/count * 100 + "%")
           if which < count - 1
             submit(which + 1)
           else
-            window.location.replace(document.referrer)
+            window.location.replace(document.referrer
         $.post val.attr("action") + "/confirm.json", val.serialize(), next, "json"
         return false
       submit(0)

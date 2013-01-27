@@ -1,9 +1,22 @@
 #edit_many_photos
-  %p Please add some captions and privacy information for the photos you uploaded!
-
-  - @photos.each_with_index do |photo, i|
-    .row
-      - @photo = photo
-      %hr.span12
-      = render 'form'
-
+  %h2 Uploaded Photos
+  .alert.alert-success
+    Your photos have been uploaded.  You can specify captions and privacy information on this page.
+  .form-horizontal
+    .control-group
+      %label.control-label Privacy for these photos
+      .controls
+        = select_tag "photo[privacy_level]", options_for_select([["Private", 1], ["Friends Only", 2], ["Public", 3]], 3), :id => 'all_photo_privacy'
+    .control-group
+      %label.control-label Upload to facebook?
+      .controls
+        = check_box_tag :photo, :facebook_bit, :checked, {:id => "all_photo_facebook_bit", :class => "btn btn-primary"}
+    .control-group
+      .controls
+        = submit_tag "Save Changes", :id => "submit-button", :class => "btn btn-primary"
+  .row
+    %h3.span12 Captions
+    - @photos.each_with_index do |photo, i|
+      .span6.tablet-full-width
+        - @photo = photo
+        = render 'form'
