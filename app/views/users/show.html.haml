@@ -3,40 +3,51 @@
   
 .row
   .span8
-    .row
-      .span8
-        %h3 Photos
-        .photo-grid
-          - @photos.each do |photo|
-            .image-mouseover
-              = link_to photo do
-                = image_tag photo.image(:thumb)
-              .image-mouseover-content.hidden-tablet.hidden-phone
-                - if not photo.caption.blank?
-                  %p= truncate(photo.caption, :length => 70)
-                %p Challenge: #{link_to photo.challenge.name, photo.challenge}
-        
-    .row
-      .span8
-        %h3 Completed Challenges:
-        #completed-challenges
-          -@completed_challenges.each do |completed|
-            = render :layout => "challenges/mini", :locals => {:challenge => completed} do
-              - photos = Photo.where(user_id: @user.id, challenge_id: completed.id)
-              - if photos
-                .tiny-photos
-                  - photos.each do |photo|
-                    = link_to photo do
-                      = image_tag photo.image(:tiny)
-              %p Completed by #{@user.username} #{time_ago_in_words completed.completed_by?(@user).created_at} ago
-    .row
-      .span4
-        %h3 Todo List:
-        %p
-          -@user.todos.each do |todo|
-            =link_to todo.name, challenge_path(todo)
+    .onlyjs
+      %ul.nav.nav-pills.nav-hash
+        %li#challenges-tab
+          = link_to "#challenges" do
+            %i.icon-star
+            Challenges
+        %li#photos-tab
+          = link_to "#photos" do
+            %i.icon-picture
+            Photos
+        %li#todo-tab
+          = link_to "#todo" do
+            %i.icon-tasks
+            Todo List
+          
+    .nojs
+      %h3 Photos
+    #photos-hash.content-hash.photo-grid
+      - @photos.each do |photo|
+        .image-mouseover
+          = link_to photo do
+            = image_tag photo.image(:thumb)
+          .image-mouseover-content.hidden-tablet.hidden-phone
+            - if not photo.caption.blank?
+              %p= truncate(photo.caption, :length => 70)
+            %p Challenge: #{link_to photo.challenge.name, photo.challenge}
+    .nojs
+      %h3 Completed Challenges:
+    #completed-challenges.content-hash#challenges-hash
+      -@completed_challenges.each do |completed|
+        = render :layout => "challenges/mini", :locals => {:challenge => completed} do
+          - photos = Photo.where(user_id: @user.id, challenge_id: completed.id)
+          - if photos
+            .tiny-photos
+              - photos.each do |photo|
+                = link_to photo do
+                  = image_tag photo.image(:tiny)
+          %p Completed by #{@user.username} #{time_ago_in_words completed.completed_by?(@user).created_at} ago
+    .nojs
+      %h3 Todo List:
+    #todo-hash.content-hash
+      -@user.todos.each do |todo|
+        =link_to todo.name, challenge_path(todo)
 
   .span4
-    %h3 Recent Activity
+    %h5 Recent Activity
     - @newsfeed.each do |n|
       = render :partial => "newsfeed/main", :locals => {:newsfeed_item => n}

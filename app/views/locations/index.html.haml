@@ -1,17 +1,12 @@
-.all-locations
-  -@locations.each do |location|
-    .row.big-location{:style=>"background-image: url(#{location.image.url}); background-position: center; background-size: cover"}
-      .location-details
-        %h3= link_to location.name, location
-        .description
-          =location.description
-      -if can? :create, Location
-        .actions
-          %p
-            = link_to 'Show', location
-            = link_to 'Edit', edit_location_path(location)
-            = link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' }
+-@locations.each do |location|
+  %h3= link_to location.name, location
+  =location.description
+  -if can? :create, Location
+    .actions
+      %p
+        = link_to 'Show', location
+        = link_to 'Edit', edit_location_path(location)
+        = link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' }
 
 -if can? :create, Location      
-  .new-location
-    = link_to 'Create new location', new_location_path, :class => "btn"
+  = link_to 'Create new location', new_location_path, :class => "btn"

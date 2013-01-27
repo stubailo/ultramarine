@@ -1,2 +1,3 @@
 $ ->
   $(".nojs").remove()
+  $(".onlyjs").show()
