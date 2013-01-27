@@ -3,6 +3,17 @@
   %small{:style => "display: inline-block"}
     in 
     = link_to @challenge.location.name, @challenge.location
+%p
+  Posted by
+  - if current_user == @challenge.user
+    you
+  - else
+    #{link_to @challenge.user.username, @challenge.user}
+  = time_ago_in_words @challenge.created_at
+  ago
+  - if can? :edit, @challenge
+    |
+    = link_to "edit", edit_challenge_path(@challenge)
 .onlyjs
   %ul.nav.nav-pills.nav-hash
     %li#info-tab
@@ -22,17 +33,6 @@
 #info-hash.content-hash
   .row
     .span6
-      %p
-        Posted by
-        - if current_user == @challenge.user
-          you
-        - else
-          #{link_to @challenge.user.username, @challenge.user}
-        = time_ago_in_words @challenge.created_at
-        ago
-        - if can? :edit, @challenge
-          |
-          = link_to "edit", edit_challenge_path(@challenge)
     .span6
       -if current_user
         .vote-btn-group
