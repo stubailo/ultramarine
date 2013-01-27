@@ -22,14 +22,14 @@ score: #{@photo.vote_value}
     = link_to votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post, :class => "btn btn-small" do
       %i.icon-thumbs-down
 
-posted by #{@photo.user.username} #{time_ago_in_words @photo.created_at} ago
+posted by 
+=link_to @photo.user.username, @photo.user
+#{time_ago_in_words @photo.created_at} ago
 -if can? :destroy, @photo
   =link_to "Remove photo", @photo, :method => :delete
   \|
 -if can? :update, @photo
   = link_to 'Edit', edit_photo_path(@photo)
-  \|
-= link_to 'Back', challenge_path(@photo.challenge)
 
 -if current_user
   = render :partial => "comments/form", :locals => {:photo => @photo}

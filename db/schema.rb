@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130126080847) do
+ActiveRecord::Schema.define(:version => 20130127032843) do
 
   create_table "albums", :force => true do |t|
     t.integer  "user_id"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(:version => 20130126080847) do
   create_table "completed_users_completeds", :id => false, :force => true do |t|
     t.integer "completed_user_id"
     t.integer "completed_id"
+  end
+
+  create_table "facebook_friends", :force => true do |t|
+    t.integer  "fbid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   create_table "locations", :force => true do |t|
@@ -136,6 +143,7 @@ ActiveRecord::Schema.define(:version => 20130126080847) do
     t.string   "username"
     t.string   "token"
     t.integer  "fbid"
+    t.datetime "last_loaded"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

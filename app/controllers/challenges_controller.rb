@@ -64,11 +64,7 @@ class ChallengesController < ApplicationController
         @photos_to_photo_types[photo.id] = "private"
       end
 
-      friends = graph.get_connections("me", "friends")
-      friend_fbids = []
-      friends.each do |friend|
-        friend_fbids += [friend["id"].to_i]
-      end
+      friend_fbids = current_user.get_fb_friend_ids(current_user, graph)
       friend_ids = User.where(:fbid => friend_fbids)
       friend_ids = friend_ids.map{|friend| friend.id}
       friend_photos = Photo.where(:user_id => friend_ids).where(:challenge_id => @challenge.id).where(:privacy_level => [2,3])
