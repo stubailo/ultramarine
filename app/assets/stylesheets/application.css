@@ -22,7 +22,8 @@ html {
 }
 
 #footer {
-  margin-top: 30px;
+  margin-top: 50px;
   text-align: center;
   color: #999;
+  padding-bottom: 80px;
 }

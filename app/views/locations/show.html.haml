@@ -22,7 +22,9 @@
   .span8.tablet-full-width               
     .pull-right
       -if can? :create, Challenge
-        = link_to "Post a Challenge in #{@location.name}", new_challenge_path(:location_id => @location.id), :class => "btn"
+        = link_to new_challenge_path(:location_id => @location.id), :class => "btn" do
+          %i.icon-plus
+          Post a Challenge in #{@location.name} 
     %h3 Challenges
     - if @location.challenges.count
       - @location.challenges.each do |challenge|

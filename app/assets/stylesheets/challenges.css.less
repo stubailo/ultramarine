@@ -36,21 +36,23 @@
   .image-mouseover {
     float: left;
     position: relative;
-    width: 24%;
-    margin: 1px;
+    width: 25%;
     overflow: hidden;
     position: relative;
     display: inline-block;
-    border: 1px solid #ccc;
     img {
-      width: 100%;
+      width: 96%;
+      margin-bottom: 4%;
+      height: auto;
+      .border-radius(@borderRadiusSmall);
     }
+
 
     .image-mouseover-content {
         position: absolute;
-        bottom: 0;
+        bottom: 4%;
         left: 0;
-        right: 0;
+        right: 4%;
         opacity: 0;
         overflow: hidden;
         -webkit-transition: opacity;
@@ -59,6 +61,9 @@
         background: rgba(0,0,0,.7);
         padding: @paddingSmall;
         color: #ddd;
+
+        .border-radius(@borderRadiusSmall);
+        .border-top-radius(0);
 
         a {
             color: white;
