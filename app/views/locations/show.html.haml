@@ -26,9 +26,6 @@
           %i.icon-plus
           Post a Challenge in #{@location.name} 
     %h3 Challenges
-    -if can? :create, Challenge
-      %p
-        = link_to "Add a Challenge Here", new_challenge_path(:location_id => @location.id), :class => "btn"
     - if @challenges.count
       .challenge-sort
         %span.challenge-sort-by
