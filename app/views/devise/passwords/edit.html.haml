@@ -2,19 +2,22 @@
 
 = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f|
   = devise_error_messages!
-  = f.hidden_field :reset_password_token
+  .row
+    .span9
+      = f.hidden_field :reset_password_token
 
-  .control-group
-    = f.label :password, "New password", :class => "control-label"
-    .controls
-      = f.password_field :password, :autofocus => true
+      .control-group
+        = f.label :password, "New password", :class => "control-label"
+        .controls
+          = f.password_field :password, :autofocus => true
 
-  .control-group
-    = f.label :password_confirmation, "Confirm new password", :class => "control-label"
-    .controls
-      = f.password_field :password_confirmation
+      .control-group
+        = f.label :password_confirmation, "Confirm new password", :class => "control-label"
+        .controls
+          = f.password_field :password_confirmation
+    .span3
+      = render "devise/shared/links"
 
   .form-actions
     = f.submit "Change my password"
 
-= render "devise/shared/links"
