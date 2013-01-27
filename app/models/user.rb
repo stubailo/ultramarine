@@ -53,10 +53,8 @@ class User < ActiveRecord::Base
       puts "loading"
       friends = graph.get_connections("me", "friends")
       friend_ids = friends.map{|friend| friend["id"].to_i}
-      puts "about to insert into db"
-      puts friend_ids
-      friend_ids.each do |fbid|
-        user.facebook_friends.create({fbid: fbid, user_id: user.id})
+      User.transaction do
+        user.facebook_friends.create friend_ids.map { |fbid| {fbid: fbid, user_id: user.id} }
       end
       puts "done inserting"
       user.update_attribute(:last_loaded, Time.now())
