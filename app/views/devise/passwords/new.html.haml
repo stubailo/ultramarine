@@ -2,12 +2,15 @@
 
 = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => "form-horizontal" }) do |f|
   = devise_error_messages!
-  .control-group
-    = f.label :email, :class => "control-label"
-    .controls
-      = f.email_field :email, :autofocus => true
+  .row
+    .span9
+      .control-group
+        = f.label :email, :class => "control-label"
+        .controls
+          = f.email_field :email, :autofocus => true
+          .help-block We'll email you a link with directions on how to reset your password.
+    .span3
+      = render "devise/shared/links"
 
   .form-actions
-    = f.submit "Send me reset password instructions"
-
-= render "devise/shared/links"
+    = f.submit "Submit", :class => "btn btn-primary"
