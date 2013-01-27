@@ -47,13 +47,18 @@ class User < ActiveRecord::Base
   end
 
   def get_fb_friend_ids(user, graph)
+    puts "calling fb friend ids"
     if user.last_loaded.nil? || (Time.now-user.last_loaded).to_i > 600
       user.facebook_friends.destroy_all
+      puts "loading"
       friends = graph.get_connections("me", "friends")
       friend_ids = friends.map{|friend| friend["id"].to_i}
+      puts "about to insert into db"
+      puts friend_ids
       friend_ids.each do |fbid|
         user.facebook_friends.create({fbid: fbid, user_id: user.id})
       end
+      puts "done inserting"
       user.update_attribute(:last_loaded, Time.now())
       user.save
       return friend_ids
