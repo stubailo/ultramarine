@@ -29,10 +29,11 @@
     - if @challenges.count
       .challenge-sort
         %span.challenge-sort-by
-          Sort challenges by:
-          = sortable "score", "vote_value"
-          = sortable "duration", "duration_value"
-          = sortable "difficulty"
+          %ul.inline
+            %li Sort by:
+            %li= sortable "score", "vote_value"
+            %li= sortable "duration", "duration_value"
+            %li= sortable "difficulty"
       - @challenges.each do |challenge|
         = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
           .tiny-photos
