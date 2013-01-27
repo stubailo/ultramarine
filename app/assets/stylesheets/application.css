@@ -20,3 +20,9 @@ html {
 .onlyjs {
   display: none;
 }
+
+#footer {
+  margin-top: 30px;
+  text-align: center;
+  color: #999;
+}
