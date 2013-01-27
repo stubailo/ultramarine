@@ -26,8 +26,14 @@
           %i.icon-plus
           Post a Challenge in #{@location.name} 
     %h3 Challenges
-    - if @location.challenges.count
-      - @location.challenges.each do |challenge|
+    - if @challenges.count
+      .challenge-sort
+        %span.challenge-sort-by
+          Sort challenges by:
+          = sortable "score", "vote_value"
+          = sortable "duration", "duration_value"
+          = sortable "difficulty"
+      - @challenges.each do |challenge|
         = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
           .tiny-photos
             - challenge.photos(@graph, current_user).each do |photo|
