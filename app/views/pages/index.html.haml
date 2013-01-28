@@ -1,16 +1,19 @@
-- if Location.any?
-  - location = Location.first
+- if current_user
+  = render "pages/logged_in_home"
+- else
+  - if Location.any?
+    - location = Location.first
 
-  - content_for (:above_container) do
-    .big-image{:style => "background-image: url(#{location.image})"}
-      .container
-        .dark-bg
-          %h2 
-            I'm on vacation in
-            = link_to location.name, location, :class => "location-name"
-          %p.subtitle What should I do here?
-        - if location.challenges.any?
-          = render :layout => "challenges/mini", :locals => {:challenge => location.challenges.first} do
-            Whatup 
+    - content_for (:above_container) do
+      .big-image{:style => "background-image: url(#{location.image})"}
+        .container
+          .dark-bg
+            %h2 
+              I'm on vacation in
+              = link_to location.name, location, :class => "location-name"
+            %p.subtitle What should I do here?
+          - if location.challenges.any?
+            = render :layout => "challenges/mini", :locals => {:challenge => location.challenges.first} do
+              Whatup 
 
-Other shit here.
+  Other shit here.
