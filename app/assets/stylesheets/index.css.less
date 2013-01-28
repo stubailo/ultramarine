@@ -14,9 +14,16 @@ body.pages.index {
     .dark-bg {
       background: rgba(0,0,0,.7);
       padding: 15px;
+      .border-radius(@borderRadiusSmall);
+    }
+
+    #index-sign-up {
+      background: @linkColor;
+      margin: 15px 0;
     }
 
     h2 {
+      line-height: normal;
       color: white;
       text-shadow: 0 0 10px rgba(0,0,0,.4);
       font-size: 4em;

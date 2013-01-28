@@ -1,6 +1,14 @@
 @import "twitter/bootstrap/variables.less";
 @import "twitter/bootstrap/mixins.less";
 body.locations {
+  .main-content > .tablet-full-width {
+    @media (max-width: 979px) {
+      width: 100%;
+      margin-bottom: 20px;
+      float: left;
+    }
+  }
+
   .big-image {
     color: white;
     .container {
@@ -15,6 +23,7 @@ body.locations {
       font-size: 5em;
       text-shadow: 0 1px 8px rgba(0,0,0,.7);
       margin-bottom: 20px;
+      line-height: normal;
     }
     p {
       text-shadow: 0 1px 8px rgba(0,0,0,.7);
@@ -97,6 +106,10 @@ body.locations {
         text-decoration: none;
       }
     }
+  }
+
+  .new_challenge_link {
+    margin-top: 20px;
   }
 
 }

@@ -18,11 +18,25 @@
           %h2= @location.name
           %p= @location.description
 
-.row
-  .span8.tablet-full-width               
+.row.main-content
+  .span4.tablet-full-width.pull-right{:style => "margin-top: 10px"}
+    - if @challenges_completed.any?
+      %h5 #{@challenges_completed.count} challenges completed in #{@location.name}.
+      %p #{@challenges_completed.sum {|a| a.difficulty} * 10} / #{@location.challenges.sum{|a| a.difficulty} * 10} points for this location.
+      %ul.unstyled.hidden-tablet
+        - @challenges_completed.each do |challenge|
+          %li
+            = link_to challenge.name, challenge
+            %span.muted
+              %i.icon-star
+              = challenge.difficulty_string
+    - else
+      .well
+        No challenges completed in #{@location.name} yet!  Browse on the left to find something you want to do!
+  .span8.tablet-full-width.pull-left    
     .pull-right
       -if can? :create, Challenge
-        = link_to new_challenge_path(:location_id => @location.id), :class => "btn" do
+        = link_to new_challenge_path(:location_id => @location.id), :class => "btn new_challenge_link" do
           %i.icon-plus
           Post a Challenge in #{@location.name} 
     %h3 Challenges
@@ -40,11 +54,4 @@
             - challenge.photos(@graph, current_user).each do |photo|
               = link_to photo do
                 = image_tag photo.image(:tiny)
-  .span4.tablet-full-width
-    -#
-      %h4 Potential locations of interest in this area:
-      .google-places
-        - @venues.each do |venue| 
-          = venue.name
-          = venue.rating
   

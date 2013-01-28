@@ -1,12 +1,13 @@
 .row
-  .span8
+  .span8.tablet-full-width
     .mini-challenge
       .title
         .name.pull-left= link_to challenge.name, challenge
         %ul.pull-left.inline
           %li
             - if current_user
-              .btn.btn-mini
+              - additional_class = {1 => "btn-success", 0 => "", -1 => "btn-error"}[current_user.voted_for? challenge]
+              = link_to votes_vote_path(:challenge_id => challenge.id, :value => 1), :method => "post", :class => "btn btn-mini " + additional_class do
                 %i.icon-thumbs-up
               = challenge.vote_value
             - else

@@ -82,4 +82,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def voted_for? (object)
+    query = Vote.where(:user_id => id, (object.class.to_s.downcase + "_id").to_sym => object.id)
+    if query.any?
+      return query.first.value
+    else
+      return 0
+    end
+  end
+
 end
