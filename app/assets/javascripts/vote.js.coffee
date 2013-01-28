@@ -1,9 +1,12 @@
 $ ->
-  $(".vote-btn-group a").click (e) ->
+  $("[href^='/votes/vote']").click (e) ->
     e.preventDefault()
-    $.post($(this).attr("href"), {}, (->), "json")
-    was_active = $(this).hasClass("active")
-    $(".vote-btn-group a").removeClass("active")
-    unless was_active
-      $(this).addClass("active")
-    return false;
+    n = $(this).parents(".vote-container").find(".vote-count")
+    if $(this).hasClass("btn-success")
+      n.text(parseInt(n.text()) - 1)
+      $(this).removeClass("btn-success")
+    else
+      n.text(parseInt(n.text()) + 1)
+      $(this).addClass("btn-success")
+    $.post $(this).attr("href")
+    return false

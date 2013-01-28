@@ -14,13 +14,7 @@
 
 %p= @photo.caption
 
-score: #{@photo.vote_value}
--if current_user
-  %span.vote-btn-group
-    = link_to  votes_vote_path(:photo_id => @photo.id, :value => 1), :method => :post, :class => "btn btn-small" do
-      %i.icon-thumbs-up
-    = link_to votes_vote_path(:photo_id => @photo.id, :value => -1), :method => :post, :class => "btn btn-small" do
-      %i.icon-thumbs-down
+= render :partial => "votes/vote", :locals => {:object => @photo}
 
 posted by 
 =link_to @photo.user.username, @photo.user

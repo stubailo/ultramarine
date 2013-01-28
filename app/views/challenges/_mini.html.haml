@@ -5,14 +5,7 @@
         .name.pull-left= link_to challenge.name, challenge
         %ul.pull-left.inline
           %li
-            - if current_user
-              - additional_class = {1 => "btn-success", 0 => "", -1 => "btn-error"}[current_user.voted_for? challenge]
-              = link_to votes_vote_path(:challenge_id => challenge.id, :value => 1), :method => "post", :class => "btn btn-mini " + additional_class do
-                %i.icon-thumbs-up
-              = challenge.vote_value
-            - else
-              %i.icon-thumbs-up
-              = challenge.vote_value
+            = render :partial => "votes/vote", :locals => {:object => challenge}
           %li
             %i.icon-globe
             = link_to challenge.location.name, challenge.location
