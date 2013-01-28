@@ -45,44 +45,14 @@ class ChallengesController < ApplicationController
   def show
     @count = 0
     @photos_to_photo_types = Hash.new
-    @ordered_photos = []
 
-    public_photos = Photo.where(:challenge_id => @challenge.id).where(:privacy_level => 3)
-    @count += public_photos.length
-    unless current_user
-      @ordered_photos += public_photos
-      public_photos.each do |photo|
-        @photos_to_photo_types[photo.id] = "public"
-      end
+    photos = @challenge.photos(graph, current_user)
+    @count = photos.size()
+    @ordered_photos = photos.sort_by{|photo| photo[:vote_value]}.reverse
+    friend_ids = current_user.friend_ids(current_user, graph)
+    @ordered_photos.each do |photo|
+      @photos_to_photo_types[photo.id] = (photo.privacy_level == 1) ? "private" : (photo.privacy_level == 2) ? "friend" : (friend_ids.include?(photo.user_id)) ? "friend" : "public"
     end
-
-    if current_user
-      private_photos = Photo.where(:user_id => current_user.id).where(:challenge_id => @challenge.id)
-      @count += private_photos.length
-      @ordered_photos += private_photos
-      private_photos.each do |photo|
-        @photos_to_photo_types[photo.id] = "private"
-      end
-
-      friend_fbids = current_user.get_fb_friend_ids(current_user, graph)
-      friend_ids = User.where(:fbid => friend_fbids)
-      friend_ids = friend_ids.map{|friend| friend.id}
-      friend_photos = Photo.where(:user_id => friend_ids).where(:challenge_id => @challenge.id).where(:privacy_level => [2,3])
-      @count += friend_photos.length
-      @ordered_photos += friend_photos
-      friend_photos.each do |photo|
-        @photos_to_photo_types[photo.id] = "friend"
-      end
-
-      public_photos = public_photos - friend_photos - private_photos
-      @ordered_photos += public_photos
-      public_photos.each do |photo|
-        @photos_to_photo_types[photo.id] = "public"
-      end
-    end
-    @ordered_photos = @ordered_photos.sort_by{|photo| photo[:vote_value]}.reverse
-    
-    puts @photos_to_photo_types
     
     respond_to do |format|
       format.html # show.html.erb

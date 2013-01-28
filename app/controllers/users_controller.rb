@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @graph = graph
     @is_me = @user == current_user
     @newsfeed = @user.newsfeed_items.order("created_at DESC")
     

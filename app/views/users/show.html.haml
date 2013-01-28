@@ -34,7 +34,7 @@
     #completed-challenges.content-hash#challenges-hash
       -@completed_challenges.each do |completed|
         = render :layout => "challenges/mini", :locals => {:challenge => completed} do
-          - photos = Photo.where(user_id: @user.id, challenge_id: completed.id)
+          - photos = completed.photos(@graph, current_user).where(user_id: @user.id, challenge_id: completed.id)
           - if photos
             .tiny-photos
               - photos.each do |photo|
