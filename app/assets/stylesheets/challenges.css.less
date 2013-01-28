@@ -1,6 +1,12 @@
 @import "twitter/bootstrap/variables.less";
 @import "twitter/bootstrap/mixins.less";
-
+a {
+      &:hover {
+        img {
+          .box-shadow(0 0 4px rgba(0,0,0,.4));
+        }
+      }
+}
 .mini-challenge {
   margin-bottom: 15px;
   margin-top: 15px;
@@ -9,15 +15,30 @@
   .tiny-photos {
     padding: @paddingSmall;
     padding-bottom: 8px;
+    .clearfix;
+
+    a {
+      display: block;
+      float: left;
+      margin: 2px;
+    }
+    img {
+    }
   }
   .title {
     ul {
-      margin-bottom: 0;
+      margin-bottom: 2px;
+      li {
+        padding-left: 0;
+        padding-right: 10px;
+      }
     }
     .clearfix;
     .name {
       font-weight: bold;
       font-size: 1.2em;
+      margin-bottom: 4px;
+      margin-right: 10px;
     }
     .pull-left {
       margin-right: 10px;
@@ -41,7 +62,7 @@
     display: inline-block;
     img {
       width: 96%;
-      margin-bottom: 4%;
+      margin: 2%;
       height: auto;
       .border-radius(@borderRadiusSmall);
     }
@@ -49,9 +70,9 @@
 
     .image-mouseover-content {
         position: absolute;
-        bottom: 4%;
-        left: 0;
-        right: 4%;
+        bottom: 2%;
+        left: 2%;
+        right: 2%;
         opacity: 0;
         overflow: hidden;
         -webkit-transition: opacity;
