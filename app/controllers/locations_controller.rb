@@ -25,6 +25,10 @@ class LocationsController < ApplicationController
       @challenges = @location.challenges.order(sort_column + ' ' + sort_direction)
     end
 
+    if params[:hide] == 'completed'
+      @challenges = @challenges - current_user.completed_challenges
+    end
+
     #@client = GooglePlaces::Client.new(Ultramarine::Application::PLACES_API_KEY)
     #@venues = @client.spots(@location.lat, @location.lon)
 

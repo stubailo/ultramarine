@@ -34,6 +34,11 @@
             %li= sortable "score", "vote_value"
             %li= sortable "duration", "duration_value"
             %li= sortable "difficulty"
+      - if current_user
+        .challenge-hide
+          %span.challenge-hide-by
+            %ul.inline
+              %li= link_to "Hide completed challenges", {:hide => 'completed'}
       - @challenges.each do |challenge|
         = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
           .tiny-photos
