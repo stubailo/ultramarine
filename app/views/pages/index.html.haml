@@ -3,17 +3,25 @@
 - else
   - if Location.any?
     - location = Location.first
+  - content_for (:above_container) do
+    .big-image{:style => "background-image: url(#{location.image})"}
+      .container
+        .dark-bg
+          %h2 
+            I'm on vacation in
+            = link_to location.name, location, :class => "location-name"
+          %p.subtitle What should I do here?
+        - if location.challenges.any?
+          - challenge = location.challenges.first
+          = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
+            .tiny-photos
+              - challenge.photos.each do |photo|
+                = link_to photo do
+                  = image_tag photo.image(:tiny)
 
-    - content_for (:above_container) do
-      .big-image{:style => "background-image: url(#{location.image})"}
-        .container
-          .dark-bg
-            %h2 
-              I'm on vacation in
-              = link_to location.name, location, :class => "location-name"
-            %p.subtitle What should I do here?
-          - if location.challenges.any?
-            = render :layout => "challenges/mini", :locals => {:challenge => location.challenges.first} do
-              Whatup 
-
-  Other shit here.
+.row
+  .span8.tablet-full-width
+    %p.lead{:style => "margin-top: 20px"}
+      Ultramarine is a place where people can post challenges for you to do when you're traveling.  It's for vacationers looking to expand past the usual touristy activities.
+    %p There are hundreds of websites where you can look for the most popular tourist attractions in any given place, and it can be hard to look beyond those to find the real hidden gems at your destination.
+    %p On our site you can sort challenges by difficulty, amount of time required, and popularity to find the most interesting and exciting ways to use your time.
