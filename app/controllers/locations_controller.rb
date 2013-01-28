@@ -2,7 +2,7 @@ require 'net/http'
 
 class LocationsController < ApplicationController
 
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :hide_column
   load_and_authorize_resource
   # GET /locations
   # GET /locations.json
@@ -98,5 +98,9 @@ class LocationsController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+
+  def hide_column
+    %w[completed].include?(params[:hide]) ? params[:hide] : nil
   end
 end
