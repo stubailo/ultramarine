@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @graph = graph
     @is_me = @user == current_user
-    @newsfeed = @user.newsfeed_items.order("created_at DESC")
+    @newsfeed = @user.newsfeed_items.order("created_at DESC").limit(100)
     
     @is_friends = current_user ? current_user.facebook_friends?(current_user, @user.id, graph) : nil
     
@@ -44,6 +44,8 @@ class UsersController < ApplicationController
       end
       true
     end
+
+    @newsfeed = @newsfeed[0...15]
 
     @completed_challenges = Challenge.joins(:challenge_completions).where(:challenge_completions => {:user_id => @user.id}).order("challenge_completions.created_at DESC")
   end

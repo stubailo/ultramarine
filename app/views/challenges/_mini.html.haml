@@ -5,6 +5,14 @@
         .name.pull-left= link_to challenge.name, challenge
         %ul.pull-left.inline
           %li
+            - if current_user
+              .btn.btn-mini
+                %i.icon-thumbs-up
+              = challenge.vote_value
+            - else
+              %i.icon-thumbs-up
+              = challenge.vote_value
+          %li
             %i.icon-globe
             = link_to challenge.location.name, challenge.location
           - if challenge.difficulty
