@@ -1,6 +1,8 @@
-- if Location.any?
-  - location = Location.first
-
+- if current_user
+  = render "pages/logged_in_home"
+- else
+  - if Location.any?
+    - location = Location.first
   - content_for (:above_container) do
     .big-image{:style => "background-image: url(#{location.image})"}
       .container

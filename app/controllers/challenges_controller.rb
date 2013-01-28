@@ -49,9 +49,15 @@ class ChallengesController < ApplicationController
     photos = @challenge.photos(graph, current_user)
     @count = photos.size()
     @ordered_photos = photos.sort_by{|photo| photo[:vote_value]}.reverse
-    friend_ids = current_user.friend_ids(current_user, graph)
-    @ordered_photos.each do |photo|
-      @photos_to_photo_types[photo.id] = (photo.privacy_level == 1) ? "private" : (photo.privacy_level == 2) ? "friend" : (friend_ids.include?(photo.user_id)) ? "friend" : "public"
+    if current_user
+      friend_ids = current_user.friend_ids(current_user, graph)
+      @ordered_photos.each do |photo|
+        @photos_to_photo_types[photo.id] = (photo.privacy_level == 1) ? "private" : (photo.privacy_level == 2) ? "friend" : (friend_ids.include?(photo.user_id)) ? "friend" : "public"
+      end
+    else
+      @ordered_photos.each do |photo|
+        @photos_to_photo_types[photo.id] = "public"
+      end
     end
     
     respond_to do |format|

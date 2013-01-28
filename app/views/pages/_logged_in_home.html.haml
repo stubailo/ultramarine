@@ -1,0 +1,22 @@
+%br
+%br
+%h2 What to do?
+.todo
+%h3 On your todo list:
+.todo-challenges
+  -@challenges_todo.each do |todo|
+    = link_to todo.name, todo
+.friends
+%h3 Challenges your friends have completed:
+.friend-challenges
+  -@friend_challenges.each do |challenge|
+    = link_to challenge[:challenge].name, challenge[:challenge]
+    Completed by
+    = link_to challenge[:friend].username, challenge[:friend]
+.popular
+%h3 Other popular challenges:
+.popular-challenges
+  -@popular_challenges.each do |popular|
+    = link_to popular.name, popular
+    = popular.vote_value
+
