@@ -13,11 +13,6 @@
           = link_to "#photos" do
             %i.icon-picture
             Photos
-        %li#todo-tab
-          = link_to "#todo" do
-            %i.icon-tasks
-            Todo List
-          
     .nojs
       %h3 Photos
     #photos-hash.content-hash.photo-grid
@@ -41,11 +36,6 @@
                 = link_to photo do
                   = image_tag photo.image(:tiny)
           %p Completed by #{@user.username} #{time_ago_in_words completed.completed_by?(@user).created_at} ago
-    .nojs
-      %h3 Todo List:
-    #todo-hash.content-hash
-      -@user.todos.each do |todo|
-        =link_to todo.name, challenge_path(todo)
 
   .span4
     %h5 Recent Activity
