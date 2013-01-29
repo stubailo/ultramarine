@@ -4,19 +4,22 @@ gem 'rails', '3.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'sqlite3'
+group :development, :test do
+  gem 'therubyracer'
+  gem 'sqlite3'
+end
+group :production do
+  gem 'pg'
+  gem 'thin'
+end
 gem 'thin'
-
+gem 'heroku'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-fileupload-rails'
