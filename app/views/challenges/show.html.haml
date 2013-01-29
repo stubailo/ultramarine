@@ -6,7 +6,10 @@
     - if current_user == @challenge.user
       you
     - else
-      #{link_to @challenge.user.username, @challenge.user}
+      - if @challenge.user
+        #{link_to @challenge.user.username, @challenge.user}
+      - else
+        [deleted]
     = time_ago_in_words @challenge.created_at
     ago
     - if can? :edit, @challenge

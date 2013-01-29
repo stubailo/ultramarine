@@ -10,16 +10,16 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :token, :fbid, :password_confirmation, :remember_me, :username, :login
   # attr_accessible :title, :body
 
-  has_many :omniauth_associations
-  has_many :facebook_friends
-  has_many :photos
+  has_many :omniauth_associations, :dependent => :destroy
+  has_many :facebook_friends, :dependent => :destroy
+  has_many :photos, :dependent => :destroy
   has_many :challenges
-  has_many :albums
+  has_many :albums, :dependent => :destroy
   has_many :newsfeed_items
 
   has_and_belongs_to_many :todos, :class_name => "Challenge", :join_table => "todo_users_todos", :foreign_key => "todo_user_id", :association_foreign_key => "todo_id"
 
-  has_many :challenge_completions
+  has_many :challenge_completions, :dependent => :destroy
   has_many :completed_challenges, :class_name => "Challenge", :source => :challenge, :through => :challenge_completions
   attr_accessor :login
 
