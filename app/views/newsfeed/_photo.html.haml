@@ -2,7 +2,7 @@
   = link_to photo, :class => "pull-left" do
     = image_tag photo.image(:tiny), :class => "media-object"
   .media-body
-    %p.media-heading #{photo.user.username} uploaded a photo to #{link_to photo.challenge.name, photo.challenge}
+    %p.media-heading #{link_to photo.user.username, photo.user} uploaded a photo to #{link_to photo.challenge.name, photo.challenge}
     - if not photo.caption.blank?
       %p= photo.caption
     %p

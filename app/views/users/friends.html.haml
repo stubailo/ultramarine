@@ -1,13 +1,16 @@
 %h2 Friends on Ultramarine
 
-.friends.row
-  -@friends.each do |friend|
-    .span4
-      .friend.media
-        =image_tag(friend[:picture], :class => "pull-left")
-        .media-body
-          = link_to friend[:friend].username, friend[:friend]
-          .info
-            = friend[:friend].points
-            points
-
+- if @friends.any?
+  .friends.row
+    -@friends.each do |friend|
+      .span4
+        .friend.media
+          =image_tag(friend[:picture], :class => "pull-left")
+          .media-body
+            = link_to friend[:friend].username, friend[:friend]
+            .info
+              = friend[:friend].points
+              points
+- else
+  .well
+    None of your Facebook friends are using Ultramarine yet!  Let them know about it for us :]

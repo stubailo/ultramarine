@@ -8,7 +8,7 @@
       = image_tag base_comment.photo.image(:tiny), :class => "media-object"
   .media-body
     %p.media-heading
-      #{comment.user.username} #{comment.parent_id ? "replied to a comment" : "commented"}
+      #{link_to comment.user.username, comment.user} #{comment.parent_id ? "replied to a comment" : "commented"}
       on
       - if base_comment.photo_id
         = link_to "a photo", base_comment.photo

@@ -1,8 +1,12 @@
+%h4
+  =link_to @challenge.location do
+    %i.icon-circle-arrow-left
+    Back to #{@challenge.location.name}
+
 %h2
   = @challenge.name
   %small{:style => "display: inline-block"}
-    in 
-    #{link_to @challenge.location.name, @challenge.location}, posted by
+    posted by
     - if current_user == @challenge.user
       you
     - else
@@ -10,8 +14,9 @@
         #{link_to @challenge.user.username, @challenge.user}
       - else
         [deleted]
-    = time_ago_in_words @challenge.created_at
-    ago
+    %span
+      = time_ago_in_words @challenge.created_at
+      ago
     - if can? :edit, @challenge
       |
       = link_to "edit", edit_challenge_path(@challenge)
@@ -47,7 +52,7 @@
         = f.hidden_field :challenge_id, :value => @challenge.id 
         = f.file_field :image, multiple: true, name: "photo[image]"
 .onlyjs
-  %ul.nav.nav-pills.nav-hash
+  %ul.nav.nav-tabs.nav-hash
     %li#info-tab
       = link_to "#info" do
         %i.icon-info-sign

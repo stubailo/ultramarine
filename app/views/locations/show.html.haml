@@ -64,12 +64,15 @@
                     = link_to ({:hide => 'completed', :sort => params[:sort], :direction => params[:direction]}) do
                       = succeed "Hide Completed" do
                         %i.icon-check-empty
-      - @challenges.each do |challenge|
-        = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
-          - photos = challenge.photos(@graph, current_user)
-          - if photos.any?
-            .tiny-photos
-              - photos.each do |photo|
-                = link_to photo do
-                  = image_tag photo.image(:tiny)
+      - if @challenges.any?
+        - @challenges.each do |challenge|
+          = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
+            - photos = challenge.photos(@graph, current_user)
+            - if photos.any?
+              .tiny-photos
+                - photos.each do |photo|
+                  = link_to photo do
+                    = image_tag photo.image(:tiny)
+      - else
+        .well No challenges to display in #{@location.name}.  Use the button above to create some of your own!
   
