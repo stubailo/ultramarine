@@ -52,7 +52,7 @@ class Challenge < ActiveRecord::Base
     else
       @all_photos = Photo.where(:challenge_id => id).where(:privacy_level => 3)
     end
-    return @all_photos
+    return @all_photos.order("vote_value DESC")
   end
 
   def duration_value
