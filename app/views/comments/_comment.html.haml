@@ -5,15 +5,10 @@
     = link_to comment.user.username, comment.user
   - else
     [deleted]
-  score: #{comment.vote_value}
 .comment-body
   = comment.body
   .comment-links
-    %span.vote-btn-group
-      = link_to votes_vote_path(:comment_id => comment.id, :value => 1), :method => :post, :class => "btn btn-small" do
-        %i.icon-thumbs-up
-      = link_to votes_vote_path(:comment_id => comment.id, :value => -1), :method => :post, :class => "btn btn-small" do
-        %i.icon-thumbs-down
+    = render :partial => "votes/vote", :locals => {:object => comment}
     -if can? :delete, comment
       = link_to "delete", comment, :method => :delete
     %span.reply 

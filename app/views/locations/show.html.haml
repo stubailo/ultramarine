@@ -41,21 +41,27 @@
           Post a Challenge in #{@location.name} 
     %h3 Challenges
     - if @challenges.count
-      .challenge-sort
-        %span.challenge-sort-by
-          %ul.inline
-            %li Sort by:
-            %li= sortable "score", "vote_value"
-            %li= sortable "duration", "duration_value"
-            %li= sortable "difficulty"
-      - if current_user
-        .challenge-hide
-          %span.challenge-hide-by
-            %ul.inline
-              - if params[:hide] == 'completed'
-                %li= link_to "Show completed challenges", {:sort => params[:sort], :direction => params[:direction]}
-              - else
-                %li= link_to "Hide completed challenges", {:hide => 'completed', :sort => params[:sort], :direction => params[:direction]}
+      %ul.inline
+        %li Sort by:
+        %li.challenge-sort= sortable "score", "vote_value"
+        %li.challenge-sort= sortable "duration", "duration_value"
+        %li.challenge-sort= sortable "difficulty"
+        - if current_user
+          %li
+          %li Options:
+          %li
+            %span.challenge-hide-by
+              %ul.inline
+                - if params[:hide] == 'completed'
+                  %li
+                    = link_to ({:sort => params[:sort], :direction => params[:direction]}) do
+                      = succeed "Hide Completed" do
+                        %i.icon-check
+                - else 
+                  %li
+                    = link_to ({:hide => 'completed', :sort => params[:sort], :direction => params[:direction]}) do
+                      = succeed "Hide Completed" do
+                        %i.icon-check-empty
       - @challenges.each do |challenge|
         = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
           .tiny-photos

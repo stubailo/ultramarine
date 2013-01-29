@@ -2,21 +2,42 @@
   = @challenge.name
   %small{:style => "display: inline-block"}
     in 
-    = link_to @challenge.location.name, @challenge.location
-%p
-  Posted by
-  - if current_user == @challenge.user
-    you
-  - else
-    - if @challenge.user
-      #{link_to @challenge.user.username, @challenge.user}
+    #{link_to @challenge.location.name, @challenge.location}, posted by
+    - if current_user == @challenge.user
+      you
     - else
-      [deleted]
-  = time_ago_in_words @challenge.created_at
-  ago
-  - if can? :edit, @challenge
-    |
-    = link_to "edit", edit_challenge_path(@challenge)
+      - if @challenge.user
+        #{link_to @challenge.user.username, @challenge.user}
+      - else
+        [deleted]
+    = time_ago_in_words @challenge.created_at
+    ago
+    - if can? :edit, @challenge
+      |
+      = link_to "edit", edit_challenge_path(@challenge)
+.pull-right{:style => "margin-bottom: 20px; margin-top: 5px"}
+  = render :partial => "votes/vote", :locals => {:object => @challenge}
+  -if current_user
+    -if @challenge.completed_by? current_user
+      = link_to remove_completed_path(@challenge), :class => 'btn btn-small btn-info' do
+        %i.icon-ok
+        Completed
+        %span.completed-score
+          = @challenge.difficulty * 10
+          points
+    -else
+      .btn-group
+        = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
+          %i.icon-ok
+          Mark Done
+        -if @challenge.todo_users.exists?(:id => current_user.id)
+          = link_to remove_todo_path(@challenge), :class => 'btn btn-small' do
+            %i.icon-minus
+            Todo
+        -else
+          = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
+            %i.icon-plus
+            Todo
 .onlyjs
   %ul.nav.nav-pills.nav-hash
     %li#info-tab
@@ -36,27 +57,6 @@
 #info-hash.content-hash
   .row
     .span6
-      = render :partial => "votes/vote", :locals => {:object => @challenge}
-      -if current_user
-        -if @challenge.completed_by? current_user
-          %span.label.label-success
-            %i.icon-ok
-            Completed
-            \-
-            = link_to "cancel", remove_completed_path(@challenge), :style => "color: white"
-        -else
-          .btn-group
-            = link_to add_completed_path(@challenge), :class => 'btn btn-small' do
-              %i.icon-ok
-              Mark Done
-            -if @challenge.todo_users.exists?(:id => current_user.id)
-              = link_to remove_todo_path(@challenge), :class => 'btn btn-small' do
-                %i.icon-minus
-                Todo
-            -else
-              = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
-                %i.icon-plus
-                Todo
   .row
     .span6
       %dl{:style => "margin-top: 0"}
@@ -67,7 +67,7 @@
           %dd= @challenge.difficulty_string
         - if @challenge.duration
           %dt Time Required
-          %dd #{@challenge.duration} #{@challenge.duration_unit}
+          %dd #{@challenge.duration_string}
     .span6 
 
       - if not @challenge.lat.blank?

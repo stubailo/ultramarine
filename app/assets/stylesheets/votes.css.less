@@ -1,0 +1,54 @@
+@import "twitter/bootstrap/variables.less";
+@import "twitter/bootstrap/mixins.less";
+
+.vote-btn-group a.active {
+  text-transform: uppercase;
+}
+
+.vote-container .btn-mini {
+  font-size: 14px;
+  margin-top: -4px;
+}
+
+.vote-container .btn-small {
+  i {
+    font-size: 15px;
+    margin-top: -4px;
+  }
+  .vote-text {
+    margin-left: 4px;
+  }
+  .vote-count {
+    border-left: rgba(0,0,0,.3) 1px solid;
+    font-weight: bold;
+    padding-left: 7px;
+    margin-left: 4px;
+  }
+}
+
+.comment-links, .mini-challenge {
+  .vote-container .btn-small {
+    i {
+      font-size: 14px;
+      margin-top: -4px;
+    }
+    .vote-text {
+      display: none;
+    }
+    .vote-count {
+      border: none;
+      font-weight: normal;
+      padding-left: 0;
+      margin-left: 4px;
+    }
+    
+    padding: @paddingMini;
+    font-size: @fontSizeSmall;
+    .border-radius(@borderRadiusSmall);
+  }
+}
+
+.mini-challenge .vote-container .btn-small {
+  margin-top: -4px;
+  margin-left: 4px;
+}

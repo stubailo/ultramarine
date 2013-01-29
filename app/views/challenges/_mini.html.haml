@@ -16,7 +16,10 @@
           - if challenge.duration
             %li
               %i.icon-time
-              = challenge.duration
-              = challenge.duration_unit
+              = challenge.duration_string
+          - if current_user and challenge.completed_by? current_user
+            %li
+              %i.icon-check
+              Completed
       %p= challenge.description
       = yield
