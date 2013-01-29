@@ -1,25 +1,23 @@
-.row
-  .span8.tablet-full-width
-    .mini-challenge
-      .title
-        .name= link_to challenge.name, challenge
-        %ul.pull-left.inline
-          %li
-            = render :partial => "votes/vote", :locals => {:object => challenge}
-          %li
-            %i.icon-globe
-            = link_to challenge.location.name, challenge.location
-          - if challenge.difficulty
-            %li
-              %i.icon-star
-              = challenge.difficulty_string
-          - if challenge.duration
-            %li
-              %i.icon-time
-              = challenge.duration_string
-          - if current_user and challenge.completed_by? current_user
-            %li
-              %i.icon-check
-              Completed
-      %p= challenge.description
-      = yield
+.mini-challenge
+  .title
+    .name= link_to challenge.name, challenge
+    %ul.pull-left.inline
+      %li
+        = render :partial => "votes/vote", :locals => {:object => challenge}
+      %li
+        %i.icon-globe
+        = link_to challenge.location.name, challenge.location
+      - if challenge.difficulty
+        %li
+          %i.icon-star
+          = challenge.difficulty_string
+      - if challenge.duration
+        %li
+          %i.icon-time
+          = challenge.duration_string
+      - if current_user and challenge.completed_by? current_user
+        %li
+          %i.icon-check
+          Completed
+  %p= challenge.description
+  = yield

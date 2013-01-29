@@ -1,48 +1,60 @@
-.todo
-  %h3
-    Todo List
-  %p
-    To add items, click the "+ Todo" button on any challenge.
-  -if @challenges_todo.any?
-    .todo-challenges
-      -@challenges_todo.each_with_index do |todo, i|
-        .row
-          .span2
-            %ul.unstyled
-              %li
-                = link_to add_completed_path(todo) do
-                  %i.icon-check
-                  Mark Completed
-              %li
-                = link_to remove_todo_path(todo) do
-                  %i.icon-trash
-                  Remove
-          = render :layout => "challenges/mini", :locals => {:challenge => todo} do
-            - photos = todo.photos(@graph, current_user)
-            - if photos.any?
-              .tiny-photos
-                - photos.limit(10).each do |photo|
-                  = link_to photo do
-                    = image_tag photo.image(:tiny)
--if @friend_challenges.any?
-  .friends
-    %h3 Challenges your friends have completed:
-    .friend-challenges
-      -@friend_challenges.each do |challenge|
-        = link_to challenge[:challenge].name, challenge[:challenge]
-        Completed by
-        = link_to challenge[:friend].username, challenge[:friend]
--if @popular_challenges.any?
-  .popular
-    %h3 Popular challenges:
-    %p If none of these catch your eye, browse the #{link_to "locations", locations_path}!
-    .popular-challenges
-      -@popular_challenges.each do |popular|
-        = render :layout => "challenges/mini", :locals => {:challenge => popular} do
-          - photos = popular.photos(@graph, current_user)
-          - if photos.any?
-            .tiny-photos
-              - photos.limit(10).each do |photo|
-                = link_to photo do
-                  = image_tag photo.image(:tiny)
-
+.row
+  .span8
+    .onlyjs
+      %ul.nav.nav-tabs.nav-hash
+        %li#todo-tab
+          = link_to "#todo" do
+            %i.icon-tasks
+            Todo List
+        %li#popular-tab
+          = link_to "#popular" do
+            %i.icon-group
+            Popular Challenges
+    .todo
+      %h3.nojs
+        Todo List
+      #todo-hash.content-hash
+        -if @challenges_todo.any?
+          .todo-challenges
+            -@challenges_todo.each_with_index do |todo, i|
+              .row
+                .span2
+                  %ul.unstyled
+                    %li
+                      = link_to add_completed_path(todo) do
+                        %i.icon-check
+                        Mark Completed
+                    %li
+                      = link_to remove_todo_path(todo) do
+                        %i.icon-trash
+                        Remove
+                .span6
+                  = render :layout => "challenges/mini", :locals => {:challenge => todo} do
+                    - photos = todo.photos(@graph, current_user)
+                    - if photos.any?
+                      .tiny-photos
+                        - photos.limit(10).each do |photo|
+                          = link_to photo do
+                            = image_tag photo.image(:tiny)
+        - else 
+          .alert.alert-warning To add items, click the "+ Todo" button on any challenge.
+      %h3.nojs
+        Popular challenges:
+      #popular-hash.content-hash
+        -if @popular_challenges.any?
+          %p{:style => "margin-bottom: 20px"} If none of these catch your eye, browse the #{link_to "locations", locations_path}!
+          .popular-challenges
+            -@popular_challenges.each do |popular|
+              .row
+                .span8
+                  = render :layout => "challenges/mini", :locals => {:challenge => popular} do
+                    - photos = popular.photos(@graph, current_user)
+                    - if photos.any?
+                      .tiny-photos
+                        - photos.limit(10).each do |photo|
+                          = link_to photo do
+                            = image_tag photo.image(:tiny)
+  .span4
+    %h5 Friends' Recent Activity
+    - @newsfeed.each do |n|
+      = render :partial => "newsfeed/main", :locals => {:newsfeed_item => n}
