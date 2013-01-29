@@ -36,7 +36,7 @@ class LocationsController < ApplicationController
     #@venues = @client.spots(@location.lat, @location.lon)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html show.html.haml
       format.json { render json: @location }
     end
   end
