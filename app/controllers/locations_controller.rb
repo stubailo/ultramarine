@@ -17,6 +17,7 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @graph = graph
+    @fb_friend_ids = get_fb_friend_ids
     if sort_column == "duration_value"
       sort_direction == "desc" ? 
         @challenges = @location.challenges.sort_by(&:duration_value).reverse() :

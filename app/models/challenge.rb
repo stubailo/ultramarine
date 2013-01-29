@@ -45,9 +45,8 @@ class Challenge < ActiveRecord::Base
     return nil
   end
 
-  def photos(graph=nil, user=nil)
-    if graph and user
-      friend_ids = user.friend_ids(user, graph)
+  def photos(friend_ids = nil, user=nil)
+    if friend_ids and user
       @all_photos = Photo.where("(challenge_id = ? and privacy_level = ?) or (user_id = ? and challenge_id = ?) or (user_id in (?) and challenge_id = ? and privacy_level in (?))", self[:id], 3, user.id, self[:id], friend_ids, self[:id], [2,3])
     else
       @all_photos = Photo.where(:challenge_id => id).where(:privacy_level => 3)

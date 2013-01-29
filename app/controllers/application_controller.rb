@@ -26,10 +26,14 @@ class ApplicationController < ActionController::Base
   end
 
   def get_fb_friend_ids
-    if not env['fb_friend_ids']
-      env['fb_friend_ids'] = "fuck this"
+    if not request.env['fb_friend_ids']
+      if current_user
+        request.env['fb_friend_ids'] = current_user.friend_ids(current_user, graph)
+      else
+        request.env['fb_friend_ids'] = nil
+      end
     end
-    return env['fb_friend_ids']
+    return request.env['fb_friend_ids']
   end
 
 end

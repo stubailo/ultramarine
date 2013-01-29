@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @graph = graph
+    @fb_friend_ids = get_fb_friend_ids
     @is_me = @user == current_user
     @newsfeed = @user.newsfeed_items.order("created_at DESC").limit(100)
     

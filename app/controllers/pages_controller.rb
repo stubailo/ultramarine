@@ -9,7 +9,7 @@ class PagesController < ApplicationController
 
   def user_index
     if current_user
-      @friend_ids = current_user.friend_ids(current_user, graph)
+      @fb_friend_ids = get_fb_friend_ids
       @challenges_todo = current_user.todos
       @friend_completions = ChallengeCompletion.where(:user_id => @friend_ids)
       @friend_challenges = []

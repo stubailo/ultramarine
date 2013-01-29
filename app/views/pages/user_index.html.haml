@@ -30,7 +30,7 @@
                         Remove
                 .span6
                   = render :layout => "challenges/mini", :locals => {:challenge => todo} do
-                    - photos = todo.photos(@graph, current_user)
+                    - photos = todo.photos(@fb_friend_ids, current_user)
                     - if photos.any?
                       .tiny-photos
                         - photos.limit(10).each do |photo|
@@ -48,7 +48,7 @@
               .row
                 .span8
                   = render :layout => "challenges/mini", :locals => {:challenge => popular} do
-                    - photos = popular.photos(@graph, current_user)
+                    - photos = popular.photos(@fb_friend_ids, current_user)
                     - if photos.any?
                       .tiny-photos
                         - photos.limit(10).each do |photo|

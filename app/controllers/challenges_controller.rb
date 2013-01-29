@@ -51,7 +51,7 @@ class ChallengesController < ApplicationController
     @count = 0
     @photos_to_photo_types = Hash.new
 
-    photos = @challenge.photos(graph, current_user)
+    photos = @challenge.photos(get_fb_friend_ids, current_user)
     @count = photos.size()
     @ordered_photos = photos.sort_by{|photo| photo[:vote_value]}.reverse
     if current_user

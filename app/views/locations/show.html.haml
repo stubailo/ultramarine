@@ -67,7 +67,7 @@
       - if @challenges.any?
         - @challenges.each do |challenge|
           = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
-            - photos = challenge.photos(@graph, current_user)
+            - photos = challenge.photos(@fb_friend_ids, current_user)
             - if photos.any?
               .tiny-photos
                 - photos.each do |photo|
