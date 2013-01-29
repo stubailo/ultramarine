@@ -8,7 +8,7 @@ class Challenge < ActiveRecord::Base
   has_many :photos
   has_many :comments
 
-  has_many :challenge_completions
+  has_many :challenge_completions, :dependent => :destroy
   has_many :completed_users, :class_name => "User", :through => :challenge_completions, :source => :user
   has_and_belongs_to_many :todo_users, :class_name => "User", :join_table => "todo_users_todos", :foreign_key => "todo_id", :association_foreign_key => "todo_user_id"
 
