@@ -23,7 +23,7 @@ Ultramarine::Application.routes.draw do
   resources :comments
 
   get "pages/index"
-
+  get "pages/user_index"
   get "pages/about"
 
   post "votes/vote"
