@@ -27,6 +27,11 @@
 
             %ul.nav.pull-right
               - if current_user
+                -if current_user.omniauth_associations.any?
+                  %li
+                    =link_to users_friends_path do
+                      %i.icon-facebook-sign
+                      Friends
                 %li.dropdown
                   =link_to nil, {:class => "dropdown-toggle", :'data-toggle' => "dropdown"} do
                     = current_user.username
@@ -34,10 +39,6 @@
                   %ul.dropdown-menu
                     %li
                       =link_to "Profile", user_path(current_user)
-                    %li
-                      -if current_user.omniauth_associations.any?
-                        =link_to "Friends", users_friends_path
-                      -end
                     %li
                       =link_to edit_user_registration_path do
                         Edit account
