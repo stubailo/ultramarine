@@ -48,19 +48,19 @@ class User < ActiveRecord::Base
 
   def get_fb_friend_ids(user, graph)
     if user.omniauth_associations.any?
-      if user.last_loaded.nil? || (Time.now-user.last_loaded).to_i > 600
-        user.facebook_friends.destroy_all
-        friends = graph.get_connections("me", "friends")
-        friend_ids = friends.map{|friend| friend["id"].to_i}
-        User.transaction do
-          user.facebook_friends.create friend_ids.map { |fbid| {fbid: fbid.to_s, user_id: user.id} }
-        end
-        user.update_attribute(:last_loaded, Time.now())
-        user.save
-        return friend_ids
-      else
-        return user.facebook_friends.map{|friend| friend.fbid}
-      end
+      #if user.last_loaded.nil? || (Time.now-user.last_loaded).to_i > 600
+       # user.facebook_friends.destroy_all
+      friends = graph.get_connections("me", "friends")
+      friend_ids = friends.map{|friend| friend["id"]}#.to_i}
+        #User.transaction do
+         # user.facebook_friends.create friend_ids.map { |fbid| {fbid: fbid.to_s, user_id: user.id} }
+        #end
+        #user.update_attribute(:last_loaded, Time.now())
+        #user.save
+      return friend_ids
+      #else
+        #return user.facebook_friends.map{|friend| friend.fbid}
+      #end
     else
       return []
     end
