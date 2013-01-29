@@ -52,7 +52,15 @@ class ChallengesController < ApplicationController
     if current_user
       friend_ids = current_user.friend_ids(current_user, graph)
       @ordered_photos.each do |photo|
-        @photos_to_photo_types[photo.id] = (photo.privacy_level == 1) ? "private" : (photo.privacy_level == 2) ? "friend" : (friend_ids.include?(photo.user_id)) ? "friend" : "public"
+        if photo.user_id == current_user.id
+          c="private"
+        elsif photo.privacy_level > 1 and friend_ids.include? photo.user_id
+          c="friends"
+        else
+          c="public"
+        end
+        
+        @photos_to_photo_types[photo.id] = c
       end
     else
       @ordered_photos.each do |photo|

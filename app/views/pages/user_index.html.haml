@@ -1,14 +1,20 @@
-%h2 What to do?
 .todo
-  %h3 On your todo list:
+  %h3 Todo List
   -if @challenges_todo.any?
     .todo-challenges
-      -@challenges_todo.each do |todo|
-        = render :layout => "challenges/mini", :locals => {:challenge => todo} do
-          .tiny-photos
-            - todo.photos(@graph, current_user).limit(10).each do |photo|
-              = link_to photo do
-                = image_tag photo.image(:tiny)
+      -@challenges_todo.each_with_index do |todo, i|
+        .row
+          .span2
+            .pull-right
+              = link_to add_completed_path(todo), :class => "btn btn-success" do
+                %i.icon-check
+              = link_to remove_todo_path(todo), :class => "btn btn-danger" do
+                %i.icon-trash
+          = render :layout => "challenges/mini", :locals => {:challenge => todo} do
+            .tiny-photos
+              - todo.photos(@graph, current_user).limit(10).each do |photo|
+                = link_to photo do
+                  = image_tag photo.image(:tiny)
 -if @friend_challenges.any?
   .friends
     %h3 Challenges your friends have completed:
