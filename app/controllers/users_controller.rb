@@ -10,9 +10,9 @@ class UsersController < ApplicationController
     @is_friends = current_user ? current_user.facebook_friends?(current_user, @user.id, graph) : nil
     
     if @is_friends or @is_me
-      @photos = Photo.where(user_id: @user.id, privacy_level: [2,3])
+      @photos = Photo.where(user_id: @user.id, privacy_level: [2,3]).order("vote_value DESC")
     else
-      @photos = Photo.where(user_id: @user.id, privacy_level: 3)
+      @photos = Photo.where(user_id: @user.id, privacy_level: 3).order("vote_value DESC")
     end
 
     @newsfeed.select! do |item|
