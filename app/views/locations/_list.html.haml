@@ -6,6 +6,7 @@
       .row
         .span8.darken
           %p=location.description
+          %p #{pluralize location.challenges.count, "challenge"} available.
     -if can? :create, Location
       .actions
         %p

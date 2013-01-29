@@ -1,8 +1,12 @@
+%h4
+  =link_to @challenge.location do
+    %i.icon-circle-arrow-left
+    Back to #{@challenge.location.name}
+
 %h2
   = @challenge.name
   %small{:style => "display: inline-block"}
-    in 
-    #{link_to @challenge.location.name, @challenge.location}, posted by
+    posted by
     - if current_user == @challenge.user
       you
     - else

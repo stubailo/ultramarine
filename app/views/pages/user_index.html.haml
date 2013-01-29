@@ -37,7 +37,7 @@
                           = link_to photo do
                             = image_tag photo.image(:tiny)
         - else 
-          .alert.alert-warning To add items, click the "+ Todo" button on any challenge.
+          .alert.alert-warning To add items, click the "+ Todo" button on any challenge. Start at the #{link_to "locations", locations_path} page to find something to do!
       %h3.nojs
         Popular challenges:
       #popular-hash.content-hash
@@ -54,7 +54,13 @@
                         - photos.limit(10).each do |photo|
                           = link_to photo do
                             = image_tag photo.image(:tiny)
+        -else
+          .well No challenges to display here.  Submit some of your own challenges for other people to do!
   .span4
     %h5 Friends' Recent Activity
-    - @newsfeed.each do |n|
-      = render :partial => "newsfeed/main", :locals => {:newsfeed_item => n}
+    - if @newsfeed.any?
+      - @newsfeed.each do |n|
+        = render :partial => "newsfeed/main", :locals => {:newsfeed_item => n}
+    - else
+      .well
+        No friend activity yet, get your friends to use Ultramarine to see updates about their vacations!
