@@ -35,8 +35,6 @@ $ ->
     $("#edit_many_photos .form-horizontal .form-actions").remove()
     $("#edit_many_photos .control-group#privacy").hide()
     $("#edit_many_photos #photo_facebook_bit").parents(".control-group").hide()
-    $("#edit_many_photos .facebook").each (i, box) =>
-      box.checked=true
     $("#edit_many_photos form select").val("3")
     $("#edit_many_photos #submit-button").click ->
       facebook_progress_bar = $ "<div>
@@ -52,7 +50,8 @@ $ ->
         val = $ val
         val.find("#photo_privacy_level").val($("#all_photo_privacy").val())
         val.find("#photo_facebook_bit").val($("#all_photo_facebook_bit").val())
-        next = ->
+        next = =>
+          console.log "done"
           num_photos_uploaded +=1
           facebook_progress_bar.find(".bar").width(num_photos_uploaded/count * 100 + "%")
           if which < count - 1

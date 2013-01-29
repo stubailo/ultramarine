@@ -88,7 +88,7 @@ class PhotosController < ApplicationController
           Photo.facebook(@photo, current_user)
         end
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @photo }
       else
         format.html { render action: "edit" }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
