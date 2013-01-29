@@ -9,18 +9,11 @@ class PagesController < ApplicationController
 
   def user_index
     if current_user
+      @friend_ids = current_user.friend_ids(current_user, graph)
       @fb_friend_ids = get_fb_friend_ids
       @challenges_todo = current_user.todos
-      @friend_completions = ChallengeCompletion.where(:user_id => @friend_ids)
-      @friend_challenges = []
-      @friend_completions.each do |completion|
-        challenge = Challenge.find(completion.challenge_id)
-        if !@challenges_todo.include?(challenge)
-          @friend_challenges.append({:challenge => challenge, :friend => User.find(completion.user_id)})
-        end
-      end
       @popular_challenges = Challenge.order("vote_value DESC")
-      @popular_challenges = @popular_challenges - @friend_completions - @challenges_todo - current_user.completed_challenges
+      @popular_challenges = @popular_challenges - @challenges_todo - current_user.completed_challenges
       
 
       @newsfeed = NewsfeedItem.joins(:user).where("newsfeed_items.user_id" => @friend_ids).order("newsfeed_items.created_at DESC").limit(100)
