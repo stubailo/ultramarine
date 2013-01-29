@@ -5,8 +5,8 @@ class Challenge < ActiveRecord::Base
   validates :description, :presence => true
   validates :name, :presence => true
 
-  has_many :photos
-  has_many :comments
+  has_many :photos, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
 
   has_many :challenge_completions, :dependent => :destroy
   has_many :completed_users, :class_name => "User", :through => :challenge_completions, :source => :user
