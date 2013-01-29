@@ -1,7 +1,10 @@
 .comment-header
   %span.collapse
     = link_to "[-]", nil
-  = link_to comment.user.username, comment.user
+  - if comment.user
+    = link_to comment.user.username, comment.user
+  - else
+    [deleted]
   score: #{comment.vote_value}
 .comment-body
   = comment.body

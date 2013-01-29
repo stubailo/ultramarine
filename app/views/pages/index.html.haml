@@ -3,26 +3,26 @@
 - else
   - if Location.any?
     - location = Location.first
-  - content_for (:above_container) do
-    .big-image{:style => "background-image: url(#{location.image})"}
-      .container
-        .dark-bg
-          %h2 
-            I'm on vacation in
-            = link_to location.name, location, :class => "location-name"
-          %p.subtitle What should I do here?
-        .row
-          .span8.tablet-full-width
-            - if location.challenges.any?
-              - challenge = location.challenges.first
-              = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
-                .tiny-photos
-                  - challenge.photos.each do |photo|
-                    = link_to photo do
-                      = image_tag photo.image(:tiny)
-          .span4.tablet-full-width
-            #index-sign-up
-              Sign up dude
+    - content_for (:above_container) do
+      .big-image{:style => "background-image: url(#{location.image})"}
+        .container
+          .dark-bg
+            %h2 
+              I'm on vacation in
+              = link_to location.name, location, :class => "location-name"
+            %p.subtitle What should I do here?
+          .row
+            .span8.tablet-full-width
+              - if location.challenges.any?
+                - challenge = location.challenges.first
+                = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
+                  .tiny-photos
+                    - challenge.photos.each do |photo|
+                      = link_to photo do
+                        = image_tag photo.image(:tiny)
+            .span4.tablet-full-width
+              #index-sign-up
+                Sign up dude
         
 
 .row

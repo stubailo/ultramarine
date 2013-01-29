@@ -7,6 +7,6 @@ class NewsfeedObserver < ActiveRecord::Observer
   end
 
   def after_destroy(object)
-    NewsfeedItem.where({user_id: object.user_id, related_object_id: object.id, related_object_type: object.class.to_s}).destroy
+    NewsfeedItem.where({user_id: object.user_id, related_object_id: object.id, related_object_type: object.class.to_s}).first.destroy
   end
 end
