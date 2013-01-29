@@ -55,11 +55,12 @@ class UsersController < ApplicationController
   end
 
   def friends
-    if current_user.omniauth_associations.any?
+    if current_user && current_user.omniauth_associations.any?
       @user = current_user
       @friends = User.where(:id => @user.friend_ids(current_user, graph))
+      @friends = @friends.map{|friend| {:picture => graph.get_picture(friend.fbid), :friend => friend}}
     else
-      redirect_to :back, flash[:notice] = "You must be connected through facebook to view friends"
+      redirect_to root_path, flash[:notice] = "You must be connected through facebook to view friends"
     end
   end
   

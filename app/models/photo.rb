@@ -6,6 +6,8 @@ class Photo < ActiveRecord::Base
 
   has_attached_file :image, :styles => { :tiny => "64x64#", :thumb => "200x200#", :small => "300x300>", :big => "1170x882>"}
   has_many :comments
+
+  validates_attachment_content_type :image, :content_type=>['image/jpeg', 'image/png']
   
   def thumb
     image.url(:thumb)
@@ -24,8 +26,14 @@ class Photo < ActiveRecord::Base
       album_info = @graph.put_object('me','albums', :name=>"Trip to #{photo.challenge.location.name}")
       album = Album.create_album(user.id, photo.challenge.location.id, album_info["id"])
     end
-    if @graph.put_picture(photo.image.url(:big), photo.image.content_type, facebook_arguments = {:message => photo.caption}, album.fbid)
-      photo.update_attributes(:facebook_bit => 1)
+    if Rails.env.production?
+      if @graph.put_picture(photo.image.url(:big), photo.image.content_type, facebook_arguments = {:message => photo.caption}, album.fbid)
+        photo.update_attributes(:facebook_bit => 1)
+      end
+    else
+      if @graph.put_picture(photo.image.path(:big), photo.image.content_type, facebook_arguments = {:message => photo.caption}, album.fbid)
+        photo.update_attributes(:facebook_bit => 1)
+      end
     end
   end
 end

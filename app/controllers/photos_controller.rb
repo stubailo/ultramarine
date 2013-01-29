@@ -20,6 +20,7 @@ class PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.json
   def show
+    session[:return_two] = request.referrer
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @photo }
@@ -40,7 +41,11 @@ class PhotosController < ApplicationController
   end
 
   def edit_many
-    @photos = Photo.find(params[:photo_ids])
+    if !Photo.where(:id => params[:photo_ids]).any?
+      redirect_to :back, :alert => "Error uploading photo(s).  Make sure files are formatted correctly as png or jpeg"
+    else
+      @photos = Photo.find(params[:photo_ids])
+    end
   end
 
   # POST /photos
@@ -103,7 +108,7 @@ class PhotosController < ApplicationController
     @photo.destroy
 
     respond_to do |format|
-      format.html { redirect_to challenge }
+      format.html { redirect_to session[:return_two] }
       format.json { head :no_content }
     end
   end
