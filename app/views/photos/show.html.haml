@@ -12,18 +12,20 @@
 .photo-page-well
   = image_tag @photo.image(:big)
 
-%p= @photo.caption
+%p.photo-caption= @photo.caption
 
-= render :partial => "votes/vote", :locals => {:object => @photo}
+.photo-actions
+  = render :partial => "votes/vote", :locals => {:object => @photo}
 
-posted by 
-=link_to @photo.user.username, @photo.user
-#{time_ago_in_words @photo.created_at} ago
--if can? :destroy, @photo
-  =link_to "Remove photo", @photo, :method => :delete
-  \|
--if can? :update, @photo
-  = link_to 'Edit', edit_photo_path(@photo)
+  .pull-right
+    posted by 
+    =link_to @photo.user.username, @photo.user
+    #{time_ago_in_words @photo.created_at} ago
+    -if can? :destroy, @photo
+      =link_to "remove photo", @photo, :method => :delete
+      \|
+    -if can? :update, @photo
+      = link_to 'edit', edit_photo_path(@photo)
 
 -if current_user
   = render :partial => "comments/form", :locals => {:photo => @photo}

@@ -1,15 +1,1 @@
--@locations.each do |location|
-  .location-container{:style => "background: url(#{location.image}); background-size: cover; background-position: center;"}
-    %h2= link_to location.name, location
-    .row
-      .span8.darken
-        %p=location.description
-  -if can? :create, Location
-    .actions
-      %p
-        = link_to 'Show', location
-        = link_to 'Edit', edit_location_path(location)
-        = link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' }
-
--if can? :create, Location      
-  = link_to 'Create new location', new_location_path, :class => "btn"
+= render :partial => "locations/list"

@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   skip_authorization_check
   def index
+    @locations = Location.all.sort_by{|l| l.challenges.count}.reverse
     if current_user
       redirect_to :action => :user_index
     end

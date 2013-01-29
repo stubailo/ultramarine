@@ -68,18 +68,25 @@
   .row
     .span6
       %dl{:style => "margin-top: 0"}
-        %dt Description
+        %dt 
+          %i.icon-reorder
+          Description
         %dd= @challenge.description
         - if @challenge.difficulty
-          %dt Difficulty
+          %dt
+            %i.icon-star
+            Difficulty
           %dd= @challenge.difficulty_string
         - if @challenge.duration
-          %dt Time Required
+          %dt
+            %i.icon-time
+            Time Required
           %dd #{@challenge.duration_string}
     .span6 
 
       - if not @challenge.lat.blank?
         %p
+          %i.icon-map-marker
           %strong Location
           \- 
           = link_to "Larger Map", "https://maps.google.com/maps?hl=en&q=#{@challenge.lat},#{@challenge.lon}&t=m&z=16"

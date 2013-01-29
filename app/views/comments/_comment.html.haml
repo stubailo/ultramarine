@@ -5,6 +5,7 @@
     = link_to comment.user.username, comment.user
   - else
     [deleted]
+  #{time_ago_in_words comment.created_at} ago
 .comment-body
   = comment.body
   .comment-links
