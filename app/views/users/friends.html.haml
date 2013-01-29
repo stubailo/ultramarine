@@ -2,4 +2,5 @@
 
 .friends
   -@friends.each do |friend|
-    =link_to friend.username, friend
+    =image_tag(friend[:picture])
+    =link_to friend[:friend].username, friend[:friend]
