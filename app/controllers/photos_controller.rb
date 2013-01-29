@@ -41,7 +41,7 @@ class PhotosController < ApplicationController
   end
 
   def edit_many
-    if params[:photo_ids]
+    if !Photo.where(:id => params[:photo_ids]).any?
       redirect_to :back, :alert => "Error uploading photo(s).  Make sure files are formatted correctly as png or jpeg"
     else
       @photos = Photo.find(params[:photo_ids])
