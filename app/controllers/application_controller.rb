@@ -25,4 +25,11 @@ class ApplicationController < ActionController::Base
     session[:return_to] = request.fullpath unless request.fullpath =~ /\/users/
   end
 
+  def get_fb_friend_ids
+    if not env['fb_friend_ids']
+      env['fb_friend_ids'] = "fuck this"
+    end
+    return env['fb_friend_ids']
+  end
+
 end
