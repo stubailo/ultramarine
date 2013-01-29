@@ -53,6 +53,11 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
+
+  def friends
+    @user = current_user
+    @friends = User.where(:id => @user.friend_ids(current_user, graph))
+  end
   
   def edit
     @user = current_user

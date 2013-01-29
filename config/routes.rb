@@ -1,5 +1,7 @@
 Ultramarine::Application.routes.draw do
 
+  get "users/friends"
+
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 
   resources :photos do
