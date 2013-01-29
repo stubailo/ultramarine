@@ -35,7 +35,9 @@
                     %li
                       =link_to "Profile", user_path(current_user)
                     %li
-                      =link_to "Friends", users_friends_path
+                      -if current_user.omniauth_associations.any?
+                        =link_to "Friends", users_friends_path
+                      -end
                     %li
                       =link_to edit_user_registration_path do
                         Edit account
