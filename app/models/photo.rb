@@ -6,6 +6,8 @@ class Photo < ActiveRecord::Base
 
   has_attached_file :image, :styles => { :tiny => "64x64#", :thumb => "200x200#", :small => "300x300>", :big => "1170x882>"}
   has_many :comments
+
+  validates_attachment_content_type :image, :content_type=>['image/jpeg', 'image/png']
   
   def thumb
     image.url(:thumb)
