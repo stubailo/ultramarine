@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127032843) do
+ActiveRecord::Schema.define(:version => 20130129035517) do
 
   create_table "albums", :force => true do |t|
     t.integer  "user_id"
     t.integer  "location_id"
-    t.integer  "fbid"
     t.string   "name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "fbid"
   end
 
   add_index "albums", ["location_id"], :name => "index_albums_on_location_id"
@@ -70,10 +70,10 @@ ActiveRecord::Schema.define(:version => 20130127032843) do
   end
 
   create_table "facebook_friends", :force => true do |t|
-    t.integer  "fbid"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "user_id"
+    t.string   "fbid"
   end
 
   create_table "locations", :force => true do |t|
@@ -142,8 +142,8 @@ ActiveRecord::Schema.define(:version => 20130127032843) do
     t.boolean  "is_admin"
     t.string   "username"
     t.string   "token"
-    t.integer  "fbid"
     t.datetime "last_loaded"
+    t.string   "fbid"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

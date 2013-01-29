@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
     if oa
       u = oa.user
     else
-      u = User.create(email:auth.info.email, username:auth.info.name, token:auth.credentials.token, fbid:auth.uid, password:Devise.friendly_token[0,20])
+      u = User.create(email:auth.info.email, username:auth.info.name, token:auth.credentials.token, fbid:auth.uid.to_s, password:Devise.friendly_token[0,20])
       u.omniauth_associations = [OmniauthAssociation.new( {provider: auth.provider, uid: auth.uid} )]
       u.save
     end
@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
       friends = graph.get_connections("me", "friends")
       friend_ids = friends.map{|friend| friend["id"].to_i}
       User.transaction do
-        user.facebook_friends.create friend_ids.map { |fbid| {fbid: fbid, user_id: user.id} }
+        user.facebook_friends.create friend_ids.map { |fbid| {fbid: fbid.to_s, user_id: user.id} }
       end
       user.update_attribute(:last_loaded, Time.now())
       user.save
