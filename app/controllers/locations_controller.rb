@@ -30,7 +30,7 @@ class LocationsController < ApplicationController
     end
 
     if current_user
-      @challenges_completed = Challenge.joins(:challenge_completions).where(:challenge_completions => {:user_id => current_user.id}).order("difficulty DESC")
+      @challenges_completed = Challenge.joins(:challenge_completions).where(:challenge_completions => {:user_id => current_user.id}).where(:location_id => @location.id).order("difficulty DESC")
     end
     #@client = GooglePlaces::Client.new(Ultramarine::Application::PLACES_API_KEY)
     #@venues = @client.spots(@location.lat, @location.lon)
