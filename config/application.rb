@@ -13,7 +13,11 @@ module Ultramarine
   class Application < Rails::Application
     PLACES_API_KEY = "AIzaSyDpXUN863Ef1Two8nZjW3NGuIt8knw2eVo"
     CITY_DEFAULT_RADIUS = 10
-    FACEBOOK_SECRET = "61c779df72bdefbc2d852ddf1bc71567"
+    if Rails.environment.production?
+      FACEBOOK_SECRET = "8e53e9d598965e36fae348c76d92c2f5"
+    else
+      FACEBOOK_SECRET = "61c779df72bdefbc2d852ddf1bc71567"
+    end
     config.force_ssl = false
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
