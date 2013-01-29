@@ -18,6 +18,7 @@ file_all_started = (e, data) ->
     </div>"
   $("#ajax_photo_form").hide()
   $("#new_photo_form_container").append progress_area
+  $("#new_photo_form_container .btn, #new_photo_form_container form").hide()
   data.context = {}
 
 file_all_progress = (e, data) ->

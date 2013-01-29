@@ -1,15 +1,22 @@
 .todo
-  %h3 Todo List
+  %h3
+    Todo List
+  %p
+    To add items, click the "+ Todo" button on any challenge.
   -if @challenges_todo.any?
     .todo-challenges
       -@challenges_todo.each_with_index do |todo, i|
         .row
           .span2
-            .pull-right
-              = link_to add_completed_path(todo), :class => "btn btn-success" do
-                %i.icon-check
-              = link_to remove_todo_path(todo), :class => "btn btn-danger" do
-                %i.icon-trash
+            %ul.unstyled
+              %li
+                = link_to add_completed_path(todo) do
+                  %i.icon-check
+                  Mark Completed
+              %li
+                = link_to remove_todo_path(todo) do
+                  %i.icon-trash
+                  Remove
           = render :layout => "challenges/mini", :locals => {:challenge => todo} do
             .tiny-photos
               - todo.photos(@graph, current_user).limit(10).each do |photo|

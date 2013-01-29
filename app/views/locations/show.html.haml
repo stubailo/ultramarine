@@ -21,7 +21,7 @@
 .row.main-content
   .span4.tablet-full-width.pull-right{:style => "margin-top: 10px"}
     - if current_user and @challenges_completed.any?
-      %h5 #{@challenges_completed.count} challenges completed in #{@location.name}.
+      %h5 #{pluralize @challenges_completed.count, "challenge"} completed in #{@location.name}.
       %p #{@challenges_completed.sum {|a| a.difficulty} * 10} / #{@location.challenges.sum{|a| a.difficulty} * 10} points for this location.
       %ul.unstyled.hidden-tablet
         - @challenges_completed.each do |challenge|
@@ -34,14 +34,15 @@
       .well
         No challenges completed in #{@location.name} yet!  Browse on the left to find something you want to do!
   .span8.tablet-full-width.pull-left    
-    .pull-right
-      -if can? :create, Challenge
-        = link_to new_challenge_path(:location_id => @location.id), :class => "btn new_challenge_link" do
-          %i.icon-plus
-          Post a Challenge in #{@location.name} 
-    %h3 Challenges
+    .clearfix
+      %h3.pull-left Challenges
+      .pull-left
+        -if can? :create, Challenge
+          = link_to new_challenge_path(:location_id => @location.id), :class => "btn btn-small new_challenge_link" do
+            %i.icon-plus
+            Post a Challenge in #{@location.name} 
     - if @challenges.count
-      %ul.inline
+      %ul.inline.challenge-list-options
         %li Sort by:
         %li.challenge-sort= sortable "score", "vote_value"
         %li.challenge-sort= sortable "duration", "duration_value"

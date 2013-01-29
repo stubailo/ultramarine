@@ -15,7 +15,7 @@
     - if can? :edit, @challenge
       |
       = link_to "edit", edit_challenge_path(@challenge)
-.pull-right{:style => "margin-bottom: 20px; margin-top: 5px"}
+.actions
   = render :partial => "votes/vote", :locals => {:object => @challenge}
   -if current_user
     -if @challenge.completed_by? current_user
@@ -38,6 +38,14 @@
           = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
             %i.icon-plus
             Todo
+  -if can? :create, Photo
+    #new_photo_form_container
+      .btn.btn-small
+        %i.icon-plus
+        Upload Your Photos
+      = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
+        = f.hidden_field :challenge_id, :value => @challenge.id 
+        = f.file_field :image, multiple: true, name: "photo[image]"
 .onlyjs
   %ul.nav.nav-pills.nav-hash
     %li#info-tab
@@ -81,12 +89,6 @@
 .nojs
   %h4 Photos
 #photos-hash.content-hash
-  -if can? :create, Photo
-    #new_photo_form_container
-      = form_for Photo.new, :html => {:id => "ajax_photo_form", :class => "form-inline"} do |f|
-        = f.hidden_field :challenge_id, :value => @challenge.id 
-        = f.label :image, "Submit your photos:"
-        = f.file_field :image, multiple: true, name: "photo[image]"
   -if @count > 0
     .photo-grid
       -@ordered_photos.each do |photo|

@@ -2,7 +2,7 @@
   .span8.tablet-full-width
     .mini-challenge
       .title
-        .name.pull-left= link_to challenge.name, challenge
+        .name= link_to challenge.name, challenge
         %ul.pull-left.inline
           %li
             = render :partial => "votes/vote", :locals => {:object => challenge}

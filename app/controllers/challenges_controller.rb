@@ -5,12 +5,17 @@ class ChallengesController < ApplicationController
   skip_authorization_check :only => [:add_todo, :add_completed, :remove_todo, :remove_completed]
 
   def add_todo
-    @challenge.todo_users << current_user
+    unless @challenge.todo_users.include? current_user
+      @challenge.todo_users << current_user
+    end
     redirect_to :back
   end
 
   def add_completed
-    ChallengeCompletion.create(user_id: current_user.id, challenge_id: @challenge.id)
+    unless @challenge.completed_by? current_user
+      ChallengeCompletion.create(user_id: current_user.id, challenge_id: @challenge.id)
+      @challenge.todo_users.delete(current_user)
+    end
     redirect_to :back
   end
 
