@@ -20,6 +20,7 @@ class PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.json
   def show
+    session[:return_two] = request.referrer
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @photo }
@@ -103,7 +104,7 @@ class PhotosController < ApplicationController
     @photo.destroy
 
     respond_to do |format|
-      format.html { redirect_to challenge }
+      format.html { redirect_to session[:return_two] }
       format.json { head :no_content }
     end
   end
