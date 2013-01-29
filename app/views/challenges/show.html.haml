@@ -115,15 +115,4 @@
 .nojs
   %h4 Comments
 #comments-hash.content-hash
-  - if @challenge.comments.any?
-    -if can? :create, Comment
-      = render :partial => "comments/form", :locals => {:challenge => @challenge}
-    = render @challenge.comments
-  - else
-    - if can? :create, Comment
-      .well
-        Be the first to comment on this challenge!
-      = render :partial => "comments/form", :locals => {:challenge => @challenge}
-    - else
-      .well
-        Log in to be the first to comment on this challenge!
+  = render :partial => "comments/comment_area", :locals => {:object => @challenge}

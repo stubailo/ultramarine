@@ -8,15 +8,8 @@
   - elsif defined? photo
     .field
       = f.hidden_field :photo_id, :value => photo.id
-  -if defined? comment
-    .response-area
-      .field
-        = f.text_area :body
-      .actions
-        = f.submit :'Submit'
-  -else
-    .first-response-area
-      .field
-        = f.text_area :body
-      .actions
-        =f.submit :'Submit'
+  .response-area{:class => (defined? comment) ? "" : "first-response-area"}
+    .field
+      = f.text_area :body, :rows => 2
+    .new_comment_actions
+      = f.submit :'Submit'

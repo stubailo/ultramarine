@@ -1,0 +1,13 @@
+- if not object.comments.any?
+  .well
+    - if can? :create, Comment
+      Be the first to comment here!
+    - else
+      Log in to be the first to comment here!
+
+-if can? :create, Comment
+  .top_level_comment_form
+    = link_to nil, :class => "btn comment_reply_link" do
+      Write a Comment
+    = render :partial => "comments/form", :locals => {object.class.to_s.downcase.to_sym => object}
+  = render object.comments

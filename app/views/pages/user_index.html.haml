@@ -18,10 +18,12 @@
                   %i.icon-trash
                   Remove
           = render :layout => "challenges/mini", :locals => {:challenge => todo} do
-            .tiny-photos
-              - todo.photos(@graph, current_user).limit(10).each do |photo|
-                = link_to photo do
-                  = image_tag photo.image(:tiny)
+            - photos = todo.photos(@graph, current_user)
+            - if photos.any?
+              .tiny-photos
+                - photos.limit(10).each do |photo|
+                  = link_to photo do
+                    = image_tag photo.image(:tiny)
 -if @friend_challenges.any?
   .friends
     %h3 Challenges your friends have completed:
@@ -37,8 +39,10 @@
     .popular-challenges
       -@popular_challenges.each do |popular|
         = render :layout => "challenges/mini", :locals => {:challenge => popular} do
-          .tiny-photos
-            - popular.photos(@graph, current_user).limit(10).each do |photo|
-              = link_to photo do
-                = image_tag photo.image(:tiny)
+          - photos = popular.photos(@graph, current_user)
+          - if photos.any?
+            .tiny-photos
+              - photos.limit(10).each do |photo|
+                = link_to photo do
+                  = image_tag photo.image(:tiny)
 

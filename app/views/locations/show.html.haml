@@ -66,8 +66,10 @@
                         %i.icon-check-empty
       - @challenges.each do |challenge|
         = render :layout => "challenges/mini", :locals => {:challenge => challenge} do
-          .tiny-photos
-            - challenge.photos(@graph, current_user).each do |photo|
-              = link_to photo do
-                = image_tag photo.image(:tiny)
+          - photos = challenge.photos(@graph, current_user)
+          - if photos.any?
+            .tiny-photos
+              - photos.each do |photo|
+                = link_to photo do
+                  = image_tag photo.image(:tiny)
   

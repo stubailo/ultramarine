@@ -1,0 +1,60 @@
+// Place all the styles related to the Comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "twitter/bootstrap/variables.less";
+@import "twitter/bootstrap/mixins.less";
+
+.subcomments {
+  padding-left: 30px;
+  border-left: 1px solid #ddd;
+}
+
+@media (max-width: 767px) {
+  .subcomments {
+    padding-left: 5px;
+  }
+}
+
+.top_level_comment_form {
+  margin-bottom: 30px;
+}
+
+.comment-container {
+  margin-bottom: 20px;
+
+  .comment-header {
+    margin-bottom: 3px;
+  }
+  
+  .comment-links {
+    margin-top: 5px;
+
+    .vote-container {
+      margin-right: 5px;
+    }
+  }
+
+  .subcomments {
+    margin-top: 20px;
+  }
+}
+
+form.new_comment {
+  margin: 0;
+  textarea {
+    width: 300px;
+    float: left;
+    margin: 0;
+  }
+
+  .new_comment_actions {
+    float: left;
+    margin-left: 10px;
+  }
+  .clearfix;
+}
+
+span.reply {
+}
+

@@ -27,6 +27,4 @@
     -if can? :update, @photo
       = link_to 'edit', edit_photo_path(@photo)
 
--if current_user
-  = render :partial => "comments/form", :locals => {:photo => @photo}
-= render @photo.comments
+= render :partial => "comments/comment_area", :locals => {:object => @photo}

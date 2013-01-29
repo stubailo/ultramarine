@@ -3,10 +3,10 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-  $(".response-area").hide()
+  $("form.new_comment").hide()
   $("form.new_comment").submit comment_submit_handler 
-  $("span.reply").click comment_reply
-  $("span.collapse").click comment_collapse
+  $(".comment_reply_link").click comment_reply
+  $(".comment_collapse_link").click comment_collapse
   
 comment_submit_handler = (event) ->
   $(".response-area").hide()
@@ -24,22 +24,22 @@ comment_submit_handler = (event) ->
       new_comment.find("form.new_comment").submit comment_submit_handler
       form.after new_comment
       new_comment.slideDown()
-      new_comment.find("span.reply").click comment_reply
-      new_comment.find("span.collapse").click comment_collapse
+      new_comment.find(".comment_reply_link").click comment_reply
+      new_comment.find(".comment_collapse_link").click comment_collapse
   form.find("textarea").val ""
   return false
 
 comment_reply = (event) ->
-  $(this).parent().find("div.response-area").first().show()
+  $(this).parent().find("form.new_comment").first().slideToggle()
   return false
 
 comment_collapse = (event) ->
-  collapse_icon = $(this).find("a")
-  subcomment_section = $(this).parent().parent().find("div.comment-body").first()
+  collapse_icon = $(this)
+  subcomment_section = $(this).parents(".comment-header").parent().find(".comment-body")
   if subcomment_section.is(":visible")
-    subcomment_section.hide()
+    subcomment_section.slideUp()
     collapse_icon.text("[+]")
   else
-    subcomment_section.show()
+    subcomment_section.slideDown()
     collapse_icon.text("[-]")
   return false

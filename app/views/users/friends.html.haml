@@ -1,6 +1,13 @@
-%h2 Your friends on Ultramarine:
+%h2 Friends on Ultramarine
 
-.friends
+.friends.row
   -@friends.each do |friend|
-    =image_tag(friend[:picture])
-    =link_to friend[:friend].username, friend[:friend]
+    .span4
+      .friend.media
+        =image_tag(friend[:picture], :class => "pull-left")
+        .media-body
+          = link_to friend[:friend].username, friend[:friend]
+          .info
+            = friend[:friend].points
+            points
+

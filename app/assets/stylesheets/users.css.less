@@ -5,6 +5,14 @@
 @import "twitter/bootstrap/variables.less";
 @import "twitter/bootstrap/mixins.less";
 
+body.users.friends .friends {
+  margin-top: 20px;
+
+  img {
+    float: left;
+  }
+}
+
 body.users.show {
 
   #challenges-hash {
@@ -16,14 +24,18 @@ body.users.show {
     line-height: normal;
     margin-bottom: 12px;
     p {
-      margin-bottom: 1px;
+      margin-bottom: 5px;
     }
 
     .border-radius(@borderRadiusSmall);
     background: #eee;
 
     .media-body {
-      padding: 5px 10px 5px 0;
+      padding: 5px 10px;
+    }
+
+    .pull-left {
+      margin-right: 0;
     }
 
     .media-object {

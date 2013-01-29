@@ -1,20 +1,21 @@
-.comment-header
-  %span.collapse
-    = link_to "[-]", nil
-  - if comment.user
-    = link_to comment.user.username, comment.user
-  - else
-    [deleted]
-  #{time_ago_in_words comment.created_at} ago
-.comment-body
-  = comment.body
-  .comment-links
-    = render :partial => "votes/vote", :locals => {:object => comment}
-    -if can? :delete, comment
-      = link_to "delete", comment, :method => :delete
-    %span.reply 
-      = link_to "reply", nil
+.comment-container
+  .comment-header
+    %span.collapse
+      = link_to "[-]", nil, :class => "comment_collapse_link"
+    - if comment.user
+      = link_to comment.user.username, comment.user
+    - else
+      [deleted]
+    wrote
+    #{time_ago_in_words comment.created_at} ago
+  .comment-body
+    = comment.body
+    .comment-links
+      = render :partial => "votes/vote", :locals => {:object => comment}
+      -if can? :delete, comment
+        = link_to "delete", comment, :method => :delete
+      = link_to "reply", nil, :class => "comment_reply_link"
 
-    .subcomments
-      = render :partial => "comments/form", :locals => {:comment => comment}
-      = render comment.subcomments
+      .subcomments
+        = render :partial => "comments/form", :locals => {:comment => comment}
+        = render comment.subcomments
