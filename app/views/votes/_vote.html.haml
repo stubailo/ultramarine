@@ -1,10 +1,11 @@
 -# needs local object
 - if current_user
-  - additional_class = {1 => "btn-success", 0 => "", -1 => "btn-error"}[current_user.voted_for? object]
+  - additional_class = {1 => "btn-info", 0 => "", -1 => "btn-error"}[current_user.voted_for? object]
   %span.vote-container
-    = link_to votes_vote_path( (object.class.to_s.downcase + "_id").to_sym => object.id, :value => 1), :method => "post", :class => "btn btn-mini " + additional_class do
+    = link_to votes_vote_path( (object.class.to_s.downcase + "_id").to_sym => object.id, :value => 1), :method => "post", :class => "btn btn-small " + additional_class do
       %i.icon-thumbs-up
-    %span.vote-count= object.vote_value
+      %span.vote-text Like
+      %span.vote-count= object.vote_value
 - else
   %i.icon-thumbs-up
   = object.vote_value

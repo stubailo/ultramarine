@@ -28,6 +28,14 @@ class Challenge < ActiveRecord::Base
     DifficultyStringMap[difficulty]
   end
 
+  def duration_string
+    if duration == 1
+      return "#{duration} #{duration_unit.singularize}"
+    else
+      return "#{duration} #{duration_unit}"
+    end
+  end
+
   def completed_by? (user)
     ChallengeCompletion.where(user_id: user.id, challenge_id: id).first
   end
