@@ -49,7 +49,7 @@ $ ->
         val = $("#edit_many_photos form")[which]
         val = $ val
         val.find("#photo_privacy_level").val($("#all_photo_privacy").val())
-        val.find("#photo_facebook_bit").val($("#all_photo_facebook_bit").val())
+        val.find("#photo_facebook_bit").attr("checked", $("#all_photo_facebook_bit").is(":checked"))
         next = =>
           console.log "done"
           num_photos_uploaded +=1
