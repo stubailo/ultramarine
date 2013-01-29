@@ -20,7 +20,7 @@
 
 .row.main-content
   .span4.tablet-full-width.pull-right{:style => "margin-top: 10px"}
-    - if @challenges_completed.any?
+    - if current_user and @challenges_completed.any?
       %h5 #{@challenges_completed.count} challenges completed in #{@location.name}.
       %p #{@challenges_completed.sum {|a| a.difficulty} * 10} / #{@location.challenges.sum{|a| a.difficulty} * 10} points for this location.
       %ul.unstyled.hidden-tablet

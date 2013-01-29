@@ -1,5 +1,39 @@
 @import "twitter/bootstrap/variables.less";
 @import "twitter/bootstrap/mixins.less";
+
+body.locations.index {
+  .location-container {
+    margin-bottom: 30px;
+    .border-radius(@borderRadiusLarge);
+    padding: 20px;
+    color: white;
+    text-shadow: 0 0 20px rgba(0,0,0, .8);
+    background-opacity: .6;
+
+    .darken {
+      background: rgba(0,0,0,.7);
+      .border-radius(@baseBorderRadius);
+      padding: 10px;
+    }
+
+    h2 {
+      font-size: 5em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      
+      margin-top: 30px;
+      a {
+        color: white;
+      
+        &:hover {
+          color: white;
+        }
+      }
+    
+    }
+  }
+}
+
 body.locations {
   .main-content > .tablet-full-width {
     @media (max-width: 979px) {

@@ -43,8 +43,10 @@
                   
               - else
                 %li
-                  = link_to user_omniauth_authorize_path(:facebook) do
-                    <i class='icon-facebook-sign'></i>
+                  = link_to user_omniauth_authorize_path(:facebook), :style=>"color: #3B5998" do
+                    %i.icon-facebook-sign
+                    Sign in with Facebook
+
                 %li
                   = link_to "Sign in", new_user_session_path
                 %li

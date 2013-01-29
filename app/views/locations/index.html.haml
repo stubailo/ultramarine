@@ -1,6 +1,9 @@
 -@locations.each do |location|
-  %h3= link_to location.name, location
-  =location.description
+  .location-container{:style => "background: url(#{location.image}); background-size: cover; background-position: center;"}
+    %h2= link_to location.name, location
+    .row
+      .span8.darken
+        %p=location.description
   -if can? :create, Location
     .actions
       %p

@@ -19,7 +19,7 @@
   = render :partial => "votes/vote", :locals => {:object => @challenge}
   -if current_user
     -if @challenge.completed_by? current_user
-      = link_to remove_completed_path(@challenge), :class => 'btn btn-small btn-info' do
+      = link_to remove_completed_path(@challenge), :class => 'btn btn-small btn-success' do
         %i.icon-ok
         Completed
         %span.completed-score

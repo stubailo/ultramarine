@@ -1,10 +1,11 @@
 %h2 What to do?
--if @challenges_todo.any?
-  .todo
-    %h3 On your todo list:
+.todo
+  %h3 On your todo list:
+  -if @challenges_todo.any?
     .todo-challenges
       -@challenges_todo.each do |todo|
-        = link_to todo.name, todo
+        = render :layout => "challenges/mini", :locals => {:challenge => todo} do
+          =""
 -if @friend_challenges.any?
   .friends
     %h3 Challenges your friends have completed:
@@ -15,9 +16,10 @@
         = link_to challenge[:friend].username, challenge[:friend]
 -if @popular_challenges.any?
   .popular
-    %h3 Other popular challenges:
+    %h3 Popular challenges:
+    %p If none of these catch your eye, browse the #{link_to "locations", locations_path}!
     .popular-challenges
       -@popular_challenges.each do |popular|
-        = link_to popular.name, popular
-        = popular.vote_value
+        = render :layout => "challenges/mini", :locals => {:challenge => popular} do
+          =""
 
