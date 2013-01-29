@@ -21,9 +21,10 @@
           = link_to photo do
             = image_tag photo.image(:thumb)
           .image-mouseover-content.hidden-tablet.hidden-phone
-            - if not photo.caption.blank?
-              %p= truncate(photo.caption, :length => 70)
-            %p Challenge: #{link_to photo.challenge.name, photo.challenge}
+            - if photo.challenge
+              - if not photo.caption.blank?
+                %p= truncate(photo.caption, :length => 70)
+              %p Challenge: #{link_to photo.challenge.name, photo.challenge}
     .nojs
       %h3 Completed Challenges:
     #completed-challenges.content-hash#challenges-hash
