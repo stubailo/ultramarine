@@ -44,7 +44,11 @@
         .well{:style => "margin-top: -15px"} You haven't completed any challenges yet.  Go to the #{link_to "locations", locations_path} page to browse for something to do!
 
   .span4
-    %h5 Recent Activity
+    %h5 Challenge Points
+    %p #{@user.username} has #{@user.points} points from completing challenges.
+
+    %h5{:style => "margin-top: 30px"} Recent Activity
+
     - if @newsfeed.any?
       - @newsfeed.each do |n|
         = render :partial => "newsfeed/main", :locals => {:newsfeed_item => n}
