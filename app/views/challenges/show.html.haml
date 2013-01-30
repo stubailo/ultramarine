@@ -43,6 +43,9 @@
           = link_to add_todo_path(@challenge), :class => 'btn btn-small' do
             %i.icon-plus
             Todo
+  -else
+    \- 
+    Sign in for todo list and social features!
   -if can? :create, Photo
     #new_photo_form_container
       .btn.btn-small

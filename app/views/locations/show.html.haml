@@ -17,11 +17,11 @@
           %p= @location.description
 
 .row.main-content
-  .span4.tablet-full-width.pull-right{:style => "margin-top: 10px"}
+  .span4.tablet-full-width.pull-right{:style => "margin-top: 10px;", :class => (current_user and @challenges_completed.any?) ? "" : "hidden-tablet hidden-phone"}
     - if current_user and @challenges_completed.any?
       %h5 #{pluralize @challenges_completed.count, "challenge"} completed in #{@location.name}.
       %p #{@challenges_completed.sum {|a| a.difficulty} * 10} / #{@location.challenges.sum{|a| a.difficulty} * 10} points for this location.
-      %ul.unstyled.hidden-tablet
+      %ul.unstyled.hidden-tablet.hidden-phone
         - @challenges_completed.each do |challenge|
           %li
             = link_to challenge.name, challenge
@@ -29,11 +29,12 @@
               %i.icon-star
               = challenge.difficulty_string
     - else
-      .well
-        %h5
-          No challenges completed in #{@location.name} yet!
-        %p
-          Browse the challenges to find something you want to do, and click the 'Mark Done' button to record your achievement!
+      .hidden-tablet.hidden-phone
+        .well
+          %h5
+            No challenges completed in #{@location.name} yet!
+          %p
+            Browse the challenges to find something you want to do, and click the 'Mark Done' button to record your achievement!
   .span8.tablet-full-width.pull-left    
     .clearfix
       %h3.pull-left Challenges
